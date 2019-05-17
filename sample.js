@@ -2,6 +2,7 @@ var Matrix = require('rpi-matrix');
 var path = require("path");
 
 Matrix.Canvas.registerFont(path.join(__dirname, './fonts/Verdana.ttf'), { family: 'what-ever' });
+Matrix.configure({'led-cols':32, 'led-rows':32});
 
 class Sample extends Matrix {
 
