@@ -76,9 +76,6 @@ class Command {
 
 		try {
 
-			var config = argv;
-			
-
 		
 			var config = {...getMatrixConfiguration(), ...argv};
 
