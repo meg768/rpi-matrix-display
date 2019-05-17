@@ -59,8 +59,7 @@ class App {
 
 	};
 
-
-	run();
 };
 
-module.exports = new App();
+var app = new App();
+app.run();
