@@ -2,7 +2,7 @@
   "name": "rpi-matrix-display",
   "version": "1.0.0",
   "description": "rpi-matrix-display",
-  "main": "index.js",
+  "main": "rpi-matrix-display.js",
   "scripts": {
     "goto-github": "open https://github.com/meg768/rpi-matrix-display",
     "goto-npm": "open https://www.npmjs.com/package/rpi-matrix-display",
