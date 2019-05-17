@@ -1,7 +1,7 @@
 var Matrix = require('rpi-matrix');
 var path = require("path");
 
-Matrix.Canvas.registerFont(path.join(__dirname, '../fonts/Verdana.ttf'), { family: 'what-ever' });
+Matrix.Canvas.registerFont(path.join(__dirname, './fonts/Verdana.ttf'), { family: 'what-ever' });
 
 class Sample extends Matrix {
 
