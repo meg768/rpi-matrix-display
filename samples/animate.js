@@ -14,7 +14,7 @@ function configureMatrix(options) {
 		name = name.toUpperCase();
 		name = name.replace('-', '_');
 console.log(name);
-		var value = process.env[name];
+		var value = parseInt(process.env[name]);
 
 		if (value != undefined) {
 			defaultOptions[param] = value;
