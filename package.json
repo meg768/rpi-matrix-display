@@ -6,9 +6,9 @@
   "scripts": {
     "goto-github": "open https://github.com/meg768/rpi-matrix-display",
     "goto-npm": "open https://www.npmjs.com/package/rpi-matrix-display",
-    "git-pull": "git pull",
-    "git-commit": "git add -A && git commit -m '-' && git push",
-    "git-revert": "git reset --hard HEAD"
+    "pull": "git pull",
+    "commit": "git add -A && git commit -m '-' && git push",
+    "revert": "git reset --hard HEAD"
   },
   "repository": {
     "type": "git",
