@@ -23,7 +23,8 @@ console.log(name);
 
 	console.log('Default options', defaultOptions);
 
-	Matrix.configure({...defaultOptions, ...options});
+	var config = {...defaultOptions, ...options};
+	Matrix.configure(config);
 
 }
 class Command {
