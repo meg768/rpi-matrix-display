@@ -69,7 +69,7 @@ class Command {
 		try {
 
 			//Matrix.configure(argv);
-			configureMatrix();
+			configureMatrix(argv);
 			console.log('argv', argv);
 			var sample = new GifAnimation(argv);
 			sample.run();
