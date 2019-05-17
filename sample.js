@@ -20,5 +20,6 @@ class Sample extends Matrix {
         setTimeout(() => {}, 3000);
     }
 };
+
 var sample = new Sample({mode:'canvas', width:32, height:32});
 sample.run();
