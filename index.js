@@ -1,8 +1,6 @@
 
 var Matrix = require('rpi-matrix');
 
-console.log('FD');
-/*
 class Sample extends Matrix {
 
     run() {
@@ -24,4 +22,4 @@ class Sample extends Matrix {
 Matrix.configure({'led-cols':32, 'led-rows':32});
 var sample = new Sample({mode:'pixel'});
 sample.run();
-*/
+
