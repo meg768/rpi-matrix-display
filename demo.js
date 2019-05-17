@@ -10,6 +10,11 @@ class App {
 		this.fileName = __filename;
 	}
 
+	loadDefaultOptions() {
+
+	}
+
+	
 	loadSamples() {
 		var folder = path.join(__dirname, './samples');
 
@@ -37,7 +42,7 @@ class App {
             args.option('led-rgb-sequence', {describe:'Matrix RGB color order', default:'RGB'});
             args.option('led-scan-mode',    {describe:'Scan mode (0/1)', default:0});
 
-			this.loadSamples(args);  
+			this.loadSamples();  
 
 			args.help();
 			args.wrap(null);
