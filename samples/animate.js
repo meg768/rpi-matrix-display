@@ -6,11 +6,11 @@ var GifAnimation = require('../src/gif-animation.js');
 function configureMatrix(options) {
 
 	function isNumeric(num){
-		return num != undefined && !isNaN(num);
+		return !isNaN(num);
 	}
 
 	var params = ['led-rows', 'led-cols'];
-	var defaultOptions = {};
+	var processOptions = {};
 
 	params.forEach((param) => {
 		var name = param;
@@ -24,13 +24,13 @@ function configureMatrix(options) {
 			value = parseInt(value);
 
 		if (value != undefined) {
-			defaultOptions[param] = value;
+			processOptions[param] = value;
 		}
 	});
 
 	console.log('Default options', defaultOptions);
 
-	var config = {...defaultOptions, ...options};
+	var config = {...processOptions, ...options};
 	console.log('config', config);
 	Matrix.configure(config);
 
