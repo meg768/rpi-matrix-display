@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var Matrix = require('rpi-matrix');
 Matrix.configure({'led-cols':32, 'led-rows':32});
 
