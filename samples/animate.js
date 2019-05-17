@@ -2,6 +2,16 @@
 var Matrix = require('rpi-matrix');
 var GifAnimation = require('../src/gif-animation.js');
 
+class MatrixDefaults {
+
+	constructor() {
+
+	}
+
+
+
+};
+
 function convertMatrixConfiguration(config) {
 
 	var options = {...config};
@@ -14,7 +24,11 @@ function convertMatrixConfiguration(config) {
 
 	toInt('led-rows');
 	toInt('led-cols');
-
+	toInt('led-row-addr-type');
+	toInt('led-chain');
+	toInt('led-parallel');
+	toInt('led-multiplexing');	
+	
 	return options;
 }
 
