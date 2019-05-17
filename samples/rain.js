@@ -1,5 +1,5 @@
 
-var Matrix = require('../matrix.js');
+var Matrix = require('rpi-matrix');
 var RainAnimation = require('../src/js/rain-animation.js');
 
 class Command {

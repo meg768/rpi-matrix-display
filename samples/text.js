@@ -1,5 +1,5 @@
 
-var Matrix = require('../matrix.js');
+var Matrix = require('rpi-matrix');
 var TextAnimation = require('../src/js/text-animation.js');
 var AnimationQueue = require('../src/js/animation-queue.js');
 

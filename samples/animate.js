@@ -1,5 +1,5 @@
 
-var Matrix = require('../matrix.js');
+var Matrix = require('rpi-matrix');
 var GifAnimation = require('../src/js/gif-animation.js');
 
 var path = require('path');
