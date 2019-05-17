@@ -4,10 +4,17 @@ var fs   = require('fs');
 var path = require('path');
 var args = require('yargs');
 
+
 class App {
 
 	constructor() {
 		this.fileName = __filename;
+
+        // Load .env
+        require('dotenv').config({
+            path: path.join(__dirname, './.env')
+        });
+
 	}
 
 	loadDefaultOptions() {
