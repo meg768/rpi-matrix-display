@@ -31,6 +31,8 @@ function getMatrixConfiguration() {
 		name = name.toUpperCase();
 		name = name.replace('-', '_');
 
+		var value = process.env[name];
+
 		if (value != undefined) {
 			processOptions[param] = value;
 		}
