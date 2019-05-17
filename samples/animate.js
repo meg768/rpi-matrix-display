@@ -24,6 +24,7 @@ console.log(name);
 	console.log('Default options', defaultOptions);
 
 	var config = {...defaultOptions, ...options};
+	console.log('config', config);
 	Matrix.configure(config);
 
 }
