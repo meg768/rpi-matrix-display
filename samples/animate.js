@@ -38,7 +38,9 @@ function getMatrixConfiguration() {
 		}
 	});
 
-	return convertMatrixConfiguration(processOptions);
+	var x = convertMatrixConfiguration(processOptions);
+	console.log('process config', x); 
+	return x;
 
 }
 class Command {
