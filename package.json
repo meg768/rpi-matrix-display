@@ -18,5 +18,16 @@
   "bugs": {
     "url": "https://github.com/meg768/rpi-matrix-display/issues"
   },
-  "homepage": "https://github.com/meg768/rpi-matrix-display#readme"
+  "homepage": "https://github.com/meg768/rpi-matrix-display#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "color-name": "^1.1.4",
+    "cors": "^2.8.5",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "omggif": "^1.0.9",
+    "psd": "^3.2.0",
+    "yargs": "^12.0.5",
+    "yow": "^1.0.105"
+  }
 }
