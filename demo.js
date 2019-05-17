@@ -42,7 +42,7 @@ class App {
 			args.help();
 			args.wrap(null);
 
-			args.check(function(argv) {
+			args.check(function() {
 				return true;
 			});
 
