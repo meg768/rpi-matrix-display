@@ -1,6 +1,6 @@
 
 var Matrix = require('rpi-matrix');
-var GifAnimation = require('../src/js/gif-animation.js');
+var GifAnimation = require('../src/gif-animation.js');
 
 var path = require('path');
 var fs = require('fs');

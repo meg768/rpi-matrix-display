@@ -1,7 +1,7 @@
 
 var Matrix = require('rpi-matrix');
-var TextAnimation = require('../src/js/text-animation.js');
-var AnimationQueue = require('../src/js/animation-queue.js');
+var TextAnimation = require('../src/text-animation.js');
+var AnimationQueue = require('../src/animation-queue.js');
 
 class Command {
 
