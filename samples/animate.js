@@ -20,6 +20,7 @@ class Command {
 		args.option('help', {describe:'Displays this information'});
 		args.option('gif',  {describe:'Specifies name of GIF', default:'pacman'});
 		args.option('duration', {describe:'Animate for a specified time (ms)'});
+		args.option('iterations', {describe:'Number of iterations to animate'});
 
 		args.wrap(null);
 
