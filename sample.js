@@ -3,15 +3,14 @@
 var fs = require('fs');
 var path = require('path');
 
+class App {
 
 
+	constructor() {
+		this.fileName = __filename;
+	}
 
-var App = function() {
-
-
-	this.fileName = __filename;
-
-	function loadCommands(args) {
+	loadSamples(args) {
 		var folder = path.join(__dirname, './samples');
 
 		fs.readdirSync(folder).forEach((file) => {
@@ -28,7 +27,7 @@ var App = function() {
 	}
 
 
-	function run() {
+	run() {
 		try {
 			var args = require('yargs');
 
