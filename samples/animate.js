@@ -13,7 +13,7 @@ function configureMatrix(options) {
 		
 		name = name.toUpperCase();
 		name = name.replace('-', '_');
-
+console.log(name);
 		var value = process.env[name];
 
 		if (value != undefined) {
@@ -22,7 +22,7 @@ function configureMatrix(options) {
 	});
 
 	console.log('Default options', defaultOptions);
-	
+
 	Matrix.configure({...defaultOptions, ...options});
 
 }
