@@ -4,10 +4,11 @@
   "description": "rpi-matrix-display",
   "main": "index.js",
   "scripts": {
-    "pull": "git pull",
     "goto-github": "open https://github.com/meg768/rpi-matrix-display",
     "goto-npm": "open https://www.npmjs.com/package/rpi-matrix-display",
-    "commit": "git add -A && git commit -m '-' && git push"
+    "git-pull": "git pull",
+    "git-commit": "git add -A && git commit -m '-' && git push",
+    "git-revert": "git reset --hard HEAD"
   },
   "repository": {
     "type": "git",
