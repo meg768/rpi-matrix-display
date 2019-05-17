@@ -43,7 +43,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
         this.textColor  = textColor;
 
         this.colors     = require('color-name');
-        this.emojis     = loadEmojis(path.join(__dirname, '../../emojis'));
+        this.emojis     = loadEmojis(path.join(__dirname, '../emojis'));
 
     }
 
