@@ -1,0 +1,22 @@
+{
+  "name": "rpi-matrix-display",
+  "version": "1.0.0",
+  "description": "rpi-matrix-display",
+  "main": "index.js",
+  "scripts": {
+    "pull": "git pull",
+    "goto-github": "open https://github.com/meg768/rpi-matrix-display",
+    "goto-npm": "open https://www.npmjs.com/package/rpi-matrix-display",
+    "commit": "git add -A && git commit -m '-' && git push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meg768/rpi-matrix-display.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meg768/rpi-matrix-display/issues"
+  },
+  "homepage": "https://github.com/meg768/rpi-matrix-display#readme"
+}
