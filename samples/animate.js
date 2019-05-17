@@ -6,7 +6,7 @@ var GifAnimation = require('../src/gif-animation.js');
 function configureMatrix(options) {
 
 	function isNumeric(num){
-		return !isNaN(num)
+		return num != undefined && !isNaN(num);
 	}
 
 	var params = ['led-rows', 'led-cols'];
