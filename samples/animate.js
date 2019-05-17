@@ -2,28 +2,26 @@
 var Matrix = require('rpi-matrix');
 var GifAnimation = require('../src/gif-animation.js');
 
+function convertMatrixConfiguration(config) {
+
+	var options = {...config};
+
+	function toInt(name) {
+		if (options[name] != undefined) {
+			options[name] = parseInt(options[name]);
+		}
+	}	
+
+	toInt('led-rows');
+	toInt('led-cols');
+
+	return options;
+}
 
 function getDefaultMatrixConfiguration() {
 
-
-	function convertMatrixConfiguration(config) {
-
-		var options = {...config};
-
-		function toInt(name) {
-			if (options[name] != undefined) {
-				options[name] = parseInt(options[name]);
-			}
-		}	
-		
-		toInt('led-rows');
-		toInt('led-cols');
-
-		return options;
-	}
-
 	var params = ['led-rows', 'led-cols'];
-	var processOptions = {};
+	var config = {};
 
 	params.forEach((param) => {
 		var name = param;
@@ -34,15 +32,13 @@ function getDefaultMatrixConfiguration() {
 		var value = process.env[name];
 
 		if (value != undefined) {
-			processOptions[param] = value;
+			config[param] = value;
 		}
 	});
 
-	var x = convertMatrixConfiguration(processOptions);
-	console.log('process config', x); 
-	return x;
-
+	return config;
 }
+
 class Command {
 
     constructor() {
@@ -79,7 +75,7 @@ class Command {
 		
 			var config = {...getDefaultMatrixConfiguration(), ...argv};
 
-			Matrix.configure(config);
+			Matrix.configure(convertMatrixConfiguration(config));
 
 
 			console.log('argv', argv);
