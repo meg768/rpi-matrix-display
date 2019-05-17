@@ -3,7 +3,7 @@ var Matrix = require('rpi-matrix');
 var GifAnimation = require('../src/gif-animation.js');
 
 
-function getMatrixConfiguration() {
+function getDefaultMatrixConfiguration() {
 
 
 	function convertMatrixConfiguration(config) {
@@ -77,7 +77,7 @@ class Command {
 		try {
 
 		
-			var config = {...getMatrixConfiguration(), ...argv};
+			var config = {...getDefaultMatrixConfiguration(), ...argv};
 
 			Matrix.configure(config);
 
