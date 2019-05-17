@@ -1,6 +1,6 @@
 var path = require('path');
 
-var Matrix = require('../../matrix.js');
+var Matrix = require('rpi-matrix');
 var Animation = require('./animation.js');
 
 

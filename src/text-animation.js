@@ -2,7 +2,7 @@ var root = '..';
 var path = require('path');
 var once = require('yow/once');
 
-var Matrix = require('../../matrix.js')
+var Matrix = require('rpi-matrix');
 var ScrollAnimation = require('./scroll-animation.js');
 
 var loadEmojis = once((folder) => {
