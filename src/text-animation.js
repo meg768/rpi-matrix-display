@@ -90,7 +90,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
             try {
                 if (item.type == 'emoji') {
                     if (item.fileName != undefined) {
-                        this.matrix.loadImage(item.fileName).then((image) => {
+                        Matrix.Canvas.loadImage(item.fileName).then((image) => {
                             item.image = this.createEmojiImage(image);    
                         })
                         .then(() => {
