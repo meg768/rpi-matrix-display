@@ -21,6 +21,8 @@ function configureMatrix(options) {
 		}
 	});
 
+	console.log('Default options', defaultOptions);
+	
 	Matrix.configure({...defaultOptions, ...options});
 
 }
