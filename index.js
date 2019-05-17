@@ -1,8 +1,8 @@
 
-console.log('HEJ');
-/*
 var Matrix = require('rpi-matrix');
 
+console.log('FD');
+/*
 class Sample extends Matrix {
 
     run() {
