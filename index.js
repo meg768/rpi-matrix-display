@@ -1,3 +1,6 @@
+
+console.log('HEJ');
+/*
 var Matrix = require('rpi-matrix');
 
 class Sample extends Matrix {
@@ -21,3 +24,4 @@ class Sample extends Matrix {
 Matrix.configure({'led-cols':32, 'led-rows':32});
 var sample = new Sample({mode:'pixel'});
 sample.run();
+*/
