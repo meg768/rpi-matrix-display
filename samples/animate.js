@@ -60,7 +60,7 @@ class Command {
 		try {
 
 			//Matrix.configure(argv);
-			configureMatrix(argv);
+			configureMatrix();
 			var sample = new GifAnimation(argv);
 			sample.run();
 		}
