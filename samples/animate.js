@@ -20,8 +20,8 @@ function configureMatrix(options) {
 
 		var value = process.env[name];
 
-		if (isNumeric(value))
-			value = parseInt(value);
+		//if (isNumeric(value))
+		//	value = parseInt(value);
 
 		if (value != undefined) {
 			processOptions[param] = value;
@@ -68,8 +68,8 @@ class Command {
 
 		try {
 
-			//Matrix.configure(argv);
-			configureMatrix(argv);
+			Matrix.configure({'led-rows':'32', 'led-cols':'32'});
+//			configureMatrix(argv);
 			console.log('argv', argv);
 			var sample = new GifAnimation(argv);
 			sample.run();
