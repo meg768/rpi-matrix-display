@@ -1,7 +1,4 @@
 var Matrix = require('rpi-matrix');
-var path = require("path");
-
-Matrix.Canvas.registerFont(path.join(__dirname, './fonts/Verdana.ttf'), { family: 'what-ever' });
 Matrix.configure({'led-cols':32, 'led-rows':32});
 
 class Sample extends Matrix {
@@ -9,17 +6,13 @@ class Sample extends Matrix {
     run() {
         var ctx = this.canvas.getContext('2d');
 
-        ctx.font = 'bold 16px Verdana';
         ctx.fillStyle = 'blue';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('X', this.width / 2, this.height / 2);
+        ctx.fillRect(0, 0, this.width, this.height);
 
         this.render();
-
         setTimeout(() => {}, 3000);
     }
 };
 
-var sample = new Sample({mode:'canvas', width:32, height:32});
+var sample = new Sample({mode:'canvas'});
 sample.run();
