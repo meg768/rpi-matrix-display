@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 
-var fs = require('fs');
+var fs   = require('fs');
 var path = require('path');
+var args = require('yargs');
 
 class App {
-
 
 	constructor() {
 		this.fileName = __filename;
 	}
 
-	loadSamples(args) {
+	loadSamples() {
 		var folder = path.join(__dirname, './samples');
 
 		fs.readdirSync(folder).forEach((file) => {
@@ -29,8 +29,6 @@ class App {
 
 	run() {
 		try {
-			var args = require('yargs');
-
 			args.usage('Usage: $0 <command> [options]')
 
             args.option('led-cols',         {describe:'Number of columns for display', default:64});
@@ -39,7 +37,7 @@ class App {
             args.option('led-rgb-sequence', {describe:'Matrix RGB color order', default:'RGB'});
             args.option('led-scan-mode',    {describe:'Scan mode (0/1)', default:0});
 
-			loadCommands(args);  
+			this.loadSamples(args);  
 
 			args.help();
 			args.wrap(null);
