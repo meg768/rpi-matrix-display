@@ -68,7 +68,7 @@ class Command {
 
 		try {
 
-			Matrix.configure({'led-rows':32, 'led-cols':32});
+			Matrix.configure({'led-rows':'32', 'led-cols':'32'});
 //			configureMatrix(argv);
 			console.log('argv', argv);
 			var sample = new GifAnimation(argv);
