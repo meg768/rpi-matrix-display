@@ -17,7 +17,7 @@ console.log(name);
 		var value = process.env[name];
 
 		if (value != undefined) {
-			defaultOptions[name] = value;
+			defaultOptions[param] = value;
 		}
 	});
 
