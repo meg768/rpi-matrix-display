@@ -3,6 +3,27 @@ var Matrix = require('rpi-matrix');
 var GifAnimation = require('../src/gif-animation.js');
 
 
+function configureMatrix(options) {
+
+	var params = ['led-rows', 'led-cols'];
+	var defaultOptions = {};
+
+	params.forEach((param) => {
+		var name = param;
+		
+		name = name.toUpperCase();
+		name = name.replace('-', '_');
+
+		var value = process.env[name];
+
+		if (value != undefined) {
+			defaultOptions[name] = value;
+		}
+	});
+
+	Matrix.configure({...defaultOptions, ...options});
+
+}
 class Command {
 
     constructor() {
@@ -36,7 +57,8 @@ class Command {
 
 		try {
 
-            Matrix.configure(argv);
+			//Matrix.configure(argv);
+			configureMatrix(argv);
 			var sample = new GifAnimation(argv);
 			sample.run();
 		}
