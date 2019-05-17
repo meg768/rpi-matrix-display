@@ -5,6 +5,10 @@ var GifAnimation = require('../src/gif-animation.js');
 
 function configureMatrix(options) {
 
+	function isNumeric(num){
+		return !isNaN(num)
+	}
+
 	var params = ['led-rows', 'led-cols'];
 	var defaultOptions = {};
 
@@ -13,8 +17,11 @@ function configureMatrix(options) {
 		
 		name = name.toUpperCase();
 		name = name.replace('-', '_');
-console.log(name);
-		var value = parseInt(process.env[name]);
+
+		var value = process.env[name];
+
+		if (isNumeric(value))
+			value = parseInt(value);
 
 		if (value != undefined) {
 			defaultOptions[param] = value;
