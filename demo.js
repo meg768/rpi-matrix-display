@@ -44,7 +44,7 @@ class App {
             args.option('led-rows',                {describe:'Number of rows for display', default:process.env.LED_ROWS || 32});
             args.option('led-chain',               {describe:'Number of daisy-chained panels', default:process.env.LED_CHAIN || 1});
             args.option('led-parallel',            {describe:'For A/B+ models or RPi2,3b: parallel chains.', default:process.env.LED_PARALLEL || 1});
-		   /*
+		   
 			args.option('led-gpio-mapping',        {describe:'Type of hardware used', default:'regular'});
             args.option('led-rgb-sequence',        {describe:'Matrix RGB color order', default:'RGB'});
             args.option('led-scan-mode',           {describe:'Scan mode (0/1)', default:0});
@@ -54,7 +54,7 @@ class App {
             args.option('led-brightness',          {describe:'Display brightness', default:100});
             args.option('led-multiplexing',        {describe:'Multiplexing type (0-4).', default:0});
             args.option('led-show-refresh',        {describe:'Show refresh rate.', default:false});
-*/
+
 			this.loadSamples();  
 
 			args.help();
