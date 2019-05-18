@@ -85,14 +85,14 @@ class App {
 		   
 			args.option('led-gpio-mapping',        {describe:'Type of hardware used', default:defaultConfig['led-gpio-mapping']});
             args.option('led-rgb-sequence',        {describe:'Matrix RGB color order', default:defaultConfig['led-rgb-sequence']});
-            args.option('led-scan-mode',           {describe:'Scan mode (0/1)', default:getDefaultConfig['led-scan-mode']});
-            args.option('led-inverse-colors',      {describe:'Inverse colors', default:getDefaultConfig['led-inverse-colors']});
-            args.option('led-pwm-bits',            {describe:'Color depth', default:getDefaultConfig['led-pwm-bits']});
-            args.option('led-pwm-lsb-nanoseconds', {describe:'Tweak timing', default:getDefaultConfig['led-pwm-lsb-nanoseconds']});
-            args.option('led-brightness',          {describe:'Display brightness', default:getDefaultConfig['led-brightness']});
-            args.option('led-multiplexing',        {describe:'Multiplexing type (0-4).', default:getDefaultConfig['led-multiplexing']});
-            args.option('led-show-refresh',        {describe:'Show refresh rate.', default:getDefaultConfig['led-show-refresh']});
-            args.option('led-slowdown-gpio',       {describe:'Slowdown GPIO. Needed for faster Pis/slower panels', default:getDefaultConfig['led-slowdown-gpio']});
+            args.option('led-scan-mode',           {describe:'Scan mode (0/1)', default:defaultConfig['led-scan-mode']});
+            args.option('led-inverse-colors',      {describe:'Inverse colors', default:defaultConfig['led-inverse-colors']});
+            args.option('led-pwm-bits',            {describe:'Color depth', default:defaultConfig['led-pwm-bits']});
+            args.option('led-pwm-lsb-nanoseconds', {describe:'Tweak timing', default:defaultConfig['led-pwm-lsb-nanoseconds']});
+            args.option('led-brightness',          {describe:'Display brightness', default:defaultConfig['led-brightness']});
+            args.option('led-multiplexing',        {describe:'Multiplexing type (0-4).', default:defaultConfig['led-multiplexing']});
+            args.option('led-show-refresh',        {describe:'Show refresh rate.', default:defaultConfig['led-show-refresh']});
+            args.option('led-slowdown-gpio',       {describe:'Slowdown GPIO. Needed for faster Pis/slower panels', default:defaultConfig['led-slowdown-gpio']});
 
 			this.loadSamples();  
 
