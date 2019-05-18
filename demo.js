@@ -50,10 +50,6 @@ class App {
 			return value;
 		}
 
-		function stringValue(value, defaultValue) {
-			return value == undefined ? defaultValue : value;
-		}
-
 		config['led-gpio-mapping'] = getValue(process.env.LED_GPIO_MAPPING, 'regular');
 		config['led-rows'] = getValue(process.env.LED_ROWS, 32);
 		config['led-cols'] = getValue(process.env.LED_COLS, 32);
@@ -96,7 +92,7 @@ class App {
             args.option('led-brightness',          {describe:'Display brightness', default:getDefaultConfig['led-brightness']});
             args.option('led-multiplexing',        {describe:'Multiplexing type (0-4).', default:getDefaultConfig['led-multiplexing']});
             args.option('led-show-refresh',        {describe:'Show refresh rate.', default:getDefaultConfig['led-show-refresh']});
-            args.option('led-slowdown-gpio',        {describe:'Slowdown GPIO. Needed for faster Pis/slower panels', default:getDefaultConfig['led-slowdown-gpio']});
+            args.option('led-slowdown-gpio',       {describe:'Slowdown GPIO. Needed for faster Pis/slower panels', default:getDefaultConfig['led-slowdown-gpio']});
 
 			this.loadSamples();  
 
