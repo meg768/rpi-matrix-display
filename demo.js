@@ -49,6 +49,10 @@ class App {
             args.option('led-pwm-bits',            {describe:'Color depth', default:11});
             args.option('led-pwm-lsb-nanoseconds', {describe:'Tweak timing', default:130});
             args.option('led-brightness',          {describe:'Display brightness', default:100});
+            args.option('led-chain-length',        {describe:'Number of daisy-chained panels', default:1});
+            args.option('led-parallel',            {describe:'For A/B+ models or RPi2,3b: parallel chains.', default:1});
+            args.option('led-multiplexing',        {describe:'Multiplexing type (0-4).', default:0});
+            args.option('led-show-refresh',        {describe:'Show refresh rate.', default:false});
 
 			this.loadSamples();  
 
