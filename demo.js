@@ -96,6 +96,7 @@ class App {
             args.option('led-brightness',          {describe:'Display brightness', default:getDefaultConfig['led-brightness']});
             args.option('led-multiplexing',        {describe:'Multiplexing type (0-4).', default:getDefaultConfig['led-multiplexing']});
             args.option('led-show-refresh',        {describe:'Show refresh rate.', default:getDefaultConfig['led-show-refresh']});
+            args.option('led-slowdown-gpio',        {describe:'Slowdown GPIO. Needed for faster Pis/slower panels', default:getDefaultConfig['led-slowdown-gpio']});
 
 			this.loadSamples();  
 
