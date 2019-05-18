@@ -39,8 +39,6 @@ class Command {
 
 			Matrix.configure(argv);
 
-
-			console.log('argv', argv);
 			var sample = new GifAnimation(argv);
 			sample.run();
 		}
@@ -55,6 +53,8 @@ class Command {
 };
 
 new Command();
+
+
 
 
 
