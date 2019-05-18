@@ -40,11 +40,11 @@ class App {
 		try {
 			args.usage('Usage: $0 <command> [options]')
 
-            args.option('led-cols',         {describe:'Number of columns for display', default:process.env.LED_COLS});
-            args.option('led-rows',         {describe:'Number of rows for display', default:process.env.LED_ROWS});
-            args.option('led-gpio-mapping', {describe:'Type of hardware used', default:'regular'});
-            args.option('led-rgb-sequence', {describe:'Matrix RGB color order', default:'RGB'});
-            args.option('led-scan-mode',    {describe:'Scan mode (0/1)', default:0});
+            args.option('led-cols',         {describe:'Number of columns for display', default:process.env.LED_COLS || 32});
+            args.option('led-rows',         {describe:'Number of rows for display', default:process.env.LED_ROWS || 32});
+            args.option('xled-gpio-mapping', {describe:'Type of hardware used', default:'regular'});
+            args.option('xled-rgb-sequence', {describe:'Matrix RGB color order', default:'RGB'});
+            args.option('xled-scan-mode',    {describe:'Scan mode (0/1)', default:0});
 
 			this.loadSamples();  
 
