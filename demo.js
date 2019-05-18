@@ -86,7 +86,7 @@ class App {
 			args.option('led-gpio-mapping',        {describe:'Type of hardware used', default:defaultConfig['led-gpio-mapping']});
             args.option('led-rgb-sequence',        {describe:'Matrix RGB color order', default:defaultConfig['led-rgb-sequence']});
             args.option('led-scan-mode',           {describe:'Scan mode (0/1)', default:defaultConfig['led-scan-mode']});
-            args.option('led-inverse-colors',      {describe:'Inverse colors', default:defaultConfig['led-inverse-colors']});
+            args.option('led-inverse',             {describe:'Inverse colors', default:defaultConfig['led-inverse']});
             args.option('led-pwm-bits',            {describe:'Color depth', default:defaultConfig['led-pwm-bits']});
             args.option('led-pwm-lsb-nanoseconds', {describe:'Tweak timing', default:defaultConfig['led-pwm-lsb-nanoseconds']});
             args.option('led-brightness',          {describe:'Display brightness', default:defaultConfig['led-brightness']});
