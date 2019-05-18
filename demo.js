@@ -52,6 +52,8 @@ class App {
 
 		config['led-gpio-mapping'] = stringValue(process.env.LED_GPIO_MAPPING, 'regular');
 		config['led-rgb-sequence'] = stringValue(process.env.LED_GPIO_MAPPING, 'RGB');
+
+		return config;
 	}
 
 	run() {
