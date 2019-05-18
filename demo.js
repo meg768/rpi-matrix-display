@@ -17,9 +17,6 @@ class App {
 
 	}
 
-	loadDefaultOptions() {
-
-	}
 
 	
 	loadSamples() {
