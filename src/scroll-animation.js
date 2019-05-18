@@ -17,7 +17,7 @@ module.exports = class ScrollAnimation extends Animation  {
         this.scrollDirection = scrollDirection;
         this.scrollImage     = scrollImage;
 
-        console.log('Matrix size', this.matrix.width. this.matrix.height);
+        console.log('Matrix size', this.matrix.width, this.matrix.height);
 
     }
 
