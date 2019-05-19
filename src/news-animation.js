@@ -25,7 +25,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
         headers['Content-Type'] = 'application/json';
         headers['x-api-key'] = this.apiKey;
         
-        this.gopher = new Request('https://newsapi.org', {debug:debug, headers:headers});
+        this.gopher = new Request('https://newsapi.org', {headers:headers});
         this.animationQueue = new AnimationQueue();
     }
 
