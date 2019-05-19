@@ -22,14 +22,14 @@ module.exports = class NewsAnimation extends TextAnimation  {
     fetchNews() {
         return new Promise((resolve, reject) => {
 
-            var gopher = new Request('https://newsapi.org/v2');
+            var gopher = new Request('https://newsapi.org/v2', {debug:debug});
 
             var query = {};
             query.country  = 'se';
             query.category = 'business';
             query.apiKey   = this.apiKey;
 
-            gopher.get('headlines', {debug:debug, query:query}).then((response) => {
+            gopher.get('headlines', {query:query}).then((response) => {
                 console.log()
                 debug(response);
                 resolve();
