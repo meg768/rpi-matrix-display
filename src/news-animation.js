@@ -22,7 +22,6 @@ module.exports = class NewsAnimation extends TextAnimation  {
         this.country  = country;
         this.category = category;
         this.search   = search;
-        this.source   = source;
 
         if (!this.apiKey)
             throw new Error('Need API key');
@@ -39,7 +38,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
             var request = new Request('https://newsapi.org', {debug:debug, headers:headers});
 
             var query = {};
-            Object.assign(query, {pageSize: 1}, {sources: this.source, category:this.category, country:this.country});
+            Object.assign(query, {pageSize: 1}, {category:this.category, country:this.country});
 
             console.log('QUERY:', query);
 
