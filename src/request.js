@@ -146,7 +146,6 @@ function Gopher() {
 				});
 
 				params.path = parts.join('/');
-				debug('JOINED', params.path);
 			}
 
 			if (isObject(params.query)) {
@@ -154,7 +153,9 @@ function Gopher() {
 			}
 
 			if (isString(params.query) && params.query.length > 0) {
+				debug('BEFORE', params.path);
 				params.path = Path.join(params.path, '?' + params.query);
+				debug('AFTER', params.path);
 			}
 
 
