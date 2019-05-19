@@ -14,7 +14,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
 
     constructor(options) {
 
-        var {source = undefined, search = undefined, category = 'business', country = 'se', ...other} = options;
+        var {source = undefined, search = undefined, category = undefined, country = 'se', ...other} = options;
 
         super(other);
 
