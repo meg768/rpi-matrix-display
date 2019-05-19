@@ -41,7 +41,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
                     console.log(article.title);
                 });
 
-                resolve();
+                resolve(articles);
             })
             .catch((error) => {
                 reject(error);
@@ -49,6 +49,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
         });
 
     }
+    /*
     run() {
         debug('Running');
         return this.fetchNews();
@@ -59,14 +60,14 @@ module.exports = class NewsAnimation extends TextAnimation  {
         });
 
     }
+*/
 
-
-/*    start() {
+    start() {
 
 
         return new Promise((resolve, reject) => {
-            this.parse(this.text).then((context) => {
-                this.scrollImage = this.createDisplayImage(context);
+            this.fetchNews().then((articles) => {
+                this.text = articles[0].title;
             })
             .then(() => {
                 return super.start();
@@ -81,7 +82,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
         });
 
     }    
-    */
+    
 
 };
 
