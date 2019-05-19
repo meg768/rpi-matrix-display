@@ -41,6 +41,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
             query.category = this.category;
             query.pageSize = 1;
 
+            console.log(query);
             this.gopher.get('/v2/top-headlines', {query:query}).then((response) => {
 
                 var articles = response.body.articles.slice(0, 1);
