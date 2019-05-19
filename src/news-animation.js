@@ -27,7 +27,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
             query.category = 'business';
             query.apiKey   = this.apiKey;
 
-            gopher.get({query:query}).then((response) => {
+            gopher.get('headlines', {query:query}).then((response) => {
                 console.log(response);
                 resolve();
             })
