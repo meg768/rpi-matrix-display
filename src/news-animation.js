@@ -1,6 +1,6 @@
 var path = require('path');
 var once = require('yow/once');
-var Request = require('yow/request');
+var Request = require('./request.js');
 
 var TextAnimation = require('./text-animation.js');
 
