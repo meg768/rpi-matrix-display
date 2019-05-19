@@ -17,19 +17,22 @@ module.exports = class NewsAnimation extends TextAnimation  {
 
         if (!this.apiKey)
             throw new Error('Need API key');
+
+        var headers = {};
+        headers['Content-Type'] = 'application/json';
+        headers['x-api-key'] = this.apiKey;
+        
+        this.gopher = new Request('https://newsapi.org/v2', {debug:debug, headers:headers});
     }
 
     fetchNews() {
         return new Promise((resolve, reject) => {
 
-            var gopher = new Request('https://newsapi.org/v2', {debug:debug});
-
             var query = {};
             query.country  = 'se';
             query.category = 'business';
-            query.apiKey   = this.apiKey;
 
-            gopher.get('headlines', {query:query}).then((response) => {
+            this.gopher.get('headlines', {query:query}).then((response) => {
                 console.log()
                 debug(response);
                 resolve();
