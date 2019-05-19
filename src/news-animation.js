@@ -14,7 +14,9 @@ module.exports = class NewsAnimation extends TextAnimation  {
 
     constructor(options) {
 
-        super(options);
+        var {category = 'business', country = 'se', ...other} = options;
+
+        super(other);
 
         this.apiKey = process.env.NEWS_API_KEY;
 
@@ -25,27 +27,29 @@ module.exports = class NewsAnimation extends TextAnimation  {
         headers['Content-Type'] = 'application/json';
         headers['x-api-key'] = this.apiKey;
         
+
         this.gopher = new Request('https://newsapi.org', {headers:headers});
-        this.animationQueue = new AnimationQueue();
+        this.country = country;
+        this.category = category;
     }
 
     fetchNews() {
         return new Promise((resolve, reject) => {
 
             var query = {};
-            query.country  = 'se';
-            query.category = 'business';
+            query.country  = this.country;
+            query.category = this.category;
             query.pageSize = 1;
 
             this.gopher.get('/v2/top-headlines', {query:query}).then((response) => {
 
-                var articles = response.body.articles.slice(0, 5);
+                var articles = response.body.articles.slice(0, 1);
 
                 articles.forEach(article => {
                     console.log(article.title);
                 });
 
-                resolve(articles);
+                resolve(articles[0]);
             })
             .catch((error) => {
                 reject(error);
@@ -58,9 +62,8 @@ module.exports = class NewsAnimation extends TextAnimation  {
 
 
         return new Promise((resolve, reject) => {
-            this.fetchNews().then((articles) => {
-                console.log(articles);
-                this.text = ':money-bag:' + articles[0].title;
+            this.fetchNews().then((article) => {
+                this.text = ':money-bag:' + article.title;
             })
             .then(() => {
                 return super.start();
