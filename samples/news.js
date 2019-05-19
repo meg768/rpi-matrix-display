@@ -19,6 +19,7 @@ class Command {
         args.option('help', {describe:'Displays this information'});
         args.option('textColor', {describe:'Specifies text color', alias:['color'], default:'red'});
         args.option('category', {describe:'News category', choices:['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']});
+        args.option('source', {describe:'News source'});
 
         args.wrap(null);
 
@@ -35,7 +36,6 @@ class Command {
         Matrix.configure(argv);
 
         try {
-
             var animation = new NewsAnimation(argv);
 
             animation.run().then(() => {

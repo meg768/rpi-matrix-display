@@ -14,7 +14,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
 
     constructor(options) {
 
-        var {search = undefined, category = 'business', country = 'se', ...other} = options;
+        var {source = undefined, search = undefined, category = 'business', country = 'se', ...other} = options;
 
         super(other);
 
@@ -22,6 +22,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
         this.country  = country;
         this.category = category;
         this.search   = search;
+        this.source   = source;
 
         if (!this.apiKey)
             throw new Error('Need API key');
@@ -38,11 +39,10 @@ module.exports = class NewsAnimation extends TextAnimation  {
             var request = new Request('https://newsapi.org', {headers:headers});
 
             var query = {};
-            query.country  = this.country;
-            query.category = this.category;
-            query.pageSize = 1;
+            Object.assign(query, {pageSize: 1}, {source: this.source, category:this.category, country:this.country});
 
-            console.log(query);
+            console.log('QUERY:', query);
+
             request.get('/v2/top-headlines', {query:query}).then((response) => {
 
                 var articles = response.body.articles.slice(0, 1);

@@ -6,7 +6,7 @@ var GifAnimation = require('../src/gif-animation.js');
 class Command {
 
 	constructor() {
-		module.exports.command = 'animate [options]';
+		module.exports.command = 'gif [options]';
 		module.exports.describe = 'Animate gifs';
 		module.exports.builder = this.defineArgs;
 		module.exports.handler = this.run;
@@ -35,8 +35,6 @@ class Command {
 	run(argv) {
 
 		try {
-
-
 			Matrix.configure(argv);
 
 			var sample = new GifAnimation(argv);
@@ -53,8 +51,3 @@ class Command {
 };
 
 new Command();
-
-
-
-
-
