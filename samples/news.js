@@ -18,7 +18,7 @@ class Command {
 
         args.option('help', {describe:'Displays this information'});
         args.option('textColor', {describe:'Specifies text color'});
-        args.option('category', {describe:'News category'});
+        args.option('category', {describe:'News category', choices:['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']});
 
         args.wrap(null);
 
