@@ -31,7 +31,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
                 console.log(response);
                 resolve();
             })
-            .catch(() => {
+            .catch((error) => {
                 reject(error);
             })
             resolve();
