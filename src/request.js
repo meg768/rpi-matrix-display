@@ -153,9 +153,7 @@ function Gopher() {
 			}
 
 			if (isString(params.query) && params.query.length > 0) {
-				debug('BEFORE', params.path);
-				params.path = Path.join(params.path, '?' + params.query);
-				debug('AFTER', params.path);
+				params.path = params.path + '?' + params.query;
 			}
 
 
