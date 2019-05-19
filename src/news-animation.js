@@ -35,7 +35,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
 
             this.gopher.get('/v2/top-headlines', {query:query}).then((response) => {
                 console.log()
-                debug(response);
+                debug(response.body.articles[0]);
                 resolve();
             })
             .catch((error) => {
