@@ -49,25 +49,13 @@ module.exports = class NewsAnimation extends TextAnimation  {
         });
 
     }
-    /*
-    run() {
-        debug('Running');
-        return this.fetchNews();
-        return new Promise((resolve, reject) => {
-
-            console.log('News!');
-            resolve();
-        });
-
-    }
-*/
 
     start() {
 
 
         return new Promise((resolve, reject) => {
+            this.text = ':money-bag:' + articles[0].title;
             this.fetchNews().then((articles) => {
-                this.text = articles[0].title;
             })
             .then(() => {
                 return super.start();
