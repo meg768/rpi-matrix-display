@@ -4,6 +4,8 @@ var once = require('yow/once');
 var Request = require('yow/request');
 
 var TextAnimation = require('./text-animation.js');
+var Animation = require('./animation.js');
+var AnimationQueue = require('./animation-queue.js');
 
 var debug = console.log;
 
@@ -24,6 +26,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
         headers['x-api-key'] = this.apiKey;
         
         this.gopher = new Request('https://newsapi.org', {debug:debug, headers:headers});
+        this.animationQueue = new AnimationQueue();
     }
 
     fetchNews() {
@@ -32,6 +35,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
             var query = {};
             query.country  = 'se';
             query.category = 'business';
+            query.pageSize = 1;
 
             this.gopher.get('/v2/top-headlines', {query:query}).then((response) => {
 
@@ -55,6 +59,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
 
         return new Promise((resolve, reject) => {
             this.fetchNews().then((articles) => {
+                console.log(articles);
                 this.text = ':money-bag:' + articles[0].title;
             })
             .then(() => {
@@ -70,7 +75,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
         });
 
     }    
-    
+
 
 };
 
