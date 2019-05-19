@@ -75,12 +75,12 @@ module.exports = class GifAnimation extends Animation {
 
     constructor(options) {
 
-        var {gif = 'pacman', iterations = undefined, ...other} = options;
+        var {name = 'pacman', iterations = undefined, ...other} = options;
 
         super(other);
 
         this.matrix     = new Matrix({mode:'canvas'});
-        this.fileName   = gif;
+        this.fileName   = name;
         this.iterations = iterations;
     }
 
