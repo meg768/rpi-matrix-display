@@ -38,7 +38,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
                 var articles = response.body.articles.slice(0, 5);
 
                 articles.forEach(article => {
-                    console.log(article.description);
+                    console.log(article.title);
                 });
 
                 resolve();
