@@ -4,6 +4,8 @@ var Request = require('yow/request');
 
 var TextAnimation = require('./text-animation.js');
 
+var debug = console.log();
+
 
 module.exports = class NewsAnimation extends TextAnimation  {
 
@@ -28,7 +30,8 @@ module.exports = class NewsAnimation extends TextAnimation  {
             query.apiKey   = this.apiKey;
 
             gopher.get('headlines', {query:query}).then((response) => {
-                console.log(response);
+                console.log()
+                debug(response);
                 resolve();
             })
             .catch((error) => {
