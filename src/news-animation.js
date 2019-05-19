@@ -54,8 +54,8 @@ module.exports = class NewsAnimation extends TextAnimation  {
 
 
         return new Promise((resolve, reject) => {
-            this.text = ':money-bag:' + articles[0].title;
             this.fetchNews().then((articles) => {
+                this.text = ':money-bag:' + articles[0].title;
             })
             .then(() => {
                 return super.start();
