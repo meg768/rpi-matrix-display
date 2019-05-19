@@ -14,27 +14,28 @@ module.exports = class NewsAnimation extends TextAnimation  {
 
     constructor(options) {
 
-        var {category = 'business', country = 'se', ...other} = options;
+        var {search = undefined, category = 'business', country = 'se', ...other} = options;
 
         super(other);
 
-        this.apiKey = process.env.NEWS_API_KEY;
+        this.apiKey   = process.env.NEWS_API_KEY;
+        this.country  = country;
+        this.category = category;
+        this.search   = search;
 
         if (!this.apiKey)
             throw new Error('Need API key');
 
-        var headers = {};
-        headers['Content-Type'] = 'application/json';
-        headers['x-api-key'] = this.apiKey;
-        
-
-        this.gopher = new Request('https://newsapi.org', {headers:headers});
-        this.country = country;
-        this.category = category;
     }
 
     fetchNews() {
         return new Promise((resolve, reject) => {
+
+            var headers = {};
+            headers['Content-Type'] = 'application/json';
+            headers['x-api-key'] = this.apiKey;
+
+            var request = new Request('https://newsapi.org', {headers:headers});
 
             var query = {};
             query.country  = this.country;
@@ -42,7 +43,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
             query.pageSize = 1;
 
             console.log(query);
-            this.gopher.get('/v2/top-headlines', {query:query}).then((response) => {
+            request.get('/v2/top-headlines', {query:query}).then((response) => {
 
                 var articles = response.body.articles.slice(0, 1);
 
