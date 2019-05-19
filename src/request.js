@@ -146,6 +146,7 @@ function Gopher() {
 				});
 
 				params.path = parts.join('/');
+				debug('JOINED', params.path);
 			}
 
 			if (isObject(params.query)) {
