@@ -153,7 +153,7 @@ function Gopher() {
 			}
 
 			if (isString(params.query) && params.query.length > 0) {
-				params.path = Path.join(params.path, '?' + params.query);
+				params.path = params.path + '?' + params.query;
 			}
 
 
