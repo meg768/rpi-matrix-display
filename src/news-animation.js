@@ -37,9 +37,9 @@ module.exports = class NewsAnimation extends TextAnimation  {
 
             var request = new Request('https://newsapi.org', {debug:debug, headers:headers});
 
-            var query = {};
-            Object.assign(query, {pageSize: 1}, {category:this.category, country:this.country});
-
+            //var query = {};
+            //Object.assign(query, {pageSize: 1}, {category:this.category, country:this.country});
+            var query = {...{pageSize: 1},  ...{category:this.category, country:this.country}};
             console.log('QUERY:', query);
 
             request.get('/v2/top-headlines', {query:query}).then((response) => {
