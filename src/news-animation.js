@@ -32,7 +32,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
             query.country  = 'se';
             query.category = 'business';
 
-            this.gopher.get('/v2/headlines', {query:query}).then((response) => {
+            this.gopher.get('/v2/top-headlines', {query:query}).then((response) => {
                 console.log()
                 debug(response);
                 resolve();
