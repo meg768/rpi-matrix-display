@@ -36,7 +36,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
             headers['Content-Type'] = 'application/json';
             headers['x-api-key'] = this.apiKey;
 
-            var request = new Request('https://newsapi.org', {headers:headers});
+            var request = new Request('https://newsapi.org', {debug:debug, headers:headers});
 
             var query = {};
             Object.assign(query, {pageSize: 1}, {source: this.source, category:this.category, country:this.country});
