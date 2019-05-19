@@ -37,11 +37,11 @@ module.exports = class NewsAnimation extends TextAnimation  {
             .catch((error) => {
                 reject(error);
             })
-            resolve();
         });
 
     }
     run() {
+        debug('Running');
         return this.fetchNews();
         return new Promise((resolve, reject) => {
 
