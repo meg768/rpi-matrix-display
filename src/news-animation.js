@@ -23,7 +23,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
         headers['Content-Type'] = 'application/json';
         headers['x-api-key'] = this.apiKey;
         
-        this.gopher = new Request('https://newsapi.org', {debug:debug, headers:headers});
+        this.gopher = new Request('https://newsapi.org/v2', {debug:debug, headers:headers});
     }
 
     fetchNews() {
@@ -33,9 +33,14 @@ module.exports = class NewsAnimation extends TextAnimation  {
             query.country  = 'se';
             query.category = 'business';
 
-            this.gopher.get('/v2/top-headlines', {query:query}).then((response) => {
-                console.log()
-                debug(response.body.articles[0]);
+            this.gopher.get('top-headlines', {query:query}).then((response) => {
+
+                var articles = response.body.articles.slice(0, 5);
+
+                articles.forEach(article => {
+                    console.log(article.description);
+                });
+
                 resolve();
             })
             .catch((error) => {
