@@ -48,6 +48,8 @@ function Gopher() {
         }
 
 		self.defaultOptions = Object.assign({}, options);
+
+		debug('Request default arguments', self.defaultOptions);
 	}
 
 	this.get = function() {
