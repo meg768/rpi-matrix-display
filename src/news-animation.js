@@ -60,8 +60,6 @@ module.exports = class NewsAnimation extends TextAnimation  {
     }
 
     start() {
-
-
         return new Promise((resolve, reject) => {
             this.fetchNews().then((article) => {
                 this.text = article.title;
@@ -79,6 +77,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
         });
 
     }    
+
 
 
 };
