@@ -4,7 +4,7 @@ var Request = require('yow/request');
 
 var TextAnimation = require('./text-animation.js');
 
-var debug = console.log();
+var debug = console.log;
 
 
 module.exports = class NewsAnimation extends TextAnimation  {
