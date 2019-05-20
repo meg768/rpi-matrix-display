@@ -6,8 +6,8 @@ var args = require('yargs');
 var once = require('yow/once');
 
 
-var loadGifNames = once((text) => {
-    console.log(text);
+var loadGifNames = once((text, text2) => {
+    console.log(text, text2);
     
 });
 
@@ -123,7 +123,7 @@ class App {
 
 };
 
-loadGifNames('HEJ');
+loadGifNames('HEJ', 'OLLE');
 loadGifNames('DÅ');
 
 //var app = new App();
