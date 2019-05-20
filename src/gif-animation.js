@@ -103,6 +103,7 @@ module.exports = class GifAnimation extends Animation {
 
 	}
 */
+
     stop() {
         return new Promise((resolve, reject) => {
 

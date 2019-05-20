@@ -68,6 +68,7 @@ class App {
 		config['led-pwm-dither-bits'] = getValue(process.env.LED_PWM_DITHER_BITS, 0);
 		config['led-no-hardware-pulse'] = getValue(process.env.LED_NO_HARDWARE_PULSE, false);
 		config['led-slowdown-gpio'] = getValue(process.env.LED_SLOWDOWN_GPIO, 1);
+		config['led-pwm-dither-bits'] = getValue(process.env.LED_PWM_DITHER_BITS, 0);
 
 		return config;
 	}
@@ -90,6 +91,7 @@ class App {
             args.option('led-inverse',             {describe:'Inverse colors', default:defaultConfig['led-inverse']});
             args.option('led-pwm-bits',            {describe:'Color depth', default:defaultConfig['led-pwm-bits']});
             args.option('led-pwm-lsb-nanoseconds', {describe:'Tweak timing', default:defaultConfig['led-pwm-lsb-nanoseconds']});
+            args.option('led-pwm-dither-bits',     {describe:'Slowdown GPIO. Needed for faster Pis/slower panels', default:defaultConfig['led-pwm-dither-bits']});
             args.option('led-brightness',          {describe:'Display brightness', default:defaultConfig['led-brightness']});
             args.option('led-multiplexing',        {describe:'Multiplexing type (0-4).', default:defaultConfig['led-multiplexing']});
             args.option('led-show-refresh',        {describe:'Show refresh rate.', default:defaultConfig['led-show-refresh']});
