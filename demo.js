@@ -3,13 +3,7 @@
 var fs   = require('fs');
 var path = require('path');
 var args = require('yargs');
-var once = require('yow/once');
 
-
-var loadGifNames = once((text, text2) => {
-    console.log(text, text2);
-    
-});
 
 class App {
 
@@ -123,8 +117,6 @@ class App {
 
 };
 
-loadGifNames('HEJ', 'OLLE');
-loadGifNames('DÅ');
 
-//var app = new App();
-//app.run();
+var app = new App();
+app.run();

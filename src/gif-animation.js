@@ -6,10 +6,8 @@ var path = require('path');
 var fs = require('fs');
 
 
-var loadGifNames = once((text) => {
-    console.log('HEJ');
-    
-});
+
+
 class GifFrames {
 
     constructor(fileName) {
@@ -23,22 +21,6 @@ class GifFrames {
         this.width        = this.gif.width;
         this.height       = this.gif.height;
     }
-
-	loadSamples() {
-		var folder = path.join(__dirname, './samples');
-
-		fs.readdirSync(folder).forEach((file) => {
-
-			var fileName = path.join(folder, file);
-			var components = path.parse(fileName);
-
-			if (components.ext == '.js') {
-				args.command(require(fileName));  
-			}
-
-		})
-
-	}
 
     loadGIF(name) {
 
@@ -104,8 +86,23 @@ module.exports = class GifAnimation extends Animation {
         this.fileName   = name;
         this.iterations = iterations;
     }
+/*
+	loadSamples() {
+		var folder = path.join(__dirname, './samples');
 
+		fs.readdirSync(folder).forEach((file) => {
 
+			var fileName = path.join(folder, file);
+			var components = path.parse(fileName);
+
+			if (components.ext == '.js') {
+				args.command(require(fileName));  
+			}
+
+		})
+
+	}
+*/
     stop() {
         return new Promise((resolve, reject) => {
 
