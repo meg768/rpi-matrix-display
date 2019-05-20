@@ -45,8 +45,6 @@ module.exports = class NewsAnimation extends TextAnimation  {
             if (this.country != undefined)
                 query.country = this.country;
 
-            console.log('QUERY:', query);
-
             request.get('/v2/top-headlines', {query:query}).then((response) => {
 
                 var articles = response.body.articles.slice(0, 1);

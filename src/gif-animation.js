@@ -1,9 +1,15 @@
 var Matrix = require('rpi-matrix');
 var Animation = require('./animation.js');
 var random = require('yow/random');
+var once = require('yow/once');
 var path = require('path');
 var fs = require('fs');
 
+
+var loadGifNames = once((text) => {
+    console.log('HEJ');
+    
+});
 class GifFrames {
 
     constructor(fileName) {
@@ -18,6 +24,21 @@ class GifFrames {
         this.height       = this.gif.height;
     }
 
+	loadSamples() {
+		var folder = path.join(__dirname, './samples');
+
+		fs.readdirSync(folder).forEach((file) => {
+
+			var fileName = path.join(folder, file);
+			var components = path.parse(fileName);
+
+			if (components.ext == '.js') {
+				args.command(require(fileName));  
+			}
+
+		})
+
+	}
 
     loadGIF(name) {
 
