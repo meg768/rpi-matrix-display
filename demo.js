@@ -7,7 +7,7 @@ var once = require('yow/once');
 
 
 var loadGifNames = once((text) => {
-    console.log('HEJ');
+    console.log(text);
     
 });
 
