@@ -2,9 +2,28 @@ var Matrix = require('rpi-matrix');
 var Animation = require('./animation.js');
 var random = require('yow/random');
 var once = require('yow/once');
-var path = require('path');
 var fs = require('fs');
 
+
+var loadGifFiles = once((width, height) => {
+    var path = require('path');
+    var files = [];
+    var folder = path.join(__dirname, '../gifs', width + 'x' + height);
+
+    fs.readdirSync(folder).forEach((file) => {
+
+        var fileName = path.join(folder, file);
+        var components = path.parse(fileName);
+
+        if (components.ext == '.gif') {
+            files.push({name:components.name, fileName:fileName});  
+        }
+
+    });
+
+    return files;
+
+});
 
 
 
@@ -12,40 +31,15 @@ class GifFrames {
 
     constructor(fileName) {
       
+        var fs = require('fs');
         var GIF = require('omggif');
 
-        this.gif          = new GIF.GifReader(this.loadGIF(fileName));
+        this.gif          = new GIF.GifReader(fs.readSyncSync(fileName));
         this.canvas       = Matrix.Canvas.createCanvas(this.gif.width, this.gif.height);
         this.frameCount   = this.gif.numFrames();
         this.currentFrame = 0;
         this.width        = this.gif.width;
         this.height       = this.gif.height;
-    }
-
-    loadGIF(name) {
-
-        function fileExists(path) {
-
-            try {
-                fs.accessSync(path);		
-                return true;
-            }
-            catch (error) {
-            }
-        
-            return false;		
-        }
-
-        var fileName = '';
-
-        if (!fileExists(fileName))
-            fileName = path.join(__dirname, '../gifs/96x96', name + '.gif');
- 
-        if (!fileExists(fileName))
-            fileName = path.join(__dirname, '../gifs/32x32', name + '.gif');
-
- 
-        return fs.readFileSync(fileName);    
     }
 
 
@@ -83,26 +77,11 @@ module.exports = class GifAnimation extends Animation {
         super(other);
 
         this.matrix     = new Matrix({mode:'canvas'});
-        this.fileName   = name;
+        this.name       = name;
         this.iterations = iterations;
+        this.gifFiles   = loadGifFiles(this.matrix.width, this.matrix.height);
+
     }
-/*
-	loadSamples() {
-		var folder = path.join(__dirname, './samples');
-
-		fs.readdirSync(folder).forEach((file) => {
-
-			var fileName = path.join(folder, file);
-			var components = path.parse(fileName);
-
-			if (components.ext == '.js') {
-				args.command(require(fileName));  
-			}
-
-		})
-
-	}
-*/
 
     stop() {
         return new Promise((resolve, reject) => {
@@ -124,7 +103,19 @@ module.exports = class GifAnimation extends Animation {
         return new Promise((resolve, reject) => {
 
             super.start().then(() => {
-                var gif = new GifFrames(this.fileName);
+                var entry = this.gifFiles.find((item) => {
+                    return item.name == this.name; 
+                });
+
+                if (entry == undefined) {
+                    entry = random(this.gifFiles);
+                }
+
+                if (entry == undefined) {
+                    throw new Error('GIF not found.')
+                }
+
+                var gif = new GifFrames(entry.fileName);
 
                 var ctx    = this.matrix.canvas.getContext('2d');
                 var scaleX = this.matrix.width  / gif.width;
