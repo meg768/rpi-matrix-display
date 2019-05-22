@@ -81,6 +81,10 @@ module.exports = class GifAnimation extends Animation {
         this.iterations = iterations;
         this.gifFiles   = loadGifFiles(this.matrix.width, this.matrix.height);
 
+        if (this.gifFiles.length == 0) {
+            throw new Error('No GIFs available for this size of matrix.');
+        }
+
     }
 
     stop() {
