@@ -72,7 +72,7 @@ module.exports = class GifAnimation extends Animation {
 
     constructor(options) {
 
-        var {name = 'pacman', iterations = undefined, ...other} = options;
+        var {name = undefined, iterations = undefined, ...other} = options;
 
         super(other);
 
