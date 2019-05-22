@@ -47,6 +47,7 @@ class Command {
 
 				queue.enqueue(new GifAnimation(argv));
 	
+				queue.dequeue();
 			}
 			else {
 				var sample = new GifAnimation(argv);
