@@ -34,7 +34,7 @@ class GifFrames {
         var fs = require('fs');
         var GIF = require('omggif');
 
-        this.gif          = new GIF.GifReader(fs.readSyncSync(fileName));
+        this.gif          = new GIF.GifReader(fs.readFileSync(fileName));
         this.canvas       = Matrix.Canvas.createCanvas(this.gif.width, this.gif.height);
         this.frameCount   = this.gif.numFrames();
         this.currentFrame = 0;
