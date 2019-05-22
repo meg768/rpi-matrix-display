@@ -1,6 +1,7 @@
 
 var Matrix = require('rpi-matrix');
 var GifAnimation = require('../src/gif-animation.js');
+var AnimationQueue = require('../src/animation-queue.js');
 
 
 class Command {
@@ -37,8 +38,22 @@ class Command {
 		try {
 			Matrix.configure(argv);
 
-			var sample = new GifAnimation(argv);
-			sample.run();
+			if (argv.name == undefined) {
+				var queue = new AnimationQueue();
+
+				queue.on('idle', () => {
+					queue.enqueue(new GifAnimation(argv));
+				});
+
+				queue.enqueue(new GifAnimation(argv));
+	
+			}
+			else {
+				var sample = new GifAnimation(argv);
+				sample.run();
+	
+			}
+
 		}
 		catch (error) {
 			console.error(error.stack);
