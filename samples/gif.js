@@ -1,7 +1,8 @@
 
 var Matrix = require('rpi-matrix');
 var GifAnimation = require('../src/gif-animation.js');
-var AnimationQueue = require('../src/animation-queue.js');
+var Animation = require('rpi-animations').Animation;
+var AnimationQueue = require('rpi-animations').Queue;
 
 
 class Command {
