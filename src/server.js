@@ -2,8 +2,9 @@
 module.exports = class Server {
 
     constructor(options) {
-		var AnimationQueue = require('./animation-queue.js');
-        var express = require('express');
+		var Animation = require('rpi-animations').Animation;
+		var AnimationQueue = require('rpi-animations').Queue;
+		var express = require('express');
 
         this.options = Object.assign({}, {port:3013}, options);
 		this.app = express();

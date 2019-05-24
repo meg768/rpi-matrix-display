@@ -1,7 +1,8 @@
 var path = require('path');
 
 var Matrix = require('rpi-matrix');
-var Animation = require('./animation.js');
+var Animation = require('rpi-animations').Animation;
+var AnimationQueue = require('rpi-animations').Queue;
 
 
 module.exports = class ScrollAnimation extends Animation  {

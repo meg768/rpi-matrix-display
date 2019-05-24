@@ -4,8 +4,8 @@ var once = require('yow/once');
 var Request = require('yow/request');
 
 var TextAnimation = require('./text-animation.js');
-var Animation = require('./animation.js');
-var AnimationQueue = require('./animation-queue.js');
+var Animation = require('rpi-animations').Animation;
+var AnimationQueue = require('rpi-animations').Queue;
 
 var debug = console.log;
 
