@@ -25,7 +25,7 @@
     "omggif": "^1.0.9",
     "psd": "^3.2.0",
     "rpi-animations": "^1.0.3",
-    "rpi-matrix": "^1.0.58",
+    "rpi-matrix": "^1.0.59",
     "yargs": "^12.0.5",
     "yow": "^1.0.106"
   }
