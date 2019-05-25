@@ -18,7 +18,6 @@ module.exports = class ScrollAnimation extends Animation  {
         this.scrollDirection = scrollDirection;
         this.scrollImage     = scrollImage;
 
-        console.log(this);
 
     }
 
