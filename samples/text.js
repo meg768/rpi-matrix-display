@@ -1,7 +1,6 @@
 
 var Matrix = require('rpi-matrix');
 var TextAnimation = require('../src/text-animation.js');
-var Animation = require('rpi-animations').Animation;
 var AnimationQueue = require('rpi-animations').Queue;
 
 class Command {
@@ -39,12 +38,9 @@ class Command {
         try {
 
             var queue = new AnimationQueue();
-
             var A = new TextAnimation(argv);
-            var B = new TextAnimation({...argv, ...{text:'Thats all folks! :sunglasses:', textColor:'blue'}});
 
             queue.enqueue(A);
-//            queue.enqueue(B);
 
             queue.dequeue().then(() => {
                 console.log('Done!')
