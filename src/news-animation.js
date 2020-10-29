@@ -41,7 +41,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
 
             request.get('/v2/top-headlines', {query:query}).then((response) => {
 
-                var articles = response.body.articles.slice(0, 1);
+                var articles = response.body.articles; //.slice(0, 1);
 
                 articles.forEach(article => {
                     console.log(article.title);
