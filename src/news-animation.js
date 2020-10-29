@@ -31,7 +31,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
 
             var request = new Request('https://newsapi.org', {debug:debug, headers:headers});
 
-            var query = {pageSize:1};
+            var query = {pageSize:10};
 
             if (this.category != undefined)
                 query.category = this.category;
