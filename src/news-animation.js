@@ -8,7 +8,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
 
     constructor(options) {
 
-        var {source = undefined, search = undefined, category = undefined, country = 'se', ...other} = options;
+        var {source = undefined, search = undefined, category = undefined, language = 'se', country = undefined, ...other} = options;
 
         super(other);
 
@@ -16,6 +16,7 @@ module.exports = class NewsAnimation extends TextAnimation  {
         this.country  = country;
         this.category = category;
         this.search   = search;
+        this.language = language;
 
         if (!this.apiKey)
             throw new Error('Need API key');
@@ -38,6 +39,9 @@ module.exports = class NewsAnimation extends TextAnimation  {
 
             if (this.country != undefined)
                 query.country = this.country;
+
+            if (this.language != undefined)
+                query.language = this.language;
 
             request.get('/v2/top-headlines', {query:query}).then((response) => {
 
