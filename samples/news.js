@@ -23,6 +23,8 @@ class Command {
         args.option('textColor', {describe:'Specifies text color', alias:['color'], default:'red'});
         args.option('category', {describe:'News category', choices:['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']});
         args.option('source', {describe:'News source'});
+        args.option('language', {describe:'News language', default:'se'});
+        args.option('apiKey', {describe:'API key for newsapi.org', default:process.env.NEWS_API_KEY});
 
         args.wrap(null);
 
@@ -36,7 +38,8 @@ class Command {
 
 	run(argv) {
 
-        console.log(argv);
+        debug(argv);
+
         Matrix.configure(argv);
         var queue = new AnimationQueue();
 
@@ -46,13 +49,18 @@ class Command {
 
                 var headers = {};
                 headers['Content-Type'] = 'application/json';
-                headers['x-api-key'] = process.env.NEWS_API_KEY;
 
                 var request = new Request('https://newsapi.org', {debug:debug, headers:headers});
 
                 var query = {pageSize:3};
 
-                query.language = 'se';
+                var {language, country, sources, search, apiKey} = argv;
+
+                query.language = language;
+                query.country  = country;
+                query.search   = search;
+                query.sources  = sources;
+                query.apiKey   = apiKey;
 
                 request.get('/v2/top-headlines', {query:query}).then((response) => {
 
@@ -75,7 +83,7 @@ class Command {
 
         queue.on('idle', () => {
             enqueueNews().then(() => {
-                console.log('More news fetched.');
+                debug('More news fetched.');
             })
             .catch((error) => {
                 console.error(error);
@@ -83,7 +91,7 @@ class Command {
         });
 
         enqueueNews().then(() => {
-            console.log('News fetched.');
+            debug('News fetched.');
             queue.dequeue();
         })
         .catch((error) => {
