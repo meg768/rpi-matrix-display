@@ -36,6 +36,7 @@ class Command {
 
 	run(argv) {
 
+        console.log(argv);
         Matrix.configure(argv);
         var queue = new AnimationQueue();
 
