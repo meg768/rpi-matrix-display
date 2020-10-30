@@ -1,6 +1,7 @@
 
 var Matrix = require('rpi-matrix');
-var NewsAnimation = require('../src/news-animation.js');
+var TextAnimation = require('../src/text-animation.js');
+var AnimationQueue = require('rpi-animations').Queue;
 
 class Command {
 
@@ -31,24 +32,68 @@ class Command {
     }
 
 
-    run(argv) {
 
-        Matrix.configure(argv);
-
-        try {
-            var animation = new NewsAnimation(argv);
-
-            animation.run().then(() => {
-            })
-            .catch(error => {
-                console.error(error.stack);
-            })
-        }
-        catch (error) {
-            console.error(error.stack);
-        }
+    enqueue() {
 
     }
+
+	run(argv) {
+
+        Matrix.configure(argv);
+        var queue = new AnimationQueue();
+
+
+        function enqueueNews()  {
+            return new Promise((resolve, reject) => {
+
+                var headers = {};
+                headers['Content-Type'] = 'application/json';
+                headers['x-api-key'] = process.env.NEWS_API_KEY;
+
+                var request = new Request('https://newsapi.org', {debug:debug, headers:headers});
+
+                var query = {pageSize:3};
+
+                query.language = 'se';
+
+                request.get('/v2/top-headlines', {query:query}).then((response) => {
+
+                    var articles = response.body.articles;//.slice(0, 1);
+
+                    articles.forEach(article => {
+                        console.log(article.title);
+                        queue.enqueue(new TextAnimation({...argv, text:article.title}));
+                    });
+
+                    resolve();
+                })
+                .catch((error) => {
+                    reject(error);
+                })
+            });
+        }
+
+
+        queue.on('idle', () => {
+            enqueueNews().then(() => {
+                console.log('More news fetched.');
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        });
+
+        enqueueNews().then(() => {
+            console.log('News fetched.');
+            queue.dequeue();
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
+
+
+	}
     
 
 
