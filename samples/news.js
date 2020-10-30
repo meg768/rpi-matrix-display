@@ -2,6 +2,7 @@
 var Matrix = require('rpi-matrix');
 var TextAnimation = require('../src/text-animation.js');
 var AnimationQueue = require('rpi-animations').Queue;
+var Request = require('yow/request');
 
 class Command {
 
@@ -31,11 +32,6 @@ class Command {
         return args.argv;
     }
 
-
-
-    enqueue() {
-
-    }
 
 	run(argv) {
 
@@ -72,6 +68,7 @@ class Command {
                 })
             });
         }
+
 
 
         queue.on('idle', () => {
