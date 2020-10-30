@@ -25,6 +25,7 @@ class Command {
         args.option('source', {describe:'News source'});
         args.option('language', {describe:'News language', default:'se'});
         args.option('apiKey', {describe:'API key for newsapi.org', default:process.env.NEWS_API_KEY});
+        args.option('search', {describe:'Search keyword', default:undefined});
 
         args.wrap(null);
 
@@ -54,20 +55,21 @@ class Command {
 
                 var query = {pageSize:3};
 
-                var {language, country, sources, search, apiKey} = argv;
+                var {language, country, category, sources, search, apiKey} = argv;
 
                 query.language = language;
                 query.country  = country;
                 query.search   = search;
                 query.sources  = sources;
                 query.apiKey   = apiKey;
+                query.category = category;
 
                 request.get('/v2/top-headlines', {query:query}).then((response) => {
 
-                    var articles = response.body.articles;//.slice(0, 1);
+                    var articles = response.body.articles;
 
                     articles.forEach(article => {
-                        console.log(article.title);
+                        debug(article.title);
                         queue.enqueue(new TextAnimation({...argv, text:article.title}));
                     });
 
