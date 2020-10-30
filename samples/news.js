@@ -55,16 +55,13 @@ class Command {
 
                 var query = {pageSize:3};
 
-                var {language, country, category, sources, search, apiKey} = argv;
+                var {language, country, category, sources, apiKey} = argv;
 
                 if (language != undefined)
                     query.language = language;
 
                 if (country != undefined)
                     query.country = country;
-
-                if (search!= undefined)
-                    query.search = search;
 
                 if (sources != undefined)
                     query.sources = sources;
