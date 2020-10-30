@@ -3,6 +3,7 @@ var Matrix = require('rpi-matrix');
 var TextAnimation = require('../src/text-animation.js');
 var AnimationQueue = require('rpi-animations').Queue;
 var Request = require('yow/request');
+var debug = console.log;
 
 class Command {
 
