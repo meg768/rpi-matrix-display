@@ -57,12 +57,23 @@ class Command {
 
                 var {language, country, category, sources, search, apiKey} = argv;
 
-                query.language = language;
-                query.country  = country;
-                query.search   = search;
-                query.sources  = sources;
-                query.apiKey   = apiKey;
-                query.category = category;
+                if (language != undefined)
+                    query.language = language;
+
+                if (country != undefined)
+                    query.country = country;
+
+                if (search!= undefined)
+                    query.search = search;
+
+                if (sources != undefined)
+                    query.sources = sources;
+
+                if (apiKey != undefined)
+                    query.apiKey = apiKey;
+
+                if (category != undefined)
+                    query.category = category;
 
                 request.get('/v2/top-headlines', {query:query}).then((response) => {
 
