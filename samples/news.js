@@ -21,7 +21,7 @@ class Command {
 
         args.option('help', {describe:'Displays this information'});
         args.option('textColor', {describe:'Specifies text color', alias:['color'], default:'red'});
-        args.option('category', {describe:'News category', choices:['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']});
+        args.option('category', {describe:'News category', choices:['entertainment', 'general', 'health', 'science', 'sports', 'technology']});
         args.option('source', {describe:'News source'});
         args.option('language', {describe:'News language', default:'se'});
         args.option('apiKey', {describe:'API key for newsapi.org', default:process.env.NEWS_API_KEY});
