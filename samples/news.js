@@ -87,11 +87,10 @@ class Command {
                 fetchNews().then((articles) => {
 
                     articles.forEach(article => {
-                        debug(article.text);
                         queue.enqueue(new TextAnimation({...argv, text:article.title}));
                     });
 
-                    resolve();
+                    resolve(articles);
 
                 })
     
@@ -100,27 +99,33 @@ class Command {
                 })
             });
         }
-        
- 
 
-        queue.on('idle', () => {
-            enqueueNews().then(() => {
-                debug('More news fetched.');
+        function delay(ms) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve();
+                }, ms);
+            });
+
+        }
+
+        function fetch() {
+            enqueueNews().then((articles) => {
+                debug(articles);
             })
             .catch((error) => {
                 console.error(error);
             });
+
+        }
+
+        queue.on('idle', () => {
+            delay(60000).then(() => {
+                fetch();
+            });
         });
 
-        enqueueNews().then(() => {
-            debug('News fetched.');
-            queue.dequeue();
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-
-
+        fetch();
 
 	}
     
