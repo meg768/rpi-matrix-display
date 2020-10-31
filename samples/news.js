@@ -89,7 +89,7 @@ class Command {
                 fetchNews().then((articles) => {
                     var now = new Date();
                     var hue = Math.floor(360 * (((now.getHours() % 12) * 60) + now.getMinutes()) / (12 * 60));
-                    var textColor = sprintf('hsl(%d,100%,50%)', hue);
+                    var textColor = sprintf('hsl(%d,100%%,50%%)', hue);
 
                     articles.forEach(article => {
                         queue.enqueue(new TextAnimation({...argv, textColor:textColor, text:article.title}));
