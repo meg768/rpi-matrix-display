@@ -56,7 +56,7 @@ class Command {
 
                 var request = new Request('https://newsapi.org', {debug:debug, headers:headers});
 
-                var query = {pageSize:3};
+                var query = {pageSize:5};
 
                 var {language, country, category, sources, apiKey} = argv;
 
