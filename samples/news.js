@@ -3,6 +3,8 @@ var Matrix = require('rpi-matrix');
 var TextAnimation = require('../src/text-animation.js');
 var AnimationQueue = require('rpi-animations').Queue;
 var Request = require('yow/request');
+var sprintf = require('yow/sprintf');
+
 var debug = console.log;
 
 class Command {
@@ -85,9 +87,12 @@ class Command {
             return new Promise((resolve, reject) => {
 
                 fetchNews().then((articles) => {
+                    var now = new Date();
+                    var hue = Math.floor(360 * (((now.getHours() % 12) * 60) + now.getMinutes()) / (12 * 60));
+                    var textColor = sprintf('hsl(%d,100%,50%)', hue);
 
                     articles.forEach(article => {
-                        queue.enqueue(new TextAnimation({...argv, text:article.title}));
+                        queue.enqueue(new TextAnimation({...argv, textColor:textColor, text:article.title}));
                     });
 
                     resolve(articles);
@@ -99,7 +104,7 @@ class Command {
                 })
             });
         }
-        
+
 
         function delay(ms) {
             return new Promise((resolve, reject) => {
