@@ -22,7 +22,7 @@ class Command {
         args.usage('Usage: $0 [options]');
 
         args.option('help', {describe:'Displays this information'});
-        args.option('textColor', {describe:'Specifies text color', alias:['color'], default:'red'});
+        args.option('textColor', {describe:'Specifies text color', alias:['color'], default:'auto'});
         args.option('category', {describe:'News category', choices:['entertainment', 'general', 'health', 'science', 'sports', 'technology']});
         args.option('source', {describe:'News source'});
         args.option('language', {describe:'News language', default:'se'});
@@ -89,7 +89,7 @@ class Command {
                 fetchNews().then((articles) => {
                     var now = new Date();
                     var hue = Math.floor(360 * (((now.getHours() % 12) * 60) + now.getMinutes()) / (12 * 60));
-                    var textColor = sprintf('hsl(%d,100%%,50%%)', hue);
+                    var textColor = textColor == 'auto' ? sprintf('hsl(%d,100%%,50%%)', hue) : argv.textColor;
 
                     articles.forEach(article => {
                         queue.enqueue(new TextAnimation({...argv, textColor:textColor, text:article.title}));
