@@ -64,7 +64,7 @@ class Command {
 
                 var query = {pageSize:5};
 
-                var {language, country, category, sources, apiKey} = argv;
+                var {language, country, category, search, sources, apiKey} = argv;
 
                 if (language != undefined)
                     query.language = language;
@@ -81,6 +81,9 @@ class Command {
                 if (category != undefined)
                     query.category = category;
 
+                if (search != undefined)
+                    query.q = search;
+                    
                 request.get('/v2/top-headlines', {query:query}).then((response) => {
                     resolve(response.body.articles);
                 })
