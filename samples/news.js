@@ -45,7 +45,7 @@ class Command {
         var queue = new AnimationQueue();
 
 
-        function enqueueNews()  {
+        function fetchNews()  {
             return new Promise((resolve, reject) => {
 
                 var headers = {};
@@ -73,15 +73,7 @@ class Command {
                     query.category = category;
 
                 request.get('/v2/top-headlines', {query:query}).then((response) => {
-
-                    var articles = response.body.articles;
-
-                    articles.forEach(article => {
-                        debug(article.title);
-                        queue.enqueue(new TextAnimation({...argv, text:article.title}));
-                    });
-
-                    resolve();
+                    resolve(response.body.articles);
                 })
                 .catch((error) => {
                     reject(error);
@@ -89,7 +81,27 @@ class Command {
             });
         }
 
+        function enqueueNews()  {
+            return new Promise((resolve, reject) => {
 
+                fetchNews().then((articles) => {
+
+                    articles.forEach(article => {
+                        debug(article.text);
+                        queue.enqueue(new TextAnimation({...argv, text:article.title}));
+                    });
+
+                    resolve();
+
+                })
+    
+                .catch((error) => {
+                    reject(error);
+                })
+            });
+        }
+        
+ 
 
         queue.on('idle', () => {
             enqueueNews().then(() => {
