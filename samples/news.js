@@ -28,6 +28,7 @@ class Command {
         args.option('language', {describe:'News language', default:'se'});
         args.option('apiKey', {describe:'API key for newsapi.org', default:process.env.NEWS_API_KEY});
         args.option('search', {describe:'Search keyword', default:undefined});
+        args.option('pause', {describe:'Pause between news flashes in minutes', default:1});
 
         args.wrap(null);
 
@@ -126,7 +127,7 @@ class Command {
         }
 
         queue.on('idle', () => {
-            delay(60000).then(() => {
+            delay(argv.pause * 60000).then(() => {
                 fetch();
             });
         });
