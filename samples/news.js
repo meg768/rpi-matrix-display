@@ -31,7 +31,7 @@ class Command {
         args.option('language', {describe:'News language', default:'se'});
         args.option('apiKey', {describe:'API key for newsapi.org', default:process.env.NEWS_API_KEY});
         args.option('search', {describe:'Search keyword', default:undefined});
-        args.option('pause', {describe:'Pause between news flashes in minutes', default:1});
+        args.option('pause', {describe:'Pause between news flashes in minutes', default:5});
         args.option('debug', {describe:'Debug mode', default:false});
 
         args.wrap(null);
