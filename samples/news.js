@@ -91,9 +91,10 @@ class Command {
                     var now = new Date();
                     var hue = Math.floor(360 * (((now.getHours() % 12) * 60) + now.getMinutes()) / (12 * 60));
                     var textColor = argv.textColor == 'auto' ? sprintf('hsl(%d,100%%,50%%)', hue) : argv.textColor;
+                    var text = sprintf('%s - %s', article.title, article.source.name);
 
                     articles.forEach(article => {
-                        queue.enqueue(new TextAnimation({...argv, textColor:textColor, text:article.title}));
+                        queue.enqueue(new TextAnimation({...argv, textColor:textColor, text:text}));
                     });
 
                     resolve(articles);
