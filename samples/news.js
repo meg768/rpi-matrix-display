@@ -99,6 +99,7 @@ class Command {
                 })
             });
         }
+        
 
         function delay(ms) {
             return new Promise((resolve, reject) => {
