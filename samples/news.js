@@ -5,7 +5,9 @@ var AnimationQueue = require('rpi-animations').Queue;
 var Request = require('yow/request');
 var sprintf = require('yow/sprintf');
 
-var debug = console.log;
+
+var debug = function() {
+}
 
 class Command {
 
@@ -17,6 +19,7 @@ class Command {
         
     }
 
+ 
     defineArgs(args) {
 
         args.usage('Usage: $0 [options]');
@@ -29,6 +32,7 @@ class Command {
         args.option('apiKey', {describe:'API key for newsapi.org', default:process.env.NEWS_API_KEY});
         args.option('search', {describe:'Search keyword', default:undefined});
         args.option('pause', {describe:'Pause between news flashes in minutes', default:1});
+        args.option('debug', {describe:'Debug mode', default:false});
 
         args.wrap(null);
 
@@ -41,6 +45,8 @@ class Command {
 
 
 	run(argv) {
+        if (argv.debug)
+            debug = console.log;
 
         debug(argv);
 
