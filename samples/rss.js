@@ -26,7 +26,7 @@ class Feed extends Events {
         this.name = name;
         this.parser = new Parser();
         this.latest = undefined;
-        this.feed = [];
+        this.items = [];
         this.run();
 
     }
@@ -45,17 +45,17 @@ class Feed extends Events {
             this.parser.parseURL(this.url).then((feed) => {
 
 
-                this.feed = [feed].concat(this.feed);
+                this.items.concat(feed.items);
 
                 // Sort by date DESC
-                this.feed.items.sort((a, b) => {
+                this.items.sort((a, b) => {
                     a = new Date(a.isoDate);
                     b = new Date(b.isoDate);
                     return b.getTime() - a.getTime();
                 });
 
                 // Pick first/latest one
-                var item = this.feed.items[0];
+                var item = this.items[0];
                 
                 //debug('Latest from', this.name, item.isoDate, item.title);
 
