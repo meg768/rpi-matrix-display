@@ -5,12 +5,52 @@ var AnimationQueue = require('rpi-animations').Queue;
 var Request = require('yow/request');
 var sprintf = require('yow/sprintf');
 var Parser = require('rss-parser');
+var Events = require('events');
 
 /*
 
 */
 
 var debug = function() {
+}
+
+class Feed extends Events {
+    constructor(options) {
+        var {url} = options;
+
+        this.url = url;
+        this.parser = new Parser();
+    }
+
+    fetch() {
+        return new Promise((resolve, reject) => {
+            debug('Fetching', this.url);
+
+            this.parser.parseURL(this.url).then((feed) => {
+
+                // Sort by date DESC
+                feed.items.sort((a, b) => {
+                    a = new Date(a.isoDate);
+                    b = new Date(b.isoDate);
+                    return b.getTime() - a.getTime();
+                });
+
+                feed.items.forEach((item) => {
+                    var date = new Date(item.isoDate);
+                    debug(date, date.toString(), item.title);
+                });
+
+                resolve(feed);
+            })
+            .catch((error) => {
+                console.error(error);
+                reject(error);
+
+            })
+        });
+
+    }
+
 }
 
 class Command {
@@ -52,7 +92,7 @@ class Command {
 
         Matrix.configure(argv);
         var queue = new AnimationQueue();
-        var parser = new Parser();
+        var feed = new Feed({url:argv.url});
 
 
 
@@ -92,7 +132,7 @@ class Command {
             });
         }
 
-        fetchRSS();
+        feed.fetch();
 
 	}
     
