@@ -57,7 +57,7 @@ class Feed extends Events {
                 var thisDate = new Date(item.isoDate);
                 var latestDate = (this.latest == undefined) ? undefined : new Date(this.latest.isoDate);
 
-                //debug('Latest from', this.name, item.isoDate, item.title);
+                debug('Latest from', this.name, item.isoDate, item.title);
 
                 if (latestDate == undefined || (thisDate > latestDate)) {
                     this.latest = item;
