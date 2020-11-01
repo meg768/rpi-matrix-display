@@ -44,6 +44,17 @@ class Feed extends Events {
 
             this.parser.parseURL(this.url).then((feed) => {
 
+                // Sort by date DESC
+                feed.items.sort((a, b) => {
+                    a = new Date(a.isoDate);
+                    b = new Date(b.isoDate);
+                    return b.getTime() - a.getTime();
+                });
+
+                feed.items.forEach((item) => {
+                    console.log(item.isoDate, item.title);
+                });
+                
 
                 this.items = this.items.concat(feed.items);
 
