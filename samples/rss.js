@@ -27,7 +27,8 @@ class Command {
         args.option('help', {describe:'Displays this information'});
         args.option('textColor', {describe:'Specifies text color', alias:['color'], default:'auto'});
         args.option('pause', {describe:'Pause between news flashes in minutes', default:5});
-        args.option('debug', {describe:'Debug mode', default:false});
+        args.option('url', {describe:'Feed URL', default:'https://www.sydsvenskan.se/rss.xml?latest'});
+        args.option('debug', {describe:'Debug mode', default:true});
 
         args.wrap(null);
 
@@ -62,10 +63,10 @@ class Command {
 
         function fetchRSS() {
             return new Promise((resolve, reject) => {
-                console.log('Fetching!')
-                parser.parseURL('https://www.sydsvenskan.se/rss.xml?latest').then((feed) => {
+                debug('Fetching!')
+                parser.parseURL(argv.url).then((feed) => {
                     feed.items.forEach((item) => {
-                        console.log(new Date(item.isoDate), item.title);
+                        debug(new Date(item.isoDate), item.title);
                     })
                     //console.log(feed);
                     resolve(feed);
