@@ -136,7 +136,7 @@ class Command {
         var feeds = [
             {url: 'https://digital.di.se/rss', name: 'DI'},
             {url: 'https://www.sydsvenskan.se/rss.xml?latest', name: 'Sydsvenskan'},
-            {url: 'http://www.svd.se/?service=rss', name: 'Svenska Dagbladet'}
+            {url: 'http://www.svd.se/?service=rss', name: 'Svenska Dagbladet'},
             {url: 'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet'},
             {url: 'https://feeds.expressen.se/nyheter', name: 'Expressen'},
             {url: 'http://feeds.bbci.co.uk/news/rss.xml', name: 'BBC'},
