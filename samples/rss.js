@@ -59,7 +59,7 @@ class Feed extends Events {
                 debug('Fetched:', title);
 
                 if (this.latest == undefined || this.latest != title) {
-                    this.latest = item.title;
+                    this.latest = title;
                     this.emit('ping', {timestamp:timestamp, name:name, title:title});
                 }
 
