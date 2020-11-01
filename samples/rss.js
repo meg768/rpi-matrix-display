@@ -53,6 +53,8 @@ class Feed extends Events {
                 // Pick first/latest one
                 var item = feed.items[0];
 
+                debug(item);
+
                 if (this.latest == undefined || (this.latest.title != item.title)) {
                     this.latest = item;
                     this.emit('ping', {timestamp:new Date(item.isoDate), name:this.name, title:item.title});
