@@ -16,6 +16,8 @@ var debug = function() {
 
 class Feed extends Events {
     constructor(options) {
+        super(options);
+        
         var {url} = options;
 
         this.url = url;
