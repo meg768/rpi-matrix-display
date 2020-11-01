@@ -55,6 +55,8 @@ class Feed extends Events {
                 var timestamp = new Date(item.isoDate);
                 var title = item.title;
 
+                debug('Fetched:', title);
+
                 if (this.timestamp == undefined || timestamp > this.timestamp) {
                     this.timestamp = timestamp;
                     this.emit('ping', {timestamp:timestamp, name:this.name, title:title});
