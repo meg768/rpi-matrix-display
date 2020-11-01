@@ -14,9 +14,9 @@ var Events = require('events');
 var debug = function() {
 }
 
-class Feed extends Events {
+class Feed  {
     constructor(options) {
-        super(options);
+        //super(options);
 
         var {url} = options;
 
