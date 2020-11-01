@@ -127,7 +127,7 @@ class Command {
             var {url, name} = options;
             var feed = new Feed(options);
             feed.on('ping', (item) => {
-                console.log(sprintf('%s - %s', item.title, item.name);
+                console.log(sprintf('%s - %s', item.title, item.name));
             });
         }
         Matrix.configure(argv);
