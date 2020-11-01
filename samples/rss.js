@@ -6,6 +6,8 @@ var Request = require('yow/request');
 var sprintf = require('yow/sprintf');
 var Parser = require('rss-parser');
 var Events = require('events');
+const { time } = require('console');
+const { emit } = require('process');
 
 /*
 
@@ -18,12 +20,13 @@ class Feed extends Events {
     constructor(options) {
         super(options);
 
-        var {url} = options;
+        var {url, name = 'Noname'} = options;
 
         this.url = url;
+        this.name = name;
         this.parser = new Parser();
-        this.latest = new Date();
-
+        this.timestamp = undefined;
+        this.run();
 
     }
 
@@ -49,10 +52,15 @@ class Feed extends Events {
                 });
 
                 // Pick first/latest one
-                console.log(feed.items);
-                var item = feed.items[0];
+                var item  = feed.items[0];
+                var timestamp = new Date(item.isoDate);
+                var title = item.title;
 
-                debug(new Date(item.isoDate), item.title);
+                if (this.timestamp == undefined || timestamp > this.timestamp) {
+                    this.timestamp = timestamp;
+                    emit('ping', {timestamp:timestamp, title:title});
+                }
+                debug(timestamp, title);
 
                 resolve(item);
             })
@@ -117,12 +125,20 @@ class Command {
 
         debug(argv);
 
+        function subscribe(options) {
+            var {url, name} = options;
+            var feed = new Feed(options);
+            feed.on('ping', (item) => {
+                console.log('PING!!!', item);
+            });
+        }
         Matrix.configure(argv);
         var queue = new AnimationQueue();
-        var feed = new Feed({url:argv.url});
 
 
-        feed.run();
+        subscribe({url:'https://digital.di.se/rss', name:'DI'});
+        subscribe({url:'https://www.sydsvenskan.se/rss.xml?latest', name:'SDS'});
+        subscribe({url:'http://www.svd.se/?service=rss', name:'SVD'});
 
 	}
     
