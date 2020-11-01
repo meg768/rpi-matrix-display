@@ -58,7 +58,7 @@ class Feed extends Events {
 
                 if (this.timestamp == undefined || timestamp > this.timestamp) {
                     this.timestamp = timestamp;
-                    this.emit('ping', {timestamp:timestamp, title:title});
+                    this.emit('ping', {timestamp:timestamp, name:this.name, title:title});
                 }
 
                 resolve(item);
