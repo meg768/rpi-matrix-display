@@ -118,45 +118,7 @@ class Command {
         var feed = new Feed({url:argv.url});
 
 
-
-        function delay(ms) {
-            return new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    resolve();
-                }, ms);
-            });
-
-        }
-
-        function fetchRSS() {
-            return new Promise((resolve, reject) => {
-                debug('Fetching!')
-                parser.parseURL(argv.url).then((feed) => {
-
-                    // Sort by date DESC
-                    feed.items.sort((a, b) => {
-                        a = new Date(a.isoDate);
-                        b = new Date(b.isoDate);
-                        return b.getTime() - a.getTime();
-                    });
-
-                    feed.items.forEach((item) => {
-                        var date = new Date(item.isoDate);
-                        debug(date, date.toString(), item.title);
-                    });
-
-                    resolve(feed);
-                })
-                .catch((error) => {
-                    console.error(error);
-                    reject(error);
-
-                })
-            });
-        }
-
         feed.run();
-//        feed.fetch();
 
 	}
     
