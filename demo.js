@@ -108,7 +108,7 @@ class App {
 
 			args.demand(1);
 
-			//args.argv;
+			args.argv;
 
 		}
 		catch(error) {
