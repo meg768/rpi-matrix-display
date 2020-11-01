@@ -24,6 +24,7 @@ class Feed extends Events {
         this.parser = new Parser();
 
         this.run();
+
     }
 
     delay(ms) {
@@ -64,7 +65,7 @@ class Feed extends Events {
     }
 
     run() {
-        this.fetch().then(() => {
+        fetch().then(() => {
             setTimeout(this.run, 5000);
         })
         .catch((error) => {
@@ -72,6 +73,7 @@ class Feed extends Events {
         });
 
     }
+    
 
 }
 
