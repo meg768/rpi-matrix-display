@@ -40,7 +40,6 @@ class Feed extends Events {
 
     fetch() {
         return new Promise((resolve, reject) => {
-            debug('Fetching', this.url);
 
             this.parser.parseURL(this.url).then((feed) => {
 
@@ -60,7 +59,6 @@ class Feed extends Events {
                     this.timestamp = timestamp;
                     this.emit('ping', {timestamp:timestamp, title:title});
                 }
-                debug(timestamp, title);
 
                 resolve(item);
             })
