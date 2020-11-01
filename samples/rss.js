@@ -66,7 +66,9 @@ class Feed  {
     run() {
         debug(this);
         this.fetch().then(() => {
-            setTimeout(this.run, 5000);
+            setTimeout(() => {
+                this.run();
+            }, 5000);
         })
         .catch((error) => {
             console.error(error);
