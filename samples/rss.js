@@ -78,7 +78,8 @@ class Command {
                     });
 
                     feed.items.forEach((item) => {
-                        debug(new Date(item.isoDate), item.title);
+                        var date = new Date(item.isoDate);
+                        debug(date, date.toString(), item.title);
                     });
 
                     resolve(feed);
