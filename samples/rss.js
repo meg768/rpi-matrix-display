@@ -52,7 +52,7 @@ class Feed extends Events {
                 });
 
                 feed.items.forEach((item) => {
-                    console.log(item.isoDate, item.title);
+                   // console.log(item.isoDate, item.title);
                 });
                 
 
