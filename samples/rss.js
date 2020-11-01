@@ -14,14 +14,15 @@ var Events = require('events');
 var debug = function() {
 }
 
-class Feed  {
+class Feed extends Events {
     constructor(options) {
-        //super(options);
+        super(options);
 
         var {url} = options;
 
         this.url = url;
         this.parser = new Parser();
+        this.latest = new Date();
 
 
     }
@@ -47,12 +48,12 @@ class Feed  {
                     return b.getTime() - a.getTime();
                 });
 
-                feed.items.forEach((item) => {
-                    var date = new Date(item.isoDate);
-                    debug(date, date.toString(), item.title);
-                });
+                // Pick first/latest one
+                var item = feed[0];
 
-                resolve(feed);
+                debug(new Date(item.isoDate), item.title);
+
+                resolve(item);
             })
             .catch((error) => {
                 console.error(error);
@@ -64,7 +65,6 @@ class Feed  {
     }
 
     run() {
-        debug(this);
         this.fetch().then(() => {
             setTimeout(() => {
                 this.run();
