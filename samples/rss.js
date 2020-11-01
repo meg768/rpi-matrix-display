@@ -138,7 +138,8 @@ class Command {
         subscribe({url:'https://digital.di.se/rss', name:'DI'});
         subscribe({url:'https://www.sydsvenskan.se/rss.xml?latest', name:'SDS'});
         subscribe({url:'http://www.svd.se/?service=rss', name:'SVD'});
-
+        subscribe({url:'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name:'Aftonbladet'});
+        
 	}
     
 
