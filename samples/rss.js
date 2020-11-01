@@ -59,7 +59,7 @@ class Feed extends Events {
 
                 //debug('Latest from', this.name, item.isoDate, item.title);
 
-                if (latestDate == undefined || (thisDate > latestDate)) {
+                if (true || (latestDate == undefined || (thisDate > latestDate))) {
                     this.latest = item;
                     this.emit('ping', {timestamp:new Date(item.isoDate), name:this.name, title:item.title});
                 }
