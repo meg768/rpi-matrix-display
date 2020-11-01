@@ -49,8 +49,8 @@ class Feed extends Events {
                 });
 
                 // Pick first/latest one
-                console.log(feed);
-                var item = feed[0];
+                console.log(feed.items);
+                var item = feed.items[0];
 
                 debug(new Date(item.isoDate), item.title);
 
