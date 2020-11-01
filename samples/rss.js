@@ -46,7 +46,7 @@ class Feed extends Events {
 
 
                 this.items.concat(feed.items);
-
+                console.log(this.items);
                 // Sort by date DESC
                 this.items.sort((a, b) => {
                     a = new Date(a.isoDate);
