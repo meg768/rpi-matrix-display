@@ -64,7 +64,10 @@ class Command {
             return new Promise((resolve, reject) => {
                 console.log('Fetching!')
                 parser.parseURL('https://www.sydsvenskan.se/rss.xml?latest').then((feed) => {
-                    console.log(feed);
+                    feed.items.forEach((item) => {
+                        console.log(sprintf('%s - %s', item.title, item.isoDate));
+                    })
+                    //console.log(feed);
                     resolve(feed);
                 })
                 .catch((error) => {
