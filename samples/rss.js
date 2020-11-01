@@ -23,7 +23,6 @@ class Feed extends Events {
         this.url = url;
         this.parser = new Parser();
 
-        this.run();
 
     }
 
@@ -65,7 +64,7 @@ class Feed extends Events {
     }
 
     run() {
-        fetch().then(() => {
+        this.fetch().then(() => {
             setTimeout(this.run, 5000);
         })
         .catch((error) => {
@@ -156,6 +155,7 @@ class Command {
             });
         }
 
+        feed.run();
 //        feed.fetch();
 
 	}
