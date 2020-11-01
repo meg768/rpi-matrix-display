@@ -70,16 +70,17 @@ class Command {
                 debug('Fetching!')
                 parser.parseURL(argv.url).then((feed) => {
 
+                    // Sort by date DESC
                     feed.items.sort((a, b) => {
                         a = new Date(a.isoDate);
                         b = new Date(b.isoDate);
-                        return a.getTime() - b.getTime();
+                        return b.getTime() - a.getTime();
                     });
-                    
+
                     feed.items.forEach((item) => {
                         debug(new Date(item.isoDate), item.title);
-                    })
-                    //console.log(feed);
+                    });
+
                     resolve(feed);
                 })
                 .catch((error) => {
