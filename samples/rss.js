@@ -6,6 +6,10 @@ var Request = require('yow/request');
 var sprintf = require('yow/sprintf');
 var Parser = require('rss-parser');
 
+/*
+
+*/
+
 var debug = function() {
 }
 
@@ -65,6 +69,13 @@ class Command {
             return new Promise((resolve, reject) => {
                 debug('Fetching!')
                 parser.parseURL(argv.url).then((feed) => {
+
+                    feed.items.sort((a, b) => {
+                        a = new Date(a.isoDate);
+                        b = new Date(b.isoDate);
+                        return a.getTime() - b.getTime();
+                    });
+                    
                     feed.items.forEach((item) => {
                         debug(new Date(item.isoDate), item.title);
                     })
