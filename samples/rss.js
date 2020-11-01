@@ -65,7 +65,7 @@ class Command {
                 console.log('Fetching!')
                 parser.parseURL('https://www.sydsvenskan.se/rss.xml?latest').then((feed) => {
                     feed.items.forEach((item) => {
-                        console.log(sprintf('%s - %s', item.title, item.isoDate));
+                        console.log(new Date(item.isoDate), item.title);
                     })
                     //console.log(feed);
                     resolve(feed);
