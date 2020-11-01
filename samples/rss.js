@@ -54,12 +54,10 @@ class Feed extends Events {
 
                 // Pick first/latest one
                 var item = feed.items[0];
-                var thisDate = new Date(item.isoDate);
-                var latestDate = (this.latest == undefined) ? undefined : new Date(this.latest.isoDate);
 
                 //debug('Latest from', this.name, item.isoDate, item.title);
 
-                if (false || (latestDate == undefined || (thisDate > latestDate))) {
+                if (this.latest == undefined || this.latest.title != item.title) {
                     this.latest = item;
                     this.emit('ping', {timestamp:new Date(item.isoDate), name:this.name, title:item.title});
                 }
