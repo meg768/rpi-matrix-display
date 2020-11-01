@@ -17,11 +17,21 @@ var debug = function() {
 class Feed extends Events {
     constructor(options) {
         super(options);
-        
+
         var {url} = options;
 
         this.url = url;
         this.parser = new Parser();
+
+        this.run();
+    }
+
+    delay(ms) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve();
+            }, ms);
+        });
     }
 
     fetch() {
@@ -49,6 +59,16 @@ class Feed extends Events {
                 reject(error);
 
             })
+        });
+
+    }
+
+    run() {
+        this.fetch().then(() => {
+            setTimeout(this.run, 5000);
+        })
+        .catch((error) => {
+            console.error(error);
         });
 
     }
@@ -134,7 +154,7 @@ class Command {
             });
         }
 
-        feed.fetch();
+//        feed.fetch();
 
 	}
     
