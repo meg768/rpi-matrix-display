@@ -56,8 +56,6 @@ class Feed extends Events {
                 var title = item.title;
                 var name = this.name;
 
-                debug('Fetched:', title);
-
                 if (this.latest != title) {
                     this.latest = title;
                     this.emit('ping', {timestamp:timestamp, name:name, title:title});
