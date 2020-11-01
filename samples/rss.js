@@ -45,7 +45,7 @@ class Feed extends Events {
             this.parser.parseURL(this.url).then((feed) => {
 
 
-                this.feed = feed.concat(this.feed);
+                this.feed = [feed].concat(this.feed);
 
                 // Sort by date DESC
                 this.feed.items.sort((a, b) => {
