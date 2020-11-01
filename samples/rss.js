@@ -25,7 +25,7 @@ class Feed extends Events {
         this.url = url;
         this.name = name;
         this.parser = new Parser();
-        this.timestamp = undefined;
+        this.latest = undefined;
         this.run();
 
     }
@@ -51,15 +51,16 @@ class Feed extends Events {
                 });
 
                 // Pick first/latest one
-                var item  = feed.items[0];
+                var item = feed.items[0];
                 var timestamp = new Date(item.isoDate);
                 var title = item.title;
+                var name = this.name;
 
                 debug('Fetched:', title);
 
-                if (this.timestamp == undefined || timestamp > this.timestamp) {
-                    this.timestamp = timestamp;
-                    this.emit('ping', {timestamp:timestamp, name:this.name, title:title});
+                if (this.latest == undefined || this.latest != title) {
+                    this.latest = item.title;
+                    this.emit('ping', {timestamp:timestamp, name:name, title:title});
                 }
 
                 resolve(item);
