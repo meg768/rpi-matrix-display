@@ -25,7 +25,7 @@ class Feed extends Events {
         this.url = url;
         this.name = name;
         this.parser = new Parser();
-        this.latest = '-----------';
+        this.latest = undefined;
         this.run();
 
     }
@@ -52,13 +52,10 @@ class Feed extends Events {
 
                 // Pick first/latest one
                 var item = feed.items[0];
-                var timestamp = new Date(item.isoDate);
-                var title = item.title;
-                var name = this.name;
 
-                if (this.latest != title) {
-                    this.latest = title;
-                    this.emit('ping', {timestamp:timestamp, name:name, title:title});
+                if (this.latest == undefined || this.latest.title != item.title) {
+                    this.latest = item;
+                    this.emit('ping', {timestamp:new Date(item.isoDate), name:this.name, title:item.title});
                 }
 
                 resolve(item);
@@ -128,7 +125,7 @@ class Command {
             var {url, name} = options;
             var feed = new Feed(options);
             feed.on('ping', (item) => {
-                console.log(item.timestamp, sprintf('%s - %s', item.title, item.name));
+                console.log('PING', item.timestamp, sprintf('%s - %s', item.title, item.name));
             });
         }
         Matrix.configure(argv);
@@ -140,7 +137,8 @@ class Command {
             {url: 'http://www.svd.se/?service=rss', name: 'Svenska Dagbladet'},
             {url: 'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet'},
             {url: 'https://feeds.expressen.se/nyheter', name: 'Expressen'},
-            {url: 'http://feeds.bbci.co.uk/news/rss.xml', name: 'BBC'}
+            {url: 'http://feeds.bbci.co.uk/news/rss.xml', name: 'BBC'},
+            {url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml', name: 'New York Times'}
         ];
 
         feeds.forEach((feed) => {
