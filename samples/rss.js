@@ -134,13 +134,20 @@ class Command {
         Matrix.configure(argv);
         var queue = new AnimationQueue();
 
+        var feeds = [
+            {url: 'https://digital.di.se/rss', name: 'DI'},
+            {url: 'https://www.sydsvenskan.se/rss.xml?latest', name: 'Sydsvenskan'},
+            {url: 'http://www.svd.se/?service=rss', name: 'Svenska Dagbladet'},
+            {url: 'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet'},
+            {url: 'https://feeds.expressen.se/nyheter', name: 'Expressen'},
+            {url: 'http://feeds.bbci.co.uk/news/rss.xml', name: 'BBC'}
+        ];
 
-        subscribe({url:'https://digital.di.se/rss', name:'DI'});
-        subscribe({url:'https://www.sydsvenskan.se/rss.xml?latest', name:'SDS'});
-        subscribe({url:'http://www.svd.se/?service=rss', name:'SVD'});
-        subscribe({url:'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name:'Aftonbladet'});
-        subscribe({url:'https://feeds.expressen.se/nyheter', name:'Expressen'});
-     
+        feeds.forEach((feed) => {
+            subscribe(feed);
+        });
+
+                
 	}
     
 
