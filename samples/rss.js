@@ -25,7 +25,7 @@ class Feed extends Events {
         this.url = url;
         this.name = name;
         this.parser = new Parser();
-        this.latest = undefined;
+        this.latest = '-----------';
         this.run();
 
     }
@@ -58,7 +58,7 @@ class Feed extends Events {
 
                 debug('Fetched:', title);
 
-                if (this.latest == undefined || this.latest != title) {
+                if (this.latest != title) {
                     this.latest = title;
                     this.emit('ping', {timestamp:timestamp, name:name, title:title});
                 }
