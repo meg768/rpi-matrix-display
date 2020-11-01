@@ -40,7 +40,6 @@ class Feed extends Events {
 
     fetch() {
         return new Promise((resolve, reject) => {
-            debug('Fetching', this.url);
 
             this.parser.parseURL(this.url).then((feed) => {
 
