@@ -64,7 +64,7 @@ class Feed extends Events {
     }
 
     run() {
-        this.fetch().then(() => {
+        fetch().then(() => {
             setTimeout(this.run, 5000);
         })
         .catch((error) => {
