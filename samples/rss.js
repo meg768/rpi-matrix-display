@@ -56,7 +56,7 @@ class Feed extends Events {
                 // Pick first/latest one
                 var item = feed.items[0];
 
-                debug('latest from ', this.name, item.timestamp, item.title);
+                debug('LATEST', item.timestamp, sprintf('%s - %s', item.title, item.name));
 
                 if (this.latest == undefined || item.timestamp.getTime() > this.latest.timestamp.getTime()) {
                     this.latest = item;
