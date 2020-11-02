@@ -68,7 +68,7 @@ class Feed extends Events {
                 // Pick first/latest one
                 var item = this.items[0];
                 
-                //debug('Latest from', this.name, item.isoDate, item.title);
+                debug('Latest from', this.name, item.isoDate, item.title);
 
                 if (this.latest == undefined || this.latest.title != item.title) {
                     this.latest = item;
