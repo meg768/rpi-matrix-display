@@ -56,11 +56,14 @@ class Feed extends Events {
                 // Pick first/latest one
                 var item = feed.items[0];
 
+                this.latest = item;
+                this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
+/*
                 if (this.latest == undefined || item.timestamp.getTime() > this.latest.timestamp.getTime()) {
                     this.latest = item;
                     this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
                 }
-
+*/
                 resolve(item);
             })
             .catch((error) => {
