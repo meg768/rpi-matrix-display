@@ -44,6 +44,8 @@ class Feed extends Events {
 
             this.parser.parseURL(this.url).then((feed) => {
 
+                debug('Fetched', this.name, '...');
+
                 // Sort by date DESC
                 feed.items.sort((a, b) => {
                     a = new Date(a.isoDate);
