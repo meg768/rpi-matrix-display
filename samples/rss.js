@@ -26,7 +26,6 @@ class Feed extends Events {
         this.name = name;
         this.parser = new Parser();
         this.latest = undefined;
-        this.items = [];
         this.run();
 
     }
@@ -44,37 +43,24 @@ class Feed extends Events {
 
             this.parser.parseURL(this.url).then((feed) => {
 
-                debug('Fetched', this.name, '...');
+                // Convert to Date objects
+                feed.items.forEach((item) => {
+                    item.timestamp = new Date(item.isoDate);
+                });
 
                 // Sort by date DESC
                 feed.items.sort((a, b) => {
-                    a = new Date(a.isoDate);
-                    b = new Date(b.isoDate);
-                    return b.getTime() - a.getTime();
-                });
-
-                feed.items.forEach((item) => {
-                   // console.log(item.isoDate, item.title);
-                });
-                
-
-                this.items = this.items.concat(feed.items);
-
-                // Sort by date DESC
-                this.items.sort((a, b) => {
-                    a = new Date(a.isoDate);
-                    b = new Date(b.isoDate);
-                    return b.getTime() - a.getTime();
+                    return b.timestamp.getTime() - a.timestamp.getTime();
                 });
 
                 // Pick first/latest one
-                var item = this.items[0];
-                
-                //debug('Latest from', this.name, item.isoDate, item.title);
+                var item = feed.items[0];
 
-                if (this.latest == undefined || this.latest.title != item.title) {
+                debug('Latest from', this.name, item.timestamp, item.title);
+
+                if (this.latest == undefined || item.timestamp.getTime() > this.latest.timestamp.getTime()) {
                     this.latest = item;
-                    this.emit('ping', {timestamp:new Date(item.isoDate), name:this.name, title:item.title});
+                    this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
                 }
 
                 resolve(item);
