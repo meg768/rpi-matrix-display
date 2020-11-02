@@ -56,7 +56,7 @@ class Feed extends Events {
                 // Pick first/latest one
                 var item = feed.items[0];
 
-                debug('LATEST', item.timestamp, sprintf('%s - %s', item.title, item.name));
+                debug('LATEST', item.timestamp, sprintf('%s - %s', this.name, item.title));
 
                 if (this.latest == undefined || item.timestamp.getTime() > this.latest.timestamp.getTime()) {
                     this.latest = item;
@@ -130,7 +130,7 @@ class Command {
             var {url, name} = options;
             var feed = new Feed(options);
             feed.on('ping', (item) => {
-                console.log('PING  ', item.timestamp, sprintf('%s - %s', item.title, item.name));
+                console.log('PING  ', item.timestamp, sprintf('%s - %s', item.name, item.title));
             });
         }
         Matrix.configure(argv);
