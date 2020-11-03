@@ -25,7 +25,7 @@ class Feed extends Events {
         this.url = url;
         this.name = name;
         this.parser = new Parser();
-        this.latest = undefined;
+        this.timestamp = undefined;
         this.run();
 
     }
@@ -48,13 +48,21 @@ class Feed extends Events {
                     item.timestamp = new Date(item.isoDate);
                 });
 
+                debug(this.name, feed.items);
+                /*
                 // Sort by date DESC
                 feed.items.sort((a, b) => {
                     return b.timestamp.getTime() - a.timestamp.getTime();
                 });
 
+                feed.items.forEach((item) => {
+                    if (item.timestamp.getDate() > this.timestamp) {}
+                        this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
+                    return b.timestamp.getTime() - a.timestamp.getTime();
+                });
+
                 // Pick first/latest one
-                var item = feed.items[0];
+                this.timestamp = feed.items[0].timestamp;
 
                 debug('LATEST', item.timestamp, sprintf('%s - %s', this.name, item.title));
 
@@ -62,7 +70,7 @@ class Feed extends Events {
                     this.latest = item;
                     this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
                 }
-
+                */
                 resolve(item);
             })
             .catch((error) => {
