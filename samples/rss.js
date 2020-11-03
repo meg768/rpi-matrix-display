@@ -64,6 +64,7 @@ class Feed extends Events {
                         if (this.latest == undefined || (item.timestamp.getDate() > this.latest.timestamp.getDate())) {
                             if (this.latest != undefined) {
                                 debug(item.timestamp, this.latest.timestamp);
+                                debug(item.timestamp.getDate(), this.latest.timestamp.getDate());
 
                             }
                             this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
