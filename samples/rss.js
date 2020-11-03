@@ -26,7 +26,7 @@ class Feed extends Events {
         this.name = name;
         this.parser = new Parser();
         this.latest = undefined;
-        this.cache = {};
+        this.cache = undefined;
         this.run();
 
     }
@@ -43,32 +43,36 @@ class Feed extends Events {
         return new Promise((resolve, reject) => {
 
             this.parser.parseURL(this.url).then((feed) => {
+                var hoursAgo = 1;
+                var now = new Date();
+                var someTimeAgo = new Date(now.getTime() - hoursAgo * 60 * 60 * 1000);
+                var longTimeAgo = new Date(now.getTime() - 2 * hoursAgo * 60 * 60 * 1000);
 
+                // Create a timestamp for each item
+                feed.items.forEach((item) => {
+                    item.timestamp = new Date(item.isoDate);
+                });
+
+                // Sort by date ASC
+                feed.items.sort((a, b) => {
+                    return a.timestamp.getTime() - b.timestamp.getTime();
+                });
+
+                
+                // Filter out latest/relevant RSS
+                feed.items = feed.items.filter((item) => {
+                    if (item.timestamp.getTime() > someTimeAgo.getTime())
+                        return item;
+                });
+
+
+                
+                
                 if (feed.items.length > 0) {
-                    var hoursAgo = 1;
-                    var now = new Date();
-                    var someTimeAgo = new Date(now.getTime() - hoursAgo * 60 * 60 * 1000);
-                    var longTimeAgo = new Date(now.getTime() - 2 * hoursAgo * 60 * 60 * 1000);
 
-
-                    // Create a timestamp for each item
-                    feed.items.forEach((item) => {
-                        item.timestamp = new Date(item.isoDate);
-                    });
-
-                    // Sort by date ASC
-                    feed.items.sort((a, b) => {
-                        return a.timestamp.getTime() - b.timestamp.getTime();
-                    });
-
-
-                    // Filter out latest/relevant RSS
-                    feed.items = feed.items.filter((item) => {
-                        if (item.timestamp.getTime() > someTimeAgo.getTime())
-                            return item;
-                    });
-
-//                    debug(JSON.stringify(feed.items, null, '    '));
+                    if (this.cache == undefined) {
+                        feed.items = [feed.items[feed.items.length - 1]];
+                    }
 
                     feed.items.forEach((item) => {
                         var key = sprintf('%s:%s', item.isoDate, item.title);
@@ -92,7 +96,8 @@ class Feed extends Events {
 
                     this.cache = cache;
 */
-
+    
+ 
                 }
 
                 resolve();
