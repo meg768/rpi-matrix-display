@@ -26,7 +26,7 @@ class Feed extends Events {
         this.name = name;
         this.parser = new Parser();
         this.latest = undefined;
-        this.cache = undefined;
+        this.cache = {};
         this.run();
 
     }
