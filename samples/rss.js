@@ -47,8 +47,8 @@ class Feed extends Events {
                 feed.items.forEach((item) => {
                     item.timestamp = new Date(item.isoDate);
                 });
-
-                debug(this.name, feed.items);
+                debug(this.name, '---------------------------------------')
+                debug(feed.items);
                 /*
                 // Sort by date DESC
                 feed.items.sort((a, b) => {
@@ -71,7 +71,7 @@ class Feed extends Events {
                     this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
                 }
                 */
-                resolve(item);
+                resolve();
             })
             .catch((error) => {
                 console.error(error);
