@@ -65,8 +65,6 @@ class Feed extends Events {
                         return item;
                 });
 
-
-                
                 
                 if (feed.items.length > 0) {
 
