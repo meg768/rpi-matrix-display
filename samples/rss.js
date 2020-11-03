@@ -172,10 +172,11 @@ class Command {
             {url: 'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC              '},
             {url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times   '}
         ];
+        /*
         feeds = [
             {url: 'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet      '}
         ];
-
+        */
         feeds.forEach((feed) => {
             subscribe(feed);
         });
