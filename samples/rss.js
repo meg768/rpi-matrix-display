@@ -46,9 +46,9 @@ class Feed extends Events {
 
                 if (feed.items.length > 0) {
                     var now = new Date();
-                    var someTimeAgo = new Date();
+                    var someTimeAgo = new Date(now.getTime() - 1 * 60 * 60 * 24 * 1000);
 
-                    someTimeAgo.setHours(someTimeAgo.setHours() - 24); 
+                    someTimeAgo.setDate(someTimeAgo.getDate() - 1); 
 
                     // Create a timestamp for each item
                     feed.items.forEach((item) => {
@@ -72,6 +72,8 @@ class Feed extends Events {
                     debug(this.name, '---------------------------------------')
                     debug('ITEMS');
                     debug(JSON.stringify(feed.items, undefined, '    '));
+                    debug('LATEST');
+                    debug(JSON.stringify(this.latest, undefined, '    '));
 
                 }
 
