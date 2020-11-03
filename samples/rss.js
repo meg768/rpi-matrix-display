@@ -26,7 +26,7 @@ class Feed extends Events {
         this.name = name;
         this.parser = new Parser();
         this.latest = undefined;
-        this.cache = {};
+        this.cache = undefined;
         this.run();
 
     }
@@ -69,6 +69,7 @@ class Feed extends Events {
                 if (feed.items.length > 0) {
 
                     if (this.cache == undefined) {
+                        this.cache = {};
                         feed.items = [feed.items[feed.items.length - 1]];
                     }
 
