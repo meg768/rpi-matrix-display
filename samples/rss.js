@@ -62,6 +62,10 @@ class Feed extends Events {
 
                     feed.items.forEach((item) => {
                         if (this.latest == undefined || (item.timestamp.getDate() > this.latest.timestamp.getDate())) {
+                            if (this.latest != undefined) {
+                                debug(item.timestamp, this.latest.timestamp);
+
+                            }
                             this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
                         }
                     });
@@ -161,11 +165,10 @@ class Command {
             {url: 'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC              '},
             {url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times   '}
         ];
-/*
+
         feeds = [
             {url: 'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet      '}
         ];
-*/
         feeds.forEach((feed) => {
             subscribe(feed);
         });
