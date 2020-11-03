@@ -46,7 +46,7 @@ class Feed extends Events {
 
                 if (feed.items.length > 0) {
                     var now = new Date();
-                    var someTimeAgo = new Date(now.getTime() - 1 * 60 * 60 * 24 * 1000);
+                    var someTimeAgo = new Date(now.getTime() - 1 * 1 * 60 * 1000);
 
                     someTimeAgo.setDate(someTimeAgo.getDate() - 1); 
 
