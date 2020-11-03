@@ -48,7 +48,7 @@ class Feed extends Events {
                     var now = new Date();
                     var someTimeAgo = new Date();
 
-                    someTimeAgo.setDate(someTimeAgo.getDate() - 1); 
+                    someTimeAgo.setHours(someTimeAgo.setHours() - 1); 
 
                     // Create a timestamp for each item
                     feed.items.forEach((item) => {
