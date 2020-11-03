@@ -66,6 +66,8 @@ class Feed extends Events {
                             return item;
                     });
 
+                    debug(JSON.stringify(feed.items, null, '    '));
+
                     feed.items.forEach((item) => {
                         var key = item.isoDate + item.title;
                         
