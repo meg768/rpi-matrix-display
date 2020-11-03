@@ -26,6 +26,7 @@ class Feed extends Events {
         this.name = name;
         this.parser = new Parser();
         this.latest = undefined;
+        this.cache = {};
         this.run();
 
     }
@@ -44,7 +45,12 @@ class Feed extends Events {
             this.parser.parseURL(this.url).then((feed) => {
 
                 if (feed.items.length > 0) {
-                    // Convert to Date objects
+                    var now = new Date();
+                    var someTimeAgo = new Date();
+
+                    someTimeAgo.setDate(someTimeAgo.getDate() - 1); 
+
+                    // Create a timestamp for each item
                     feed.items.forEach((item) => {
                         item.timestamp = new Date(item.isoDate);
                     });
@@ -54,34 +60,18 @@ class Feed extends Events {
                         return a.timestamp.getTime() - b.timestamp.getTime();
                     });
 
-                    // If first time around, just use the last item
-                    if (this.latest == undefined) {
-                        feed.items = [feed.items[feed.items.length - 1]];
-                    }
 
-
-                    feed.items.forEach((item) => {
-                        if (this.latest == undefined || (item.timestamp.getTime() > this.latest.timestamp.getTime())) {
-                            if (this.latest != undefined) {
-                                debug(item.timestamp.getTime(), this.latest.timestamp.getTime());
-                                debug(JSON.stringify(item, null, '    '));
-    
-                            }
-                            this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
-
-                            this.latest = item;
-
-                        }
+                    // Filter out latest RSS
+                    feed.items = feed.items.filter((item) => {
+                        if (item.timestamp.getTime() > someTimeAgo.getTime())
+                            return item;
                     });
 
 
-                    /*
+
                     debug(this.name, '---------------------------------------')
                     debug('ITEMS');
                     debug(JSON.stringify(feed.items, undefined, '    '));
-                    debug('LATEST');
-                    debug(JSON.stringify(this.latest, undefined, '    '));
-                    */
 
                 }
 
@@ -167,7 +157,9 @@ class Command {
             {url: 'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC              '},
             {url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times   '}
         ];
-
+        feeds = [
+            {url: 'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet      '}
+        ];
 
         feeds.forEach((feed) => {
             subscribe(feed);
