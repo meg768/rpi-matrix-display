@@ -45,8 +45,10 @@ class Feed extends Events {
             this.parser.parseURL(this.url).then((feed) => {
 
                 if (feed.items.length > 0) {
+                    var hoursAgo = 1;
                     var now = new Date();
-                    var someTimeAgo = new Date(now.getTime() - 1 * 60 * 60 * 1000);
+                    var someTimeAgo = new Date(now.getTime() - hoursAgo * 60 * 60 * 1000);
+                    var longTimeAgo = new Date(now.getTime() - 2 * hoursAgo * 60 * 60 * 1000);
 
 
                     // Create a timestamp for each item
@@ -78,15 +80,18 @@ class Feed extends Events {
                         }
                     });
 
+                    var cache = {};
 
+                    // Clean up cache
+                    for (var key in this.cache) {
+                        var item = this.cache[key];
 
-/*
-                    debug(this.name, '---------------------------------------')
-                    debug('ITEMS');
-                    debug(JSON.stringify(feed.items, undefined, '    '));
-                    debug('LATEST');
-                    debug(JSON.stringify(this.latest, undefined, '    '));
-*/
+                        if (item.timestamp.getTime() < longTimeAgo.getTime())
+                            cache[key] = item;
+                    }
+
+                    this.cache = cache;
+
 
                 }
 
