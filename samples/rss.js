@@ -68,11 +68,12 @@ class Feed extends Events {
     
                             }
                             this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
+
+                            this.latest = item;
+
                         }
                     });
 
-                    // Save last one
-                    this.latest = feed.items[feed.items.length - 1];
 
                     /*
                     debug(this.name, '---------------------------------------')
