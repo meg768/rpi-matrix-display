@@ -69,7 +69,7 @@ class Feed extends Events {
                     feed.items.forEach((item) => {
                         var key = item.isoDate + item.title;
                         
-                        if (this.cache[item.title] == undefined) {
+                        if (this.cache[key] == undefined) {
                             this.emit({timestamp:item.timestamp, name:this.name, title:item.title});
                             this.cache[key] = item;
                         }
