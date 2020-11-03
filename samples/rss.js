@@ -167,6 +167,7 @@ class Command {
             {url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times   '}
         ];
 
+
         feeds.forEach((feed) => {
             subscribe(feed);
         });
