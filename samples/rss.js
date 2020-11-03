@@ -79,7 +79,7 @@ class Feed extends Events {
                             this.cache[key] = item;
                         }
                     });
-
+/*
                     var cache = {};
 
                     // Clean up cache
@@ -91,7 +91,7 @@ class Feed extends Events {
                     }
 
                     this.cache = cache;
-
+*/
 
                 }
 
