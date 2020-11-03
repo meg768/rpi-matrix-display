@@ -59,21 +59,23 @@ class Feed extends Events {
                         feed.items = [feed.items[feed.items.length - 1]];
                     }
 
-/*
+
                     feed.items.forEach((item) => {
                         if (this.latest == undefined || item.timestamp.getDate() > this.latest.timestamp.getDate()) {
                             this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
                         }
                     });
-*/
+
                     // Save last one
                     this.latest = feed.items[feed.items.length - 1];
 
+                    /*
                     debug(this.name, '---------------------------------------')
                     debug('ITEMS');
                     debug(JSON.stringify(feed.items, undefined, '    '));
                     debug('LATEST');
                     debug(JSON.stringify(this.latest, undefined, '    '));
+                    */
 
                 }
 
@@ -159,11 +161,11 @@ class Command {
             {url: 'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC              '},
             {url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times   '}
         ];
-
+/*
         feeds = [
             {url: 'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet      '}
         ];
-
+*/
         feeds.forEach((feed) => {
             subscribe(feed);
         });
