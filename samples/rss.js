@@ -60,19 +60,28 @@ class Feed extends Events {
                     });
 
 
-                    // Filter out latest RSS
+                    // Filter out latest/relevant RSS
                     feed.items = feed.items.filter((item) => {
                         if (item.timestamp.getTime() > someTimeAgo.getTime())
                             return item;
                     });
 
+                    feed.items.forEach((item) => {
+                        var key = item.isoDate + item.title;
+                        
+                        if (this.cache[item.title] == undefined) {
+                            this.emit({timestamp:item.timestamp, name:this.name, title:item.title});
+                            this.cache[key] = item;
+                        }
+                    });
 
-
+/*
                     debug(this.name, '---------------------------------------')
                     debug('ITEMS');
                     debug(JSON.stringify(feed.items, undefined, '    '));
                     debug('LATEST');
                     debug(JSON.stringify(this.latest, undefined, '    '));
+*/
 
                 }
 
