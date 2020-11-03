@@ -46,7 +46,7 @@ class Feed extends Events {
 
                 if (feed.items.length > 0) {
                     var now = new Date();
-                    var someTimeAgo = new Date(now.getTime() - 1 * 60 * 60 * 1000);
+                    var someTimeAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
 
                     // Create a timestamp for each item
