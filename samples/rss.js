@@ -25,7 +25,7 @@ class Feed extends Events {
         this.url = url;
         this.name = name;
         this.parser = new Parser();
-        this.timestamp = undefined;
+        this.latest = undefined;
         this.run();
 
     }
@@ -43,34 +43,36 @@ class Feed extends Events {
 
             this.parser.parseURL(this.url).then((feed) => {
 
-                // Convert to Date objects
-                feed.items.forEach((item) => {
-                    item.timestamp = new Date(item.isoDate);
-                });
-                debug(this.name, '---------------------------------------')
-                debug(feed.items);
-                /*
-                // Sort by date DESC
-                feed.items.sort((a, b) => {
-                    return b.timestamp.getTime() - a.timestamp.getTime();
-                });
+                if (feed.items.length > 0) {
+                    // Convert to Date objects
+                    feed.items.forEach((item) => {
+                        item.timestamp = new Date(item.isoDate);
+                    });
 
-                feed.items.forEach((item) => {
-                    if (item.timestamp.getDate() > this.timestamp) {}
-                        this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
-                    return b.timestamp.getTime() - a.timestamp.getTime();
-                });
+                    // Sort by date ASC
+                    feed.items.sort((a, b) => {
+                        return a.timestamp.getTime() - b.timestamp.getTime();
+                    });
 
-                // Pick first/latest one
-                this.timestamp = feed.items[0].timestamp;
+                    // If first time around, just use the last item
+                    if (this.latest == undefined) {
+                        feed.items = [feed.items[feed.items.length - 1]];
+                    }
 
-                debug('LATEST', item.timestamp, sprintf('%s - %s', this.name, item.title));
+                    debug(this.name, '---------------------------------------')
+                    debug(feed.items);
 
-                if (this.latest == undefined || item.timestamp.getTime() > this.latest.timestamp.getTime()) {
-                    this.latest = item;
-                    this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
+                    feed.items.forEach((item) => {
+                        if (this.latest == undefined || item.timestamp.getDate() > this.latest.timestamp.getDate()) {
+                            this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
+                        }
+                    });
+
+                    // Save last one
+                    this.latest = feed.items[feed.items.length - 1];
+
                 }
-                */
+
                 resolve();
             })
             .catch((error) => {
