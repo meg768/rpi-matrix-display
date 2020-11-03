@@ -59,8 +59,8 @@ class Feed extends Events {
                         feed.items = [feed.items[feed.items.length - 1]];
                     }
 
-                    debug(this.name, '---------------------------------------')
-                    debug(feed.items);
+                    //debug(this.name, '---------------------------------------')
+                    //debug(feed.items);
 
                     feed.items.forEach((item) => {
                         if (this.latest == undefined || item.timestamp.getDate() > this.latest.timestamp.getDate()) {
