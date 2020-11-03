@@ -73,7 +73,7 @@ class Feed extends Events {
                         
                         if (this.cache[key] == undefined) {
                             debug('CReating cahe', key);
-                            this.emit({timestamp:item.timestamp, name:this.name, title:item.title});
+                            this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
                             this.cache[key] = item;
                         }
                     });
