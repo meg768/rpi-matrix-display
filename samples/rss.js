@@ -66,12 +66,13 @@ class Feed extends Events {
                             return item;
                     });
 
-                    debug(JSON.stringify(feed.items, null, '    '));
+//                    debug(JSON.stringify(feed.items, null, '    '));
 
                     feed.items.forEach((item) => {
                         var key = item.isoDate + item.title;
                         
                         if (this.cache[key] == undefined) {
+                            debug('CReating cahe', key);
                             this.emit({timestamp:item.timestamp, name:this.name, title:item.title});
                             this.cache[key] = item;
                         }
