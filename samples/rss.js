@@ -7,9 +7,7 @@ var Timer = require('yow/timer');
 var Parser = require('rss-parser');
 var Events = require('events');
 
-/*
 
-*/
 
 var debug = function() {
 }
