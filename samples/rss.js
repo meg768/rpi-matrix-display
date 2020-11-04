@@ -183,6 +183,12 @@ class Command {
         var news = [];
         var timer = new Timer();
     
+        function displayNews() {
+            news.forEach((item) => {
+                debug('NEWS  ', item.name, item.title);
+            });            
+        }
+
         function subscribe(options) {
             var feed = new Feed(options);
 
@@ -196,8 +202,7 @@ class Command {
                 console.log('PING  ', item.timestamp, sprintf('%s - %s', item.name, item.title));
 
                 timer.setTimer(5000, () => {
-                    debug(JSON.stringify(news, null, '   '));
-
+                    displayNews();
                 });
             });
         }
