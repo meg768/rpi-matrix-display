@@ -2,14 +2,10 @@
 var Matrix = require('rpi-matrix');
 var TextAnimation = require('../src/text-animation.js');
 var AnimationQueue = require('rpi-animations').Queue;
-var Request = require('yow/request');
 var sprintf = require('yow/sprintf');
 var Timer = require('yow/timer');
 var Parser = require('rss-parser');
 var Events = require('events');
-const { time } = require('console');
-const { emit } = require('process');
-const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require('constants');
 
 /*
 
@@ -195,11 +191,13 @@ class Command {
         }
 
         function displayNews() {
+            debug('');
             news.forEach((item) => {
                 var text = sprintf('%s - %s', item.name, item.title);
                 debug('DISPLAY', item.timestamp, sprintf('%s - %s', item.name, item.title));
                 queue.enqueue(new TextAnimation({text:text}));
             });            
+            debug('');
         }
 
         function subscribe(options) {
