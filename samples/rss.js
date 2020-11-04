@@ -177,7 +177,7 @@ class Command {
 
                 console.log('PING  ', item.timestamp, sprintf('%s - %s', item.name, item.title));
 
-                timer.setTimer(30000, () => {
+                timer.setTimer(5000, () => {
                     debug(JSON.stringify(news, null, '   '));
 
                 });
