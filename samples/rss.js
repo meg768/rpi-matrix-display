@@ -189,7 +189,7 @@ class Command {
 
             var supplier = '';
             var messages = [];
-            
+
             news.forEach((item) => {
                 var messages = [];
 
@@ -210,7 +210,7 @@ class Command {
             });            
             debug('------');
 
-            timer.setTimer(3 * 60000, displayNews);
+            timer.setTimer(30000, displayNews);
         }
 
         function subscribe(options) {
