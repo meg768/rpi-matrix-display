@@ -191,8 +191,6 @@ class Command {
             var messages = [];
 
             news.forEach((item) => {
-                var messages = [];
-
                 if (item.name != supplier) {
                     messages.push(item.name);
                     supplier = item.name;
