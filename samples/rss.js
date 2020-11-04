@@ -192,20 +192,21 @@ class Command {
 
             news.forEach((item) => {
                 if (item.name != supplier) {
-                    messages.push(item.name);
+                    messages.push({type:'FEED', text:item.name});
                     supplier = item.name;
                 }
 
-                messages.push(item.title);
+                messages.push({type:'TEXT', text:item.title});
             });            
 
             messages.forEach((message) => {
-                debug(message);
+                debug(message.type, message.text);
             })
 
             news.forEach((item) => {
                 debug('NEWS  ', item.timestamp, sprintf('%s - %s', item.name, item.title));
-            });            
+            });
+
             debug('------');
 
             timer.setTimer(30000, displayNews);
