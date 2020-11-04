@@ -188,7 +188,8 @@ class Command {
             debug('------');
 
             var supplier = '';
-
+            var messages = [];
+            
             news.forEach((item) => {
                 var messages = [];
 
