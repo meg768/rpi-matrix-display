@@ -151,18 +151,6 @@ class Command {
         if (argv.debug)
             debug = console.log;
 
-        debug(argv);
-
-        function subscribe(options) {
-            var {url, name} = options;
-            var feed = new Feed(options);
-            feed.on('ping', (item) => {
-                console.log('PING  ', item.timestamp, sprintf('%s - %s', item.name, item.title));
-            });
-        }
-        Matrix.configure(argv);
-        var queue = new AnimationQueue();
-
         var feeds = [
             {url: 'https://digital.di.se/rss',                                        name: 'DI               '},
             {url: 'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'Sydsvenskan      '},
@@ -172,6 +160,26 @@ class Command {
             {url: 'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC              '},
             {url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times   '}
         ];
+
+        var news = [];
+    
+        function subscribe(options) {
+            var feed = new Feed(options);
+            feed.on('ping', (item) => {
+                // Insert news at beginning
+                news.unshift({timestamp:item.timestamp, name:item.name, title:item.title});
+
+                // Keep first number of news
+                news = news.slice(0, 3);
+
+                console.log('PING  ', item.timestamp, sprintf('%s - %s', item.name, item.title));
+                debug(JSON.stringify(news, null, '   '));
+            });
+        }
+
+        Matrix.configure(argv);
+        var queue = new AnimationQueue();
+
         
         /*feeds = [
             {url: 'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet      '}
