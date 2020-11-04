@@ -189,6 +189,8 @@ class Command {
                 debug('NEWS  ', item.timestamp, sprintf('%s - %s', item.name, item.title));
             });            
             debug('------');
+
+            timer.setTimer(3 * 60000, displayNews);
         }
 
         function subscribe(options) {
@@ -203,8 +205,7 @@ class Command {
 
                 console.log('PING  ', item.timestamp, sprintf('%s - %s', item.name, item.title));
 
-                timer.setTimer(5000, () => {
-                    displayNews();
+                timer.setTimer(5000, displayNews);
                 });
             });
         }
@@ -222,7 +223,7 @@ class Command {
             subscribe(feed);
         });
 
-                
+        
 	}
     
 
