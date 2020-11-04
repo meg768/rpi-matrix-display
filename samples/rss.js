@@ -25,8 +25,7 @@ class Feed extends Events {
         this.url = url;
         this.name = name;
         this.parser = new Parser();
-        this.latest = undefined;
-        this.cache = undefined;
+        this.cache = {};
         this.run();
 
     }
@@ -43,10 +42,9 @@ class Feed extends Events {
         return new Promise((resolve, reject) => {
 
             this.parser.parseURL(this.url).then((feed) => {
-                var hoursAgo = 1;
                 var now = new Date();
-                var someTimeAgo = new Date(now.getTime() - hoursAgo * 60 * 60 * 1000);
-                var longTimeAgo = new Date(now.getTime() - 2 * hoursAgo * 60 * 60 * 1000);
+                var someTimeAgo = new Date(now.getTime() -  6 * 60 * 60 * 1000);
+                var longTimeAgo = new Date(now.getTime() - 12 * 60 * 60 * 1000);
 
                 // Create a timestamp for each item
                 feed.items.forEach((item) => {
@@ -68,34 +66,27 @@ class Feed extends Events {
                 
                 if (feed.items.length > 0) {
 
-                    if (this.cache == undefined) {
-                        this.cache = {};
-                        feed.items = [feed.items[feed.items.length - 1]];
-                    }
-
                     feed.items.forEach((item) => {
                         var key = sprintf('%s:%s', item.isoDate, item.title);
                         
                         if (this.cache[key] == undefined) {
-                            //debug('CReating cahe', key);
                             this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
                             this.cache[key] = item;
                         }
                     });
-/*
+
                     var cache = {};
 
                     // Clean up cache
                     for (var key in this.cache) {
                         var item = this.cache[key];
 
-                        if (item.timestamp.getTime() < longTimeAgo.getTime())
+                        if (item.timestamp.getTime() >= longTimeAgo.getTime())
                             cache[key] = item;
                     }
-
+                    
                     this.cache = cache;
-*/
-    
+
  
                 }
 
