@@ -26,7 +26,7 @@ class Feed extends Events {
         this.url = url;
         this.name = name;
         this.parser = new Parser();
-        this.cache = {};
+        this.cache = undefined;
         this.run();
 
     }
@@ -66,14 +66,32 @@ class Feed extends Events {
                 
                 if (feed.items.length > 0) {
 
-                    feed.items.forEach((item) => {
-                        var key = sprintf('%s:%s', item.isoDate, item.title);
-                        
-                        if (this.cache[key] == undefined) {
-                            this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
-                            this.cache[key] = item;
-                        }
-                    });
+                    if (this.cache == undefined) {
+
+                        var cache = {};
+                        var lastItem = feed.items[feed.items.length - 1];
+
+                        feed.items.forEach((item) => {
+                            var key = sprintf('%s:%s', item.isoDate, item.title);
+                            cache[key] = item;
+                        });
+
+                        this.cache = cache;                        
+                        this.emit('ping', {timestamp:lastItem.timestamp, name:this.name, title:lastItem.title});
+                            
+                    }
+                    else {
+                        feed.items.forEach((item) => {
+                            var key = sprintf('%s:%s', item.isoDate, item.title);
+    
+                            if (this.cache[key] == undefined) {
+                                this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
+                                this.cache[key] = item;
+                            }
+                        });
+    
+                    }
+
 
                     var cache = {};
 
