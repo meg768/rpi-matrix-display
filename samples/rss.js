@@ -185,7 +185,9 @@ class Command {
     
         function displayNews() {
             news.forEach((item) => {
+                debug('------');
                 debug('NEWS  ', item.timestamp, sprintf('%s - %s', item.name, item.title));
+                debug('------');
             });            
         }
 
