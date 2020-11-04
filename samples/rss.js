@@ -44,7 +44,6 @@ class Feed extends Events {
             this.parser.parseURL(this.url).then((feed) => {
                 var now = new Date();
                 var someTimeAgo = new Date(now.getTime() -  1 * 60 * 60 * 1000);
-                var longTimeAgo = new Date(now.getTime() - 12 * 60 * 60 * 1000);
 
                 // Create a timestamp for each item
                 feed.items.forEach((item) => {
@@ -59,7 +58,7 @@ class Feed extends Events {
                 
                 // Filter out latest/relevant RSS
                 feed.items = feed.items.filter((item) => {
-                    if (item.timestamp.getTime() > someTimeAgo.getTime())
+                    if (item.timestamp.getTime() >= someTimeAgo.getTime())
                         return item;
                 });
 
@@ -81,10 +80,10 @@ class Feed extends Events {
                     for (var key in this.cache) {
                         var item = this.cache[key];
 
-                        if (item.timestamp.getTime() >= longTimeAgo.getTime())
+                        if (item.timestamp.getTime() >= someTimeAgo.getTime())
                             cache[key] = item;
                     }
-
+                    debug(JSON.stringify(cache, null, '   '));
                     this.cache = cache;
 
  
@@ -172,11 +171,11 @@ class Command {
             {url: 'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC              '},
             {url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times   '}
         ];
-        /*
+        
         feeds = [
             {url: 'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet      '}
         ];
-        */
+        
         feeds.forEach((feed) => {
             subscribe(feed);
         });
