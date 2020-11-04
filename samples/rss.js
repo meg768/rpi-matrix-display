@@ -43,7 +43,7 @@ class Feed extends Events {
 
             this.parser.parseURL(this.url).then((feed) => {
                 var now = new Date();
-                var someTimeAgo = new Date(now.getTime() -  1 * 60 * 60 * 1000);
+                var someTimeAgo = new Date(now.getTime() -  12 * 60 * 60 * 1000);
 
                 // Create a timestamp for each item
                 feed.items.forEach((item) => {
@@ -83,7 +83,8 @@ class Feed extends Events {
                         if (item.timestamp.getTime() >= someTimeAgo.getTime())
                             cache[key] = item;
                     }
-                    debug(JSON.stringify(cache, null, '   '));
+
+                    //debug(JSON.stringify(cache, null, '   '));
                     this.cache = cache;
 
  
@@ -172,9 +173,10 @@ class Command {
             {url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times   '}
         ];
         
-        feeds = [
+        /*feeds = [
             {url: 'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet      '}
         ];
+        */
         
         feeds.forEach((feed) => {
             subscribe(feed);
