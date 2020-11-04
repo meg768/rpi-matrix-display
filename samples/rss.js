@@ -184,11 +184,11 @@ class Command {
         var timer = new Timer();
     
         function displayNews() {
+            debug('------');
             news.forEach((item) => {
-                debug('------');
                 debug('NEWS  ', item.timestamp, sprintf('%s - %s', item.name, item.title));
-                debug('------');
             });            
+            debug('------');
         }
 
         function subscribe(options) {
