@@ -43,7 +43,7 @@ class Feed extends Events {
 
             this.parser.parseURL(this.url).then((feed) => {
                 var now = new Date();
-                var someTimeAgo = new Date(now.getTime() -  6 * 60 * 60 * 1000);
+                var someTimeAgo = new Date(now.getTime() -  1 * 60 * 60 * 1000);
                 var longTimeAgo = new Date(now.getTime() - 12 * 60 * 60 * 1000);
 
                 // Create a timestamp for each item
@@ -84,7 +84,7 @@ class Feed extends Events {
                         if (item.timestamp.getTime() >= longTimeAgo.getTime())
                             cache[key] = item;
                     }
-                    
+
                     this.cache = cache;
 
  
