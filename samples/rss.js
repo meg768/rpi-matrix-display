@@ -9,6 +9,7 @@ var Parser = require('rss-parser');
 var Events = require('events');
 const { time } = require('console');
 const { emit } = require('process');
+const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require('constants');
 
 /*
 
@@ -185,6 +186,24 @@ class Command {
     
         function displayNews() {
             debug('------');
+
+            var supplier = '';
+
+            news.forEach((item) => {
+                var messages = [];
+
+                if (item.name != supplier) {
+                    messages.push(item.name);
+                    supplier = item.name;
+                }
+
+                messages.push(item.title);
+            });            
+
+            messages.forEach((message) => {
+                debug(message);
+            })
+
             news.forEach((item) => {
                 debug('NEWS  ', item.timestamp, sprintf('%s - %s', item.name, item.title));
             });            
