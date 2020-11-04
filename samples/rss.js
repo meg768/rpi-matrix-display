@@ -4,6 +4,7 @@ var TextAnimation = require('../src/text-animation.js');
 var AnimationQueue = require('rpi-animations').Queue;
 var Request = require('yow/request');
 var sprintf = require('yow/sprintf');
+var Timer = require('yow/timer');
 var Parser = require('rss-parser');
 var Events = require('events');
 const { time } = require('console');
@@ -64,7 +65,12 @@ class Feed extends Events {
 
                 
                 if (feed.items.length > 0) {
-
+/*
+                    if (this.cache == undefined) {
+                        this.cache = {};
+                        feed.items = [feed.items[feed.items.length - 1]];
+                    }
+*/
                     feed.items.forEach((item) => {
                         var key = sprintf('%s:%s', item.isoDate, item.title);
                         
@@ -162,9 +168,11 @@ class Command {
         ];
 
         var news = [];
+        var timer = new Timer();
     
         function subscribe(options) {
             var feed = new Feed(options);
+
             feed.on('ping', (item) => {
                 // Insert news at beginning
                 news.unshift({timestamp:item.timestamp, name:item.name, title:item.title});
@@ -173,7 +181,11 @@ class Command {
                 news = news.slice(0, 3);
 
                 console.log('PING  ', item.timestamp, sprintf('%s - %s', item.name, item.title));
-                debug(JSON.stringify(news, null, '   '));
+
+                timer.setTimer(30000, () => {
+                    debug(JSON.stringify(news, null, '   '));
+
+                });
             });
         }
 
