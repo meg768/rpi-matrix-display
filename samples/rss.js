@@ -192,7 +192,7 @@ class Command {
 
             news.forEach((item) => {
                 if (item.name != supplier) {
-                    messages.push({type:'type', text:item.name});
+                    messages.push({type:'title', text:item.name});
                     supplier = item.name;
                 }
 
