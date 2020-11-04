@@ -26,7 +26,7 @@ class Feed extends Events {
         this.url = url;
         this.name = name;
         this.parser = new Parser();
-        this.cache = {};
+        this.cache = undefined;
         this.run();
 
     }
@@ -65,12 +65,12 @@ class Feed extends Events {
 
                 
                 if (feed.items.length > 0) {
-/*
+
                     if (this.cache == undefined) {
                         this.cache = {};
                         feed.items = [feed.items[feed.items.length - 1]];
                     }
-*/
+
                     feed.items.forEach((item) => {
                         var key = sprintf('%s:%s', item.isoDate, item.title);
                         
