@@ -185,7 +185,7 @@ class Command {
     
         function displayNews() {
             news.forEach((item) => {
-                debug('NEWS  ', item.name, item.title);
+                debug('NEWS  ', item.timestamp, item.name, item.title);
             });            
         }
 
