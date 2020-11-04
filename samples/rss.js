@@ -249,9 +249,7 @@ class Command {
         });
 
         queue.on('idle', () => {
-            delay(60000).then(() => {
-                displayNews();
-            });
+            timer.setTimer(60000, displayNews);
         });
         
 	}
