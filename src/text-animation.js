@@ -1,6 +1,7 @@
 var root = '..';
 var path = require('path');
 var once = require('yow/once');
+var sprintf = require('yow/sprintf');
 
 var Matrix = require('rpi-matrix');
 var ScrollAnimation = require('./scroll-animation.js');
@@ -33,7 +34,14 @@ module.exports = class TextAnimation extends ScrollAnimation  {
 
         super(options);
 
-        var {text = 'ABC 123', fontSize = 0.65, emojiSize = 0.75, fontStyle = 'bold', fontName = 'Arial', textColor = 'purple'} = options;
+        var {text = 'ABC 123', fontSize = 0.65, emojiSize = 0.75, fontStyle = 'bold', fontName = 'Arial', textColor = 'auto'} = options;
+
+        if (textColor == 'auto') {
+            var now = new Date();
+            var hue = Math.floor(360 * (((now.getHours() % 12) * 60) + now.getMinutes()) / (12 * 60));
+    
+            textColor = sprintf('hsl(%d,100%%,50%%)', hue);    
+        }
 
         this.text       = text;
         this.fontSize   = fontSize;
@@ -44,6 +52,8 @@ module.exports = class TextAnimation extends ScrollAnimation  {
 
         this.colors     = require('color-name');
         this.emojis     = loadEmojis(path.join(__dirname, '../emojis'));
+
+
 
     }
 
