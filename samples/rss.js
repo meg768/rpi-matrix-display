@@ -124,7 +124,7 @@ class Feed extends Events {
         this.fetch().then(() => {
             setTimeout(() => {
                 this.run();
-            }, 5000);
+            }, 60000);
         })
         .catch((error) => {
             console.error(error);
@@ -154,7 +154,7 @@ class Command {
         args.option('textColor', {describe:'Specifies text color', alias:['color'], default:'auto'});
         args.option('pause', {describe:'Pause between news flashes in minutes', default:5});
         args.option('url', {describe:'Feed URL', default:'https://www.sydsvenskan.se/rss.xml?latest'});
-        args.option('debug', {describe:'Debug mode', default:true});
+        args.option('debug', {describe:'Debug mode', default:false});
 
         args.wrap(null);
 
@@ -185,14 +185,6 @@ class Command {
         var queue = new AnimationQueue();
 
 
-        function delay(ms) {
-            return new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    resolve();
-                }, ms);
-            });
-
-        }
 
         function displayNews() {
             debug('');
