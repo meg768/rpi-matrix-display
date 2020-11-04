@@ -38,6 +38,11 @@ class Feed extends Events {
         return new Promise((resolve, reject) => {
 
             this.parser.parseURL(this.url).then((feed) => {
+
+                function makeKey(item) {
+                    return sprintf('%s:%s', item.isoDate, item.title);
+                }
+
                 var now = new Date();
                 var someTimeAgo = new Date(now.getTime() -  12 * 60 * 60 * 1000);
 
@@ -62,13 +67,14 @@ class Feed extends Events {
                 if (feed.items.length > 0) {
 
                     if (this.cache == undefined) {
+                        // If first time, take only the last feed to ping and 
+                        // store the rest in cache
 
                         var cache = {};
                         var lastItem = feed.items[feed.items.length - 1];
 
                         feed.items.forEach((item) => {
-                            var key = sprintf('%s:%s', item.isoDate, item.title);
-                            cache[key] = item;
+                            cache[makeKey(item)] = item;
                         });
 
                         this.cache = cache;                        
@@ -77,7 +83,7 @@ class Feed extends Events {
                     }
                     else {
                         feed.items.forEach((item) => {
-                            var key = sprintf('%s:%s', item.isoDate, item.title);
+                            var key = makeKey(item);
     
                             if (this.cache[key] == undefined) {
                                 this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
