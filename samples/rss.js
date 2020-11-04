@@ -206,7 +206,6 @@ class Command {
                 console.log('PING  ', item.timestamp, sprintf('%s - %s', item.name, item.title));
 
                 timer.setTimer(5000, displayNews);
-                });
             });
         }
 
