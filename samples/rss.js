@@ -104,7 +104,6 @@ class Feed extends Events {
                             cache[key] = item;
                     }
 
-                    //debug(JSON.stringify(cache, null, '   '));
                     this.cache = cache;
 
  
@@ -198,6 +197,7 @@ class Command {
         function displayNews() {
             news.forEach((item) => {
                 var text = sprintf('%s - %s', item.name, item.title);
+                debug('DISPLAY', item.timestamp, sprintf('%s - %s', item.name, item.title));
                 queue.enqueue(new TextAnimation({text:text}));
             });            
         }
@@ -212,7 +212,7 @@ class Command {
                 // Keep first number of news
                 news = news.slice(0, 3);
 
-                console.log('PING  ', item.timestamp, sprintf('%s - %s', item.name, item.title));
+                debug('PING   ', item.timestamp, sprintf('%s - %s', item.name, item.title));
 
                 timer.setTimer(5000, displayNews);
             });
