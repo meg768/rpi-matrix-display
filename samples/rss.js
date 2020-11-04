@@ -183,7 +183,18 @@ class Command {
 
         var news = [];
         var timer = new Timer();
-    
+        var queue = new AnimationQueue();
+
+
+        function delay(ms) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve();
+                }, ms);
+            });
+
+        }
+
         function displayNews() {
             debug('------');
 
@@ -200,12 +211,13 @@ class Command {
             });            
 
             messages.forEach((message) => {
-                debug(JSON.stringify(message, null, '    '));
+                queue.enqueue(new TextAnimation({text:message.text}));
+                debug(message.text);
+                //debug(JSON.stringify(message, null, '    '));
             })
 
             debug('------');
 
-            timer.setTimer(30000, displayNews);
         }
 
         function subscribe(options) {
@@ -225,7 +237,6 @@ class Command {
         }
 
         Matrix.configure(argv);
-        var queue = new AnimationQueue();
 
         
         /*feeds = [
@@ -237,6 +248,11 @@ class Command {
             subscribe(feed);
         });
 
+        queue.on('idle', () => {
+            delay(60000).then(() => {
+                displayNews();
+            });
+        });
         
 	}
     
