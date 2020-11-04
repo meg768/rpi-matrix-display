@@ -196,28 +196,10 @@ class Command {
         }
 
         function displayNews() {
-            debug('------');
-
-            var supplier = '';
-            var messages = [];
-
             news.forEach((item) => {
-                if (item.name != supplier) {
-                    messages.push({type:'title', text:item.name});
-                    supplier = item.name;
-                }
-
-                messages.push({type:'text', text:item.title});
+                var text = sprintf('%s - %s', item.name, item.title);
+                queue.enqueue(new TextAnimation({text:text}));
             });            
-
-            messages.forEach((message) => {
-                queue.enqueue(new TextAnimation({text:message.text}));
-                debug(message.text);
-                //debug(JSON.stringify(message, null, '    '));
-            })
-
-            debug('------');
-
         }
 
         function subscribe(options) {
