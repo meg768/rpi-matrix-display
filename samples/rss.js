@@ -224,6 +224,7 @@ class Command {
             })
         });
         
+        debug('Yepp!');
 	}
     
 
