@@ -16,16 +16,16 @@ class Feed extends Events {
     constructor(options) {
         super(options);
 
-        var {url, name = 'Noname'} = options;
+        var {schedule = '*/1 * * * *', url, name = 'Noname'} = options;
 
         this.url = url;
         this.name = name;
         this.parser = new Parser();
         this.cache = undefined;
+        this.schedule = schedule;
 
+        Schedule.scheduleJob(this.schedule, this.fetch);
     }
-
-
 
     fetch() {
         return new Promise((resolve, reject) => {
@@ -115,6 +115,9 @@ class Feed extends Events {
         });
 
     }
+
+
+
 }
 
 class Command {
@@ -182,21 +185,6 @@ class Command {
             });            
         }
 
-        function fetchNews() {
-            debug('Fetching RSS feeds...');
-
-            var promises = feeds.map((item) => {
-                return item.fetch();
-            })
-
-            Promise.all(promises).then(() => {
-                debug('Finished fetching.');
-            })
-            .catch((error) => {
-                console.error(error);
-            })
-
-        }
 
         function subscribe(options) {
             var feed = new Feed(options);
@@ -221,12 +209,6 @@ class Command {
         queue.on('idle', () => {
             timer.setTimer(5 * 60000, displayNews);
         });
-
-        Schedule.scheduleJob('*/3 * * * *', () => {
-            fetchNews();
-        });
-
-        fetchNews();
 
 	}
     
