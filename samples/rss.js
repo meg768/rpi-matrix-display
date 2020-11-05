@@ -24,7 +24,7 @@ class Feed extends Events {
         this.cache = undefined;
         this.schedule = schedule;
 
-        Schedule.scheduleJob(this.schedule, this.fetch);
+        Schedule.scheduleJob(schedule, this.fetch);
     }
 
     fetch() {
