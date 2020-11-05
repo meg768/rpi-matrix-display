@@ -167,6 +167,12 @@ class Command {
         var queue = new AnimationQueue();
         var feeds = [];
 
+        Matrix.configure(argv);
+
+        urls.forEach((url) => {
+            subscribe(url);
+        });
+
 
         function displayNews() {
             news.forEach((item) => {
@@ -175,8 +181,6 @@ class Command {
                 queue.enqueue(new TextAnimation({text:text}));
             });            
         }
-
-
 
         function subscribe(options) {
             var feed = new Feed(options);
@@ -196,18 +200,13 @@ class Command {
             feeds.push(feed);
         }
 
-        Matrix.configure(argv);
 
         
-        urls.forEach((url) => {
-            subscribe(url);
-        });
-
         queue.on('idle', () => {
-            timer.setTimer(60000, displayNews);
+            timer.setTimer(5 * 60000, displayNews);
         });
 
-        Schedule.scheduleJob('*/1 * * * *', () => {
+        Schedule.scheduleJob('*/3 * * * *', () => {
             debug('Fetching RSS feeds...');
 
             var promises = feeds.map((item) => {
@@ -221,8 +220,8 @@ class Command {
                 console.error(error);
             })
         });
-        
-        debug('Yepp!');
+
+
 	}
     
 
