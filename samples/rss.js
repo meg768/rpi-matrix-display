@@ -6,7 +6,7 @@ var sprintf = require('yow/sprintf');
 var Timer = require('yow/timer');
 var Parser = require('rss-parser');
 var Events = require('events');
-
+var Schedule = require('node-schedule');
 
 
 var debug = function() {
@@ -22,20 +22,15 @@ class Feed extends Events {
         this.name = name;
         this.parser = new Parser();
         this.cache = undefined;
-        this.run();
 
     }
 
-    delay(ms) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve();
-            }, ms);
-        });
-    }
+
 
     fetch() {
         return new Promise((resolve, reject) => {
+
+            debug('Fetching RSS for %s...', this.name);
 
             this.parser.parseURL(this.url).then((feed) => {
 
@@ -109,6 +104,7 @@ class Feed extends Events {
  
                 }
 
+                debug('Finished fetching RSS feed %s.', this.name);
                 resolve();
             })
             .catch((error) => {
@@ -119,20 +115,6 @@ class Feed extends Events {
         });
 
     }
-
-    run() {
-        this.fetch().then(() => {
-            setTimeout(() => {
-                this.run();
-            }, 60000);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-
-    }
-    
-
 }
 
 class Command {
@@ -170,7 +152,7 @@ class Command {
         if (argv.debug)
             debug = console.log;
 
-        var feeds = [
+        var urls = [
             {url: 'https://digital.di.se/rss',                                        name: 'DI'},
             {url: 'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS'},
             {url: 'http://www.svd.se/?service=rss',                                   name: 'SvD'},
@@ -183,7 +165,7 @@ class Command {
         var news = [];
         var timer = new Timer();
         var queue = new AnimationQueue();
-
+        var feeds = [];
 
 
         function displayNews() {
@@ -195,6 +177,8 @@ class Command {
             });            
             debug('');
         }
+
+
 
         function subscribe(options) {
             var feed = new Feed(options);
@@ -210,22 +194,30 @@ class Command {
 
                 timer.setTimer(5000, displayNews);
             });
+
+            feeds.push(feed);
         }
 
         Matrix.configure(argv);
 
         
-        /*feeds = [
-            {url: 'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet      '}
-        ];
-        */
-        
-        feeds.forEach((feed) => {
-            subscribe(feed);
+        urls.forEach((url) => {
+            subscribe(url);
         });
 
         queue.on('idle', () => {
             timer.setTimer(60000, displayNews);
+        });
+
+        Schedule.scheduleJob('0 0/1 * 1/1 * ? *', () => {
+            debug('Fetching RSS feeds...');
+            
+            Promise.all(feeds).then(() => {
+                debug('Finished fetching.');
+            })
+            .catch((error) => {
+                console.error(error);
+            })
         });
         
 	}
