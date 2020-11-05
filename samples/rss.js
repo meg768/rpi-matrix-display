@@ -209,7 +209,7 @@ class Command {
             timer.setTimer(60000, displayNews);
         });
 
-        Schedule.scheduleJob('42 * * * *', () => {
+        Schedule.scheduleJob('0 * * * *', () => {
             debug('Fetching RSS feeds...');
 
             var promises = feeds.map((item) => {
