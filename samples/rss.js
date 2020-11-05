@@ -169,13 +169,11 @@ class Command {
 
 
         function displayNews() {
-            debug('');
             news.forEach((item) => {
                 var text = sprintf('%s - %s', item.name, item.title);
-                debug('DISPLAY', item.timestamp, sprintf('%s - %s', item.name, item.title));
+                debug('Displaying %s...', text);
                 queue.enqueue(new TextAnimation({text:text}));
             });            
-            debug('');
         }
 
 
@@ -190,7 +188,7 @@ class Command {
                 // Keep first number of news
                 news = news.slice(0, 3);
 
-                debug('PING   ', item.timestamp, sprintf('%s - %s', item.name, item.title));
+                debug('Ping', item.timestamp, sprintf('%s - %s', item.name, item.title));
 
                 timer.setTimer(5000, displayNews);
             });
