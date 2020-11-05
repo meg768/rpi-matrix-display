@@ -182,6 +182,22 @@ class Command {
             });            
         }
 
+        function fetchNews() {
+            debug('Fetching RSS feeds...');
+
+            var promises = feeds.map((item) => {
+                return item.fetch();
+            })
+
+            Promise.all(promises).then(() => {
+                debug('Finished fetching.');
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+
+        }
+
         function subscribe(options) {
             var feed = new Feed(options);
 
@@ -207,20 +223,10 @@ class Command {
         });
 
         Schedule.scheduleJob('*/3 * * * *', () => {
-            debug('Fetching RSS feeds...');
-
-            var promises = feeds.map((item) => {
-                return item.fetch();
-            })
-
-            Promise.all(promises).then(() => {
-                debug('Finished fetching.');
-            })
-            .catch((error) => {
-                console.error(error);
-            })
+            fetchNews();
         });
 
+        fetchNews();
 
 	}
     
