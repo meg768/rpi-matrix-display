@@ -211,8 +211,12 @@ class Command {
 
         Schedule.scheduleJob('0 0/1 * 1/1 * ? *', () => {
             debug('Fetching RSS feeds...');
-            
-            Promise.all(feeds).then(() => {
+
+            var fetches = feeds.map((item) => {
+                return item.fetch;
+            })
+
+            Promise.all(fetches).then(() => {
                 debug('Finished fetching.');
             })
             .catch((error) => {
