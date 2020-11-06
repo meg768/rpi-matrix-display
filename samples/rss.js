@@ -140,10 +140,10 @@ class Command {
         args.usage('Usage: $0 [options]');
 
         args.option('help', {describe:'Displays this information'});
-        args.option('textColor', {describe:'Specifies text color', alias:['color'], default:'auto'});
+        args.option('textColor', {describe:'Specifies text color', alias:['color'], default:'red'});
         args.option('pause', {describe:'Pause between news flashes in minutes', default:5});
         args.option('url', {describe:'Feed URL', default:'https://www.sydsvenskan.se/rss.xml?latest'});
-        args.option('debug', {describe:'Debug mode', default:true});
+        args.option('debug', {describe:'Debug mode', default:false});
 
         args.wrap(null);
 
