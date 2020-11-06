@@ -74,6 +74,9 @@ class App {
 	}
 
 	run() {
+
+		require('yow/prefixConsole')();
+		
 		try {
 
 			var defaultConfig = this.getDefaultConfig();

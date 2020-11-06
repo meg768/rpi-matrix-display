@@ -162,6 +162,15 @@ class Command {
             debug = console.log;
         }
 
+        Matrix.configure(argv);
+
+
+        var news = [];
+        var timer = new Timer();
+        var queue = new AnimationQueue();
+        var feeds = [];
+        var schedule = Schedule.scheduleJob(argv.schedule, displayNews);
+
         var urls = [
             {url: 'https://digital.di.se/rss',                                        name: 'DI'},
             {url: 'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS'},
@@ -172,22 +181,16 @@ class Command {
             {url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times'}
         ];
 
-        var news = [];
-        var timer = new Timer();
-        var queue = new AnimationQueue();
-        var feeds = [];
-
-        Matrix.configure(argv);
-
         urls.forEach((url) => {
             subscribe(url);
         });
 
-        Schedule.scheduleJob(argv.schedule, () => {
-            displayNews();
-        });
 
         function displayNews() {
+            // Cancel scheduling temporarily
+            if (news.length > 0)
+                schedule.cancel();
+
             news.forEach((item) => {
                 var text = sprintf('%s - %s', item.name, item.title);
                 debug('Displaying %s...', text);
@@ -214,11 +217,14 @@ class Command {
             feeds.push(feed);
         }
 
-        /*
+        
         queue.on('idle', () => {
-            timer.setTimer(5 * 60000, displayNews);
+            timer.setTimer(1000, () => {
+                schedule = Schedule.scheduleJob(argv.schedule, displayNews);
+                debug('Matrix idle, starting schedule again. Next invication is', schedule.nextInvocation());
+            });
         });
-        */
+        
 
 	}
     
