@@ -161,7 +161,7 @@ class Command {
         if (argv.debug) {
             debug = console.log;
         }
-
+console.log(argv);
         var urls = [
             {url: 'https://digital.di.se/rss',                                        name: 'DI'},
             {url: 'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS'},
