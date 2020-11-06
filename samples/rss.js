@@ -141,8 +141,7 @@ class Command {
 
         args.option('help', {describe:'Displays this information'});
         args.option('textColor', {describe:'Specifies text color', alias:['color'], default:'red'});
-        args.option('pause', {describe:'Pause between news flashes in minutes', default:5});
-        args.option('url', {describe:'Feed URL', default:'https://www.sydsvenskan.se/rss.xml?latest'});
+        args.option('schedule', {describe:'Display frequency in cron format', default:'*/5 * * * *'});
         args.option('debug', {describe:'Debug mode', default:false});
 
         args.wrap(null);
@@ -180,12 +179,15 @@ class Command {
             subscribe(url);
         });
 
+        Schedule.scheduleJob(argv.schedule, () => {
+            displayNews();
+        });
 
         function displayNews() {
             news.forEach((item) => {
                 var text = sprintf('%s - %s', item.name, item.title);
                 debug('Displaying %s...', text);
-                queue.enqueue(new TextAnimation({...argv, text:text}));
+                queue.enqueue(new TextAnimation({textColor:argv.textColor, text:text}));
             });            
         }
 
@@ -208,11 +210,11 @@ class Command {
             feeds.push(feed);
         }
 
-
-        
+        /*
         queue.on('idle', () => {
             timer.setTimer(5 * 60000, displayNews);
         });
+        */
 
 	}
     
