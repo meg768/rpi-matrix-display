@@ -108,7 +108,7 @@ class Feed extends Events {
  
                 }
 
-                debug('Finished fetching RSS feed %s.', this.name);
+                debug(sprintf('Finished fetching RSS feed %s.', this.name));
                 resolve();
             })
             .catch((error) => {
@@ -169,7 +169,7 @@ class Command {
         var timer = new Timer();
         var queue = new AnimationQueue();
         var feeds = [];
-        var schedule = Schedule.scheduleJob(argv.schedule, displayNews);
+        //var schedule = Schedule.scheduleJob(argv.schedule, displayNews);
 
         var urls = [
             {url: 'https://digital.di.se/rss',                                        name: 'DI'},
@@ -188,12 +188,14 @@ class Command {
 
         function displayNews() {
             // Cancel scheduling temporarily
+            /*
             if (news.length > 0)
                 schedule.cancel();
+            */
 
             news.forEach((item) => {
                 var text = sprintf('%s - %s', item.name, item.title);
-                debug('Displaying %s...', text);
+                debug(sprintf('Displaying %s...', text));
                 queue.enqueue(new TextAnimation({textColor:argv.textColor, text:text}));
             });            
         }
@@ -219,10 +221,13 @@ class Command {
 
         
         queue.on('idle', () => {
+            timer.setTimer(5 * 60 * 1000, displayNews);
+            /*
             timer.setTimer(1000, () => {
                 schedule = Schedule.scheduleJob(argv.schedule, displayNews);
                 debug('Matrix idle, starting schedule again. Next invication is', schedule.nextInvocation());
             });
+            */
         });
         
 
