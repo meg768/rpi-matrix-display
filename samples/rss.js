@@ -155,8 +155,12 @@ class Command {
 
 
 	run(argv) {
-        if (argv.debug)
+        if (argv.debug != undefined && !argv.debug)
+            delete argv.debug;
+
+        if (argv.debug) {
             debug = console.log;
+        }
 
         var urls = [
             {url: 'https://digital.di.se/rss',                                        name: 'DI'},
