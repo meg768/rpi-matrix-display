@@ -185,7 +185,7 @@ class Command {
             news.forEach((item) => {
                 var text = sprintf('%s - %s', item.name, item.title);
                 debug('Displaying %s...', text);
-                queue.enqueue(new TextAnimation({text:text}));
+                queue.enqueue(new TextAnimation({...argv, text:text}));
             });            
         }
 
