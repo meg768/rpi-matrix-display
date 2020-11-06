@@ -142,7 +142,7 @@ class Command {
         args.option('help', {describe:'Displays this information'});
         args.option('textColor', {describe:'Specifies text color', alias:['color'], default:'red'});
         args.option('schedule', {describe:'Display frequency in cron format', default:'*/5 * * * *'});
-        args.option('debug', {describe:'Debug mode', default:false});
+        args.option('debug', {describe:'Debug mode', type:'boolean', default:false});
 
         args.wrap(null);
 
