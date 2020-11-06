@@ -34,7 +34,7 @@ class Feed extends Events {
     fetch() {
         return new Promise((resolve, reject) => {
 
-            debug('Fetching RSS for %s...', this.name);
+            debug(sprintf('Fetching RSS for %s...', this.name));
 
             this.parser.parseURL(this.url).then((feed) => {
 
