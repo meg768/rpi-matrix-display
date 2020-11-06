@@ -141,7 +141,7 @@ class Command {
 
         args.option('help', {describe:'Displays this information'});
         args.option('textColor', {describe:'Specifies text color', alias:['color'], default:'red'});
-        args.option('schedule', {describe:'Display frequency in cron format', default:'*/5 * * * *'});
+        args.option('schedule', {describe:'Display frequency in cron format', default:'30 */2 * * * *'});
         args.option('debug', {describe:'Debug mode', type:'boolean', default:false});
 
         args.wrap(null);
@@ -161,7 +161,7 @@ class Command {
         if (argv.debug) {
             debug = console.log;
         }
-console.log(argv);
+
         var urls = [
             {url: 'https://digital.di.se/rss',                                        name: 'DI'},
             {url: 'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS'},
