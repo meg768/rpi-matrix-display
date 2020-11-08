@@ -11,6 +11,9 @@ var Schedule = require('node-schedule');
 var rssFeeds = {
     'di': {
         url:'https://digital.di.se/rss', name: 'DI', description:'Show Dagens Industri', favorite: true
+    },
+    'xx': {
+        url:'https://digital.di.se/rss', name: 'DI', description:'Show Dagens Industri', favorite: true
     }
 };
 
@@ -164,7 +167,7 @@ class Command {
         for (var key in rssFeeds) {
             var item = rssFeeds[key];
             var {description, favorite} = item;
-            args.option(key, {describe:description, type:'boolean', default:favorite});
+            args.option('feed', {alias: 'f', describe:description});
         }
 
         args.wrap(null);
@@ -184,6 +187,8 @@ class Command {
         if (argv.debug) {
             debug = console.log;
         }
+
+        console.log(argv);
 
         Matrix.configure(argv);
 
