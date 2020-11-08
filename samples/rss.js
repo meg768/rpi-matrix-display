@@ -204,18 +204,6 @@ class Command {
         var timer = new Timer();
         var queue = new AnimationQueue();
         var feeds = [];
-        //var schedule = Schedule.scheduleJob(argv.schedule, displayNews);
-
-        var urls = [
-            {url: 'https://digital.di.se/rss',                                        name: 'DI'},
-            {url: 'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS'},
-            {url: 'http://www.svd.se/?service=rss',                                   name: 'SvD'},
-            {url: 'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet'},
-            {url: 'https://feeds.expressen.se/nyheter',                               name: 'Expressen'},
-            // {url: 'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC'},
-            // {url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times'},
-            {url: 'http://api.sr.se/api/rss/program/83?format=145',                   name: 'Sveriges Radio'}
-        ];
 
         for (var key in rssFeeds) {
             var item = rssFeeds[key];
@@ -223,18 +211,11 @@ class Command {
             if (argv[key]) {
                 debug(sprintf('Subscribing to %s - url %s'), item.name, item.url);
                 subscribe({url:item.url, name:item.name});
-
             }
         }
 
 
         function displayNews() {
-            // Cancel scheduling temporarily
-            /*
-            if (news.length > 0)
-                schedule.cancel();
-            */
-
             news.forEach((item) => {
                 var text = sprintf('%s - %s', item.name, item.title);
                 debug(sprintf('Displaying %s...', text));
@@ -264,12 +245,6 @@ class Command {
         
         queue.on('idle', () => {
             timer.setTimer(5 * 60 * 1000, displayNews);
-            /*
-            timer.setTimer(1000, () => {
-                schedule = Schedule.scheduleJob(argv.schedule, displayNews);
-                debug('Matrix idle, starting schedule again. Next invication is', schedule.nextInvocation());
-            });
-            */
         });
         
 
