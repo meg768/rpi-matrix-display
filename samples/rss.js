@@ -10,10 +10,16 @@ var Schedule = require('node-schedule');
 
 var rssFeeds = {
     'di': {
-        url:'https://digital.di.se/rss', name: 'DI', description:'Show Dagens Industri', favorite: true
+        url:'https://digital.di.se/rss', name: 'DI', description:'Dagens Industri', favorite: true
     },
-    'xx': {
-        url:'https://digital.di.se/rss', name: 'DI', description:'Show Dagens Industri', favorite: true
+    'sds': {
+        url:'https://www.sydsvenskan.se/rss.xml?latest', name: 'SDS', description:'Sydsvenska Dagbladet', favorite: true
+    },
+    'sr': {
+        url:'http://api.sr.se/api/rss/program/83?format=145', name: 'SR', description:'Sveriges Radio', favorite: true
+    },
+    'aftonbladet': {
+        url:'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet', description:'Aftonbladet', favorite: true
     }
 };
 
@@ -167,7 +173,7 @@ class Command {
         for (var key in rssFeeds) {
             var item = rssFeeds[key];
             var {description, favorite} = item;
-            args.option('feed', {alias: 'f', describe:description});
+            args.option(key, {describe:sprintf('Show news from %s', description), type:'boolean', default:favorite});
         }
 
         args.wrap(null);
@@ -210,9 +216,15 @@ class Command {
             {url: 'http://api.sr.se/api/rss/program/83?format=145',                   name: 'Sveriges Radio'}
         ];
 
-        urls.forEach((url) => {
-            subscribe(url);
-        });
+        for (var key in rssFeeds) {
+            var item = rssFeeds[key];
+
+            if (argv[key]) {
+                debug(sprintf('Subscribing to %s - url %s'), item.name, item.url);
+                subscribe({url:item.url, name:item.name});
+
+            }
+        }
 
 
         function displayNews() {
