@@ -177,8 +177,9 @@ class Command {
             {url: 'http://www.svd.se/?service=rss',                                   name: 'SvD'},
             {url: 'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet'},
             {url: 'https://feeds.expressen.se/nyheter',                               name: 'Expressen'},
-            {url: 'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC'},
-            {url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times'}
+            // {url: 'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC'},
+            // {url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times'},
+            {url: 'http://api.sr.se/api/rss/program/83?format=145',                   name: 'Sveriges Radio'}
         ];
 
         urls.forEach((url) => {
