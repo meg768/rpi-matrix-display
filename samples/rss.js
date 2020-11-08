@@ -8,6 +8,23 @@ var Parser = require('rss-parser');
 var Events = require('events');
 var Schedule = require('node-schedule');
 
+var rssFeeds = {
+    'di': {
+        url:'https://digital.di.se/rss', name: 'DI', describe:'Show Dagens Industri', default: true
+    }
+};
+
+/*
+    {url: 'https://digital.di.se/rss',                                        name: 'DI', option: 'di', description: 'Dagens Industri'},
+    {url: 'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS', option: 'sds'},
+    {url: 'http://www.svd.se/?service=rss',                                   name: 'SvD'},
+    {url: 'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet'},
+    {url: 'https://feeds.expressen.se/nyheter',                               name: 'Expressen'},
+    {url: 'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC'},
+    {url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times'},
+    {url: 'http://api.sr.se/api/rss/program/83?format=145',                   name: 'Sveriges Radio'}
+];
+*/
 
 var debug = function() {
 }
@@ -143,6 +160,12 @@ class Command {
         args.option('textColor', {describe:'Specifies text color', alias:['color'], default:'red'});
         args.option('schedule', {describe:'Display frequency in cron format', default:'30 */2 * * * *'});
         args.option('debug', {describe:'Debug mode', type:'boolean', default:false});
+
+        for (var key in rssFeeds) {
+            var item = rssFeeds[key];
+            var {describe, default} = item;
+            args.option(key, {describe:describe, type:'boolean', default:default});
+        }
 
         args.wrap(null);
 
