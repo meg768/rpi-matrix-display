@@ -10,7 +10,7 @@ var Schedule = require('node-schedule');
 
 var rssFeeds = {
     'di': {
-        url:'https://digital.di.se/rss', name: 'DI', describe:'Show Dagens Industri', default: true
+        url:'https://digital.di.se/rss', name: 'DI', description:'Show Dagens Industri', favorite: true
     }
 };
 
@@ -163,8 +163,8 @@ class Command {
 
         for (var key in rssFeeds) {
             var item = rssFeeds[key];
-            var {describe, default} = item;
-            args.option(key, {describe:describe, type:'boolean', default:default});
+            var {description, favorite} = item;
+            args.option(key, {describe:description, type:'boolean', default:favorite});
         }
 
         args.wrap(null);
