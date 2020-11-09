@@ -10,11 +10,11 @@ var Schedule = require('node-schedule');
 
 var rssFeeds = {
     'di' :         {url:'https://digital.di.se/rss',                                        name: 'DI',             description:'Dagens Industri',          favorite: true, displayName:':di:'},
-    'sds':         {url:'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS',            description:'Sydsvenska Dagbladet',     favorite: true, displayName:':beer:'},
-    'sr':          {url:'http://api.sr.se/api/rss/program/83?format=145',                   name: 'SR',             description:'Sveriges Radio',           favorite: true, displayName:':bomb:'},
+    'sds':         {url:'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS',            description:'Sydsvenska Dagbladet',     favorite: true, displayName:':sds:'},
+    'sr':          {url:'http://api.sr.se/api/rss/program/83?format=145',                   name: 'SR',             description:'Sveriges Radio',           favorite: true, displayName:':sr:'},
     'bbc':         {url:'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC',            description:'BBC',                      favorite: false},
-    'svd':         {url:'http://www.svd.se/?service=rss',                                   name: 'SvD',            description:'Svenska Dagbladet',        favorite: true, displayName:':broom:'},
-    'expressen':   {url:'https://feeds.expressen.se/nyheter',                               name: 'Expressen',      description:'Expressen',                favorite: true, displayName:':droplet:'},
+    'svd':         {url:'http://www.svd.se/?service=rss',                                   name: 'SvD',            description:'Svenska Dagbladet',        favorite: true, displayName:':svd:'},
+    'expressen':   {url:'https://feeds.expressen.se/nyheter',                               name: 'Expressen',      description:'Expressen',                favorite: true, displayName:':expressen:'},
     'nytimes':     {url:'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times', description:'New York Times',           favorite: false},
     'aftonbladet': {url:'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet',    description:'Aftonbladet',              favorite: true, displayName:':crazy:'}
 };
