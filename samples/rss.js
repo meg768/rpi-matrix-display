@@ -9,8 +9,8 @@ var Events = require('events');
 var Schedule = require('node-schedule');
 
 var rssFeeds = {
-    'di' :         {url:'https://digital.di.se/rss',                                        name: 'DI',             description:'Dagens Industri',          favorite: true},
-    'sds':         {url:'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS',            description:'Sydsvenska Dagbladet',     favorite: true},
+    'di' :         {url:'https://digital.di.se/rss',                                        name: 'DI',             description:'Dagens Industri',          favorite: true, emoji:'di'},
+    'sds':         {url:'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS',            description:'Sydsvenska Dagbladet',     favorite: true, emoji:'di'},
     'sr':          {url:'http://api.sr.se/api/rss/program/83?format=145',                   name: 'SR',             description:'Sveriges Radio',           favorite: true},
     'bbc':         {url:'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC',            description:'BBC',                      favorite: false},
     'svd':         {url:'http://www.svd.se/?service=rss',                                   name: 'SvD',            description:'Svenska Dagbladet',        favorite: true},
@@ -27,14 +27,15 @@ class Feed extends Events {
     constructor(options) {
         super(options);
 
-        var {schedule = '*/1 * * * *', url, name = 'Noname'} = options;
+        var {schedule = '*/1 * * * *', url, emoji, name = 'Noname'} = options;
 
         this.url = url;
         this.name = name;
+
         this.parser = new Parser();
         this.cache = undefined;
         this.schedule = schedule;
-
+        this.emoji = emoji;
         this.fetch();
 
         Schedule.scheduleJob(schedule, () => {
@@ -88,7 +89,7 @@ class Feed extends Events {
                         });
 
                         this.cache = cache;                        
-                        this.emit('ping', {timestamp:lastItem.timestamp, name:this.name, title:lastItem.title});
+                        this.emit('ping', {timestamp:lastItem.timestamp, name:this.name, title:lastItem.title, emoji:this.emoji});
                             
                     }
                     else {
@@ -192,14 +193,14 @@ class Command {
 
             if (argv[key]) {
                 debug(sprintf('Subscribing to %s - url %s'), item.name, item.url);
-                subscribe({url:item.url, name:item.name});
+                subscribe({url:item.url, name:item.name, emoji:item.emoji});
             }
         }
 
 
         function displayNews() {
             news.forEach((item) => {
-                var text = sprintf(':di: %s - %s', item.name, item.title);
+                var text = sprintf('%s - %s', item.emoji ? sprintf(':%s', item.emoji) : item.name, item.title);
                 debug(sprintf('Displaying %s...', text));
                 queue.enqueue(new TextAnimation({textColor:argv.textColor, text:text}));
             });            
@@ -211,7 +212,7 @@ class Command {
 
             feed.on('ping', (item) => {
                 // Insert news at beginning
-                news.unshift({timestamp:item.timestamp, name:item.name, title:item.title});
+                news.unshift({timestamp:item.timestamp, name:item.name, title:item.title, emoji:item.emoji});
 
                 // Keep first number of news
                 news = news.slice(0, 5);
