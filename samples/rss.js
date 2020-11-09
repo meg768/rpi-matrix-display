@@ -199,7 +199,7 @@ class Command {
 
         function displayNews() {
             news.forEach((item) => {
-                var text = sprintf(':grin: %s - %s', item.name, item.title);
+                var text = sprintf(':di: %s - %s', item.name, item.title);
                 debug(sprintf('Displaying %s...', text));
                 queue.enqueue(new TextAnimation({textColor:argv.textColor, text:text}));
             });            
