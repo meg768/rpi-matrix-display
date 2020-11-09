@@ -152,7 +152,6 @@ class Command {
 
         args.option('help', {describe:'Displays this information'});
         args.option('textColor', {describe:'Specifies text color', alias:['color'], default:'red'});
-        args.option('schedule', {describe:'Display frequency in cron format', default:'30 */2 * * * *'});
         args.option('debug', {describe:'Debug mode', type:'boolean', default:false});
 
         for (var key in rssFeeds) {
@@ -178,7 +177,7 @@ class Command {
             debug = console.log;
         }
 
-        console.log(argv);
+        debug(argv);
 
         Matrix.configure(argv);
 
@@ -215,7 +214,7 @@ class Command {
                 news.unshift({timestamp:item.timestamp, name:item.name, title:item.title});
 
                 // Keep first number of news
-                news = news.slice(0, 3);
+                news = news.slice(0, 5);
 
                 debug('Ping', item.timestamp, sprintf('%s - %s', item.name, item.title));
 
