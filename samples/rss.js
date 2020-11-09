@@ -9,14 +9,14 @@ var Events = require('events');
 var Schedule = require('node-schedule');
 
 var rssFeeds = {
-    'di' :         {url:'https://digital.di.se/rss',                                        name: 'DI',             description:'Dagens Industri',          favorite: true, emoji:'di'},
-    'sds':         {url:'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS',            description:'Sydsvenska Dagbladet',     favorite: true, emoji:'di'},
-    'sr':          {url:'http://api.sr.se/api/rss/program/83?format=145',                   name: 'SR',             description:'Sveriges Radio',           favorite: true},
+    'di' :         {url:'https://digital.di.se/rss',                                        name: 'DI',             description:'Dagens Industri',          favorite: true, displayName:':di:'},
+    'sds':         {url:'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS',            description:'Sydsvenska Dagbladet',     favorite: true, displayName:':beer:'},
+    'sr':          {url:'http://api.sr.se/api/rss/program/83?format=145',                   name: 'SR',             description:'Sveriges Radio',           favorite: true, displayName:':bomb:'},
     'bbc':         {url:'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC',            description:'BBC',                      favorite: false},
-    'svd':         {url:'http://www.svd.se/?service=rss',                                   name: 'SvD',            description:'Svenska Dagbladet',        favorite: true},
-    'expressen':   {url:'https://feeds.expressen.se/nyheter',                               name: 'Expressen',      description:'Expressen',                favorite: true},
+    'svd':         {url:'http://www.svd.se/?service=rss',                                   name: 'SvD',            description:'Svenska Dagbladet',        favorite: true, displayName:':broom:'},
+    'expressen':   {url:'https://feeds.expressen.se/nyheter',                               name: 'Expressen',      description:'Expressen',                favorite: true, displayName:':droplet:'},
     'nytimes':     {url:'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times', description:'New York Times',           favorite: false},
-    'aftonbladet': {url:'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet',    description:'Aftonbladet',              favorite: true}
+    'aftonbladet': {url:'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet',    description:'Aftonbladet',              favorite: true, displayName:':crazy:'}
 };
 
 
@@ -27,7 +27,7 @@ class Feed extends Events {
     constructor(options) {
         super(options);
 
-        var {schedule = '*/1 * * * *', url, emoji, name = 'Noname'} = options;
+        var {schedule = '*/1 * * * *', url, displayName, name = 'Noname'} = options;
 
         this.url = url;
         this.name = name;
@@ -35,7 +35,7 @@ class Feed extends Events {
         this.parser = new Parser();
         this.cache = undefined;
         this.schedule = schedule;
-        this.emoji = emoji;
+        this.displayName = displayName;
         this.fetch();
 
         Schedule.scheduleJob(schedule, () => {
@@ -89,7 +89,7 @@ class Feed extends Events {
                         });
 
                         this.cache = cache;                        
-                        this.emit('ping', {timestamp:lastItem.timestamp, name:this.name, title:lastItem.title, emoji:this.emoji});
+                        this.emit('ping', {timestamp:lastItem.timestamp, name:this.name, title:lastItem.title, displayName:this.displayName});
                             
                     }
                     else {
@@ -193,14 +193,14 @@ class Command {
 
             if (argv[key]) {
                 debug(sprintf('Subscribing to %s - url %s'), item.name, item.url);
-                subscribe({url:item.url, name:item.name, emoji:item.emoji});
+                subscribe({url:item.url, name:item.name, displayName:item.displayName});
             }
         }
 
 
         function displayNews() {
             news.forEach((item) => {
-                var text = sprintf('%s - %s', item.emoji ? sprintf(':%s:', item.emoji) : item.name, item.title);
+                var text = sprintf('%s - %s', item.displayName ? item.displayName : item.name, item.title);
                 debug(sprintf('Displaying %s...', text));
                 queue.enqueue(new TextAnimation({textColor:argv.textColor, text:text}));
             });            
@@ -212,7 +212,7 @@ class Command {
 
             feed.on('ping', (item) => {
                 // Insert news at beginning
-                news.unshift({timestamp:item.timestamp, name:item.name, title:item.title, emoji:item.emoji});
+                news.unshift({timestamp:item.timestamp, name:item.name, title:item.title, displayName:item.displayName});
 
                 // Keep first number of news
                 news = news.slice(0, 5);
