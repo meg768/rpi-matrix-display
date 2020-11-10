@@ -192,7 +192,7 @@ class Command {
             var item = rssFeeds[key];
 
             if (argv[key]) {
-                debug(sprintf('Subscribing to %s - url %s'), item.name, item.url);
+                debug(sprintf('Subscribing to %s - url %s', item.name, item.url));
                 subscribe({url:item.url, name:item.name, displayName:item.displayName});
             }
         }
