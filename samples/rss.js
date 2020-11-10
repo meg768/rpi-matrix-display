@@ -89,7 +89,7 @@ class Feed extends Events {
                         });
 
                         this.cache = cache;                        
-                        this.emit('ping', {timestamp:lastItem.timestamp, name:this.name, title:lastItem.title, displayName:this.displayName});
+                        this.emit('ping', {timestamp:lastItem.timestamp, name:this.name, title:lastItem.title, xxdisplayName:this.displayName});
                             
                     }
                     else {
@@ -97,7 +97,7 @@ class Feed extends Events {
                             var key = makeKey(item);
     
                             if (this.cache[key] == undefined) {
-                                this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title});
+                                this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title, xxdisplayName:this.displayName});
                                 this.cache[key] = item;
                             }
                         });
