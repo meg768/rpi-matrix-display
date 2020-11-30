@@ -9,14 +9,14 @@ var Events = require('events');
 var Schedule = require('node-schedule');
 
 var rssFeeds = {
-    'di' :         {url:'https://digital.di.se/rss',                                        name: 'DI',             description:'Dagens Industri',          favorite: true, xdisplayName:':di:'},
-    'sds':         {url:'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS',            description:'Sydsvenska Dagbladet',     favorite: true, xdisplayName:':sds:'},
-    'sr':          {url:'http://api.sr.se/api/rss/program/83?format=145',                   name: 'SR',             description:'Sveriges Radio',           favorite: true, xdisplayName:':sr:'},
+    'sds':         {url:'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS',            description:'Sydsvenska Dagbladet',     favorite: true, displayName:':svd:'},
+    'di' :         {url:'https://digital.di.se/rss',                                        name: 'DI',             description:'Dagens Industri',          favorite: true, displayName:':svd:'},
+    'sr':          {url:'http://api.sr.se/api/rss/program/83?format=145',                   name: 'SR',             description:'Sveriges Radio',           favorite: true, displayName:':svd:'},
     'bbc':         {url:'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC',            description:'BBC',                      favorite: false},
-    'svd':         {url:'http://www.svd.se/?service=rss',                                   name: 'SvD',            description:'Svenska Dagbladet',        favorite: true, xdisplayName:':svd:'},
-    'expressen':   {url:'https://feeds.expressen.se/nyheter',                               name: 'Expressen',      description:'Expressen',                favorite: true, xdisplayName:':expressen:'},
+    'svd':         {url:'http://www.svd.se/?service=rss',                                   name: 'SvD',            description:'Svenska Dagbladet',        favorite: true, displayName:':svd:'},
+    'expressen':   {url:'https://feeds.expressen.se/nyheter',                               name: 'Expressen',      description:'Expressen',                favorite: true, displayName:':svd:'},
     'nytimes':     {url:'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times', description:'New York Times',           favorite: false},
-    'aftonbladet': {url:'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet',    description:'Aftonbladet',              favorite: true, xdisplayName:':crazy:'}
+    'aftonbladet': {url:'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet',    description:'Aftonbladet',              favorite: true, displayName:':svd:'}
 };
 
 
@@ -89,7 +89,7 @@ class Feed extends Events {
                         });
 
                         this.cache = cache;                        
-                        this.emit('ping', {timestamp:lastItem.timestamp, name:this.name, title:lastItem.title, xxdisplayName:this.displayName});
+                        this.emit('ping', {timestamp:lastItem.timestamp, name:this.name, title:lastItem.title, displayName:this.displayName});
                             
                     }
                     else {
@@ -97,7 +97,7 @@ class Feed extends Events {
                             var key = makeKey(item);
     
                             if (this.cache[key] == undefined) {
-                                this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title, xxdisplayName:this.displayName});
+                                this.emit('ping', {timestamp:item.timestamp, name:this.name, title:item.title, displayName:this.displayName});
                                 this.cache[key] = item;
                             }
                         });
@@ -181,7 +181,6 @@ class Command {
         debug(argv);
 
         Matrix.configure(argv);
-
 
         var news = [];
         var timer = new Timer();
