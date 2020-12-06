@@ -4,7 +4,7 @@ var TextAnimation = require('../src/text-animation.js');
 var AnimationQueue = require('rpi-animations').Queue;
 var Request = require('yow/request');
 var sprintf = require('yow/sprintf');
-
+var LatestNews = require('../src/latest-news.js');
 
 var debug = function() {
 }
@@ -25,13 +25,6 @@ class Command {
         args.usage('Usage: $0 [options]');
 
         args.option('help', {describe:'Displays this information'});
-        args.option('textColor', {describe:'Specifies text color', alias:['color'], default:'auto'});
-        args.option('category', {describe:'News category', choices:['entertainment', 'general', 'health', 'science', 'sports', 'technology']});
-        args.option('source', {describe:'News source'});
-        args.option('language', {describe:'News language', default:'se'});
-        args.option('apiKey', {describe:'API key for newsapi.org', default:process.env.NEWS_API_KEY});
-        args.option('search', {describe:'Search keyword', default:undefined});
-        args.option('pause', {describe:'Pause between news flashes in minutes', default:5});
         args.option('debug', {describe:'Debug mode', default:false});
 
         args.wrap(null);
@@ -50,99 +43,17 @@ class Command {
 
         debug(argv);
 
-        Matrix.configure(argv);
-        var queue = new AnimationQueue();
+        var news = new LatestNews();
 
+        news.fetch((news) => {
+            console.log(news);
 
-        function fetchNews()  {
-            return new Promise((resolve, reject) => {
-
-                var headers = {};
-                headers['Content-Type'] = 'application/json';
-
-                var request = new Request('https://newsapi.org', {debug:debug, headers:headers});
-
-                var query = {pageSize:5};
-
-                var {language, country, category, search, sources, apiKey} = argv;
-
-                if (language != undefined)
-                    query.language = language;
-
-                if (country != undefined)
-                    query.country = country;
-
-                if (sources != undefined)
-                    query.sources = sources;
-
-                if (apiKey != undefined)
-                    query.apiKey = apiKey;
-
-                if (category != undefined)
-                    query.category = category;
-
-                if (search != undefined)
-                    query.q = search;
-                    
-                request.get('/v2/top-headlines', {query:query}).then((response) => {
-                    resolve(response.body.articles);
-                })
-                .catch((error) => {
-                    reject(error);
-                })
-            });
-        }
-
-        function enqueueNews()  {
-            return new Promise((resolve, reject) => {
-
-                fetchNews().then((articles) => {
-                    var now = new Date();
-                    var hue = Math.floor(360 * (((now.getHours() % 12) * 60) + now.getMinutes()) / (12 * 60));
-                    var textColor = argv.textColor == 'auto' ? sprintf('hsl(%d,100%%,50%%)', hue) : argv.textColor;
-
-                    articles.forEach(article => {
-                        var text = sprintf('%s - %s', article.title, article.source.name);
-                        queue.enqueue(new TextAnimation({...argv, textColor:textColor, text:text}));
-                    });
-
-                    resolve(articles);
-
-                })
-    
-                .catch((error) => {
-                    reject(error);
-                })
-            });
-        }
-
-
-        function delay(ms) {
-            return new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    resolve();
-                }, ms);
-            });
-
-        }
-
-        function fetch() {
-            enqueueNews().then((articles) => {
-                debug(articles);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-
-        }
-
-        queue.on('idle', () => {
-            delay(argv.pause * 60000).then(() => {
-                fetch();
-            });
+        })
+        .catch((error) => {
+            console.error(error);
         });
 
-        fetch();
+
 
 	}
     
