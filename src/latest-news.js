@@ -40,7 +40,8 @@ module.exports = class LatestNews {
                     news.name        = feed.name;
                     news.description = feed.description;
                     news.text        = item.title;
-                    this.cache[key] = news;
+                    debug(news);
+                    this.cache[key]  = news;
                 });
  
                 debug(sprintf('Done fetching RSS for %s...', feed.name));
