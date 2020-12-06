@@ -93,6 +93,7 @@ module.exports = class LatestNews {
                 // Save cache for later
                 this.cache = cache;
 
+                debug(news);
                 resolve(news);
             })
             .catch((error) => {
