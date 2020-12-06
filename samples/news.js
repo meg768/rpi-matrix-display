@@ -4,7 +4,7 @@ var TextAnimation = require('../src/text-animation.js');
 var AnimationQueue = require('rpi-animations').Queue;
 var Request = require('yow/request');
 var sprintf = require('yow/sprintf');
-var LatestNews = require('../src/latest-news.js');
+var NewsFeed = require('../src/news-feed.js');
 
 var debug = function() {
 }
@@ -39,7 +39,7 @@ class Command {
 
 	run(argv) {
 
-        var news = new LatestNews(argv);
+        var news = new NewsFeed(argv);
 
         news.fetch((news) => {
             console.log(news);

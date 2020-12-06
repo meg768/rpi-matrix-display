@@ -100,7 +100,6 @@ module.exports = class NewsFeed {
                 // Save cache for later
                 this.cache = cache;
 
-                this.debug(news);
                 resolve(news);
             })
             .catch((error) => {
