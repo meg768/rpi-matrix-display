@@ -1,6 +1,7 @@
 
 var sprintf = require('yow/sprintf');
 var Parser = require('rss-parser');
+var isFunction = require('yow/isFunction');
 
 var feeds = [
     {url:'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS',            description:'Sydsvenska Dagbladet'},
@@ -14,14 +15,19 @@ var feeds = [
 ];
 
 
-var debug = console.log;
-
 
 module.exports = class LatestNews {
 
-    constructor() {
+    constructor(options) {
+        var debug = {options}
         this.parser = new Parser();
         this.cache = {};
+        this.debug = () => {};
+
+        if (isFunction(debug))
+            this.debug = debug;
+        else if (debug != undefined)
+            this.debug = console.log;
     }
 
 
@@ -29,7 +35,7 @@ module.exports = class LatestNews {
 
         return new Promise((resolve, reject) => {
 
-            debug(sprintf('Fetching RSS for %s...', feed.name));
+            this.debug(sprintf('Fetching RSS for %s...', feed.name));
 
             this.parser.parseURL(feed.url).then((result) => {
 
@@ -44,7 +50,7 @@ module.exports = class LatestNews {
                     this.cache[key]  = news;
                 });
  
-                debug(sprintf('Done fetching RSS for %s...', feed.name));
+                this.debug(sprintf('Done fetching RSS for %s...', feed.name));
                 resolve();
             })
             .catch((error) => {
@@ -94,7 +100,7 @@ module.exports = class LatestNews {
                 // Save cache for later
                 this.cache = cache;
 
-                debug(news);
+                this.debug(news);
                 resolve(news);
             })
             .catch((error) => {

@@ -25,7 +25,7 @@ class Command {
         args.usage('Usage: $0 [options]');
 
         args.option('help', {describe:'Displays this information'});
-        args.option('debug', {describe:'Debug mode', default:false});
+        args.option('debug', {describe:'Debug mode', default:true});
 
         args.wrap(null);
 
@@ -38,12 +38,8 @@ class Command {
 
 
 	run(argv) {
-        if (argv.debug)
-            debug = console.log;
 
-        debug(argv);
-
-        var news = new LatestNews();
+        var news = new LatestNews(argv);
 
         news.fetch((news) => {
             console.log(news);
