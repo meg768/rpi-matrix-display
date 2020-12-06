@@ -33,7 +33,6 @@ module.exports = class LatestNews {
 
             this.parser.parseURL(feed.url).then((result) => {
 
-                
                 result.items.forEach((item) => {
                     var key = sprintf('%s:%s', item.isoDate, item.title);
                     var news = {};
@@ -48,7 +47,6 @@ module.exports = class LatestNews {
                 resolve();
             })
             .catch((error) => {
-                console.error(error);
                 reject(error);
 
             })
@@ -69,6 +67,7 @@ module.exports = class LatestNews {
 
             promise.then(() => {
 
+                debug('asdfgasdf');
                 var now = new Date();
                 var someTimeAgo = new Date(now.getTime() -  12 * 60 * 60 * 1000);
                 var news = [];        
@@ -97,6 +96,7 @@ module.exports = class LatestNews {
                 // Save cache for later
                 this.cache = cache;
 
+                debug(news);
                 resolve(news);
             })
             .catch((error) => {
