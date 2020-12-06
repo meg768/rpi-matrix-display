@@ -19,9 +19,7 @@ var debug = console.log;
 
 module.exports = class LatestNews {
 
-    constructor(options) {
-        super(options);
-
+    constructor() {
         this.parser = new Parser();
         this.cache = {};
     }
