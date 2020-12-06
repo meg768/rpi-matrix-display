@@ -46,7 +46,7 @@ module.exports = class LatestNews {
                     news.name        = feed.name;
                     news.description = feed.description;
                     news.text        = item.title;
-                    debug(news);
+
                     this.cache[key]  = news;
                 });
  
