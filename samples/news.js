@@ -2,12 +2,45 @@
 var Matrix = require('rpi-matrix');
 var TextAnimation = require('../src/text-animation.js');
 var AnimationQueue = require('rpi-animations').Queue;
+var Animation = require('rpi-animations').Animation;
 var Request = require('yow/request');
 var sprintf = require('yow/sprintf');
 var NewsFeed = require('../src/news-feed.js');
 
-var debug = function() {
-}
+var debug = console.log;
+
+/*
+class NewsAnimation extends Animation {
+
+    constructor(options) {
+        super(options);
+
+        this.news = [];
+    }
+
+    start() {
+
+        return new Promise((resolve, reject) => {
+            var newsfeed = new NewsFeed();
+
+            newsfeed.fetch().then((news) => {
+                this.scrollImage = this.createDisplayImage(context);
+            })
+            .then(() => {
+                return super.start();
+            })
+            .then(() => {
+                resolve();
+            })
+            .catch(error => {
+                reject(error);
+            });
+    
+        });
+
+    }  
+};
+*/
 
 class Command {
 
