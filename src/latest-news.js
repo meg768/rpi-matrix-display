@@ -85,7 +85,7 @@ module.exports = class LatestNews {
 
                 // Sort by date ASC
                 news.sort((a, b) => {
-                    return a.timestamp.getTime() - b.timestamp.getTime();
+                    return b.timestamp.getTime() - a.timestamp.getTime();
                 });
 
                 // Select top 5
