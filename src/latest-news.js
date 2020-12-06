@@ -40,7 +40,6 @@ module.exports = class LatestNews {
                     news.name        = feed.name;
                     news.description = feed.description;
                     news.text        = item.title;
-                    debug(news);
                     this.cache[key] = news;
                 });
  
@@ -70,7 +69,7 @@ module.exports = class LatestNews {
 
                 debug('asdfgasdf');
                 var now = new Date();
-                var someTimeAgo = new Date(now.getTime() -  12 * 60 * 60 * 1000);
+                var someTimeAgo = new Date(now.getTime() -  24 * 60 * 60 * 1000);
                 var news = [];        
                 var cache = {};
         
