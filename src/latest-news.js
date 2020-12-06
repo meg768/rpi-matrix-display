@@ -65,9 +65,8 @@ module.exports = class LatestNews {
 
             Promise.all(promises).then(() => {
 
-                debug('asdfgasdf');
                 var now = new Date();
-                var someTimeAgo = new Date(now.getTime() -  1000 * 60 * 60 * 1000);
+                var someTimeAgo = new Date(now.getTime() -  24 * 60 * 60 * 1000);
                 var news = [];        
                 var cache = {};
         
@@ -89,12 +88,11 @@ module.exports = class LatestNews {
                 });
 
                 // Select top 5
-//                news = news.slice(0, 5);
+                news = news.slice(0, 5);
 
                 // Save cache for later
                 this.cache = cache;
 
-                debug(news);
                 resolve(news);
             })
             .catch((error) => {
