@@ -3,26 +3,29 @@ var sprintf = require('yow/sprintf');
 var Parser = require('rss-parser');
 var isFunction = require('yow/isFunction');
 
-var feeds = [
-    {url:'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS',            description:'Sydsvenska Dagbladet'},
-    {url:'https://digital.di.se/rss',                                        name: 'DI',             description:'Dagens Industri'},
-    //{url:'http://api.sr.se/api/rss/program/83?format=145',                   name: 'SR',             description:'Sveriges Radio'},
-    //{url:'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC',            description:'BBC'},
-    {url:'http://www.svd.se/?service=rss',                                   name: 'SvD',            description:'Svenska Dagbladet'},
-    {url:'https://feeds.expressen.se/nyheter',                               name: 'Expressen',      description:'Expressen'},
-    //{url:'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times', description:'New York Times'},
-    {url:'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet',    description:'Aftonbladet'}
-];
 
 
 
-module.exports = class LatestNews {
+
+module.exports = class NewsFeed {
 
     constructor(options) {
         var debug = {options}
+
         this.parser = new Parser();
         this.cache = {};
         this.debug = () => {};
+
+        this.feeds = [
+            {url:'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS',            description:'Sydsvenska Dagbladet'},
+            {url:'https://digital.di.se/rss',                                        name: 'DI',             description:'Dagens Industri'},
+            //{url:'http://api.sr.se/api/rss/program/83?format=145',                   name: 'SR',             description:'Sveriges Radio'},
+            //{url:'http://feeds.bbci.co.uk/news/rss.xml',                             name: 'BBC',            description:'BBC'},
+            {url:'http://www.svd.se/?service=rss',                                   name: 'SvD',            description:'Svenska Dagbladet'},
+            {url:'https://feeds.expressen.se/nyheter',                               name: 'Expressen',      description:'Expressen'},
+            //{url:'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times', description:'New York Times'},
+            {url:'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet',    description:'Aftonbladet'}
+        ];
 
         if (isFunction(debug))
             this.debug = debug;
@@ -34,8 +37,6 @@ module.exports = class LatestNews {
     fetchFeed(feed) {
 
         return new Promise((resolve, reject) => {
-
-            this.debug(sprintf('Fetching RSS for %s...', feed.name));
 
             this.parser.parseURL(feed.url).then((result) => {
 
@@ -50,7 +51,6 @@ module.exports = class LatestNews {
                     this.cache[key]  = news;
                 });
  
-                this.debug(sprintf('Done fetching RSS for %s...', feed.name));
                 resolve();
             })
             .catch((error) => {
@@ -66,14 +66,14 @@ module.exports = class LatestNews {
 
             var promises = [];
             
-            feeds.forEach((feed) => {
+            this.feeds.forEach((feed) => {
                 promises.push(this.fetchFeed(feed));
             });
 
             Promise.all(promises).then(() => {
 
                 var now = new Date();
-                var someTimeAgo = new Date(now.getTime() -  24 * 60 * 60 * 1000);
+                var someTimeAgo = new Date(now.getTime() -  1 * 24 * 60 * 60 * 1000);
                 var news = [];        
                 var cache = {};
         
