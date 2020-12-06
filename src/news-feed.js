@@ -89,7 +89,7 @@ module.exports = class NewsFeed {
                     news.push(cache[key]);
                 }
 
-                // Sort by date ASC
+                // Sort by date DESC
                 news.sort((a, b) => {
                     return b.timestamp.getTime() - a.timestamp.getTime();
                 });
