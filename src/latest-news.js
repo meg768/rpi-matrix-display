@@ -57,15 +57,13 @@ module.exports = class LatestNews {
 
         return new Promise((resolve, reject) => {
 
-            var promise = Promise.resolve();
-
+            var promises = [];
+            
             feeds.forEach((feed) => {
-                promise.then(() => {
-                    promise = this.fetchFeed(feed);
-                });
+                promises.push(this.fetchFeed(feed));
             });
 
-            promise.then(() => {
+            Promise.all(promises).then(() => {
 
                 debug('asdfgasdf');
                 var now = new Date();
