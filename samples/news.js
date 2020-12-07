@@ -2,12 +2,10 @@
 var Matrix = require('rpi-matrix');
 var TextAnimation = require('../src/text-animation.js');
 var AnimationQueue = require('rpi-animations').Queue;
-var Animation = require('rpi-animations').Animation;
-var Request = require('yow/request');
 var Timer = require('yow/timer');
 var sprintf = require('yow/sprintf');
 var NewsFeed = require('../src/news-feed.js');
-const RainAnimation = require('../src/rain-animation.js');
+var RainAnimation = require('../src/rain-animation.js');
 
 var debug = console.log;
 
@@ -27,7 +25,7 @@ class Command {
         args.usage('Usage: $0 [options]');
 
         args.option('help', {describe:'Displays this information'});
-        args.option('debug', {describe:'Debug mode', default:true});
+        args.option('debug', {describe:'Debug mode', default:false});
 
         args.wrap(null);
 
@@ -60,7 +58,7 @@ class Command {
 
     displayRain() {
         return new Promise((resolve, reject) => {
-            this.queue.enqueue(new RainAnimation({duration:60 * 1000}));
+            this.queue.enqueue(new RainAnimation({duration:3 * 60 * 1000}));
             resolve();
         });        
 
@@ -87,10 +85,8 @@ class Command {
     
             Matrix.configure(argv);
     
-            this.queue.on('idle', () => {
-                this.timer.setTimer(0 * 60 * 1000, () => {
-                    this.displayNextAnimation();
-                });
+            this.queue.on('idle', () => {                    
+                this.displayNextAnimation();
             });
         
 
@@ -98,10 +94,9 @@ class Command {
                 return this.queue.dequeue();
             })
             .then(() => {
-                console.log('Done!')
             })
             .catch(error => {
-                console.error(error.stack);
+                console.error(error);
             })
         }
         catch (error) {
