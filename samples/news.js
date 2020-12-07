@@ -42,8 +42,8 @@ class Command {
         return new Promise((resolve, reject) => {
             var feed = new NewsFeed();
 
-            feed.fetch((news) => {
-0   
+            feed.fetch().then((news) => {
+  
                 news.forEach((item) => {
                     var text = sprintf('%s - %s', item.description, item.text);
                     this.queue.enqueue(new TextAnimation({text:text}));

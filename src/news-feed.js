@@ -2,6 +2,7 @@
 var sprintf = require('yow/sprintf');
 var Parser = require('rss-parser');
 var isFunction = require('yow/isFunction');
+var isString = require('yow/isString');
 
 
 
@@ -29,8 +30,12 @@ module.exports = class NewsFeed {
 
         if (isFunction(debug))
             this.debug = debug;
-        else if (debug != undefined)
-            this.debug = console.log;
+        else if (debug != undefined) {
+            if (isString(debug) && Number(debug))
+                this.debug = console.log;
+            else if (debug)
+                this.debug = console.log;
+        }
     }
 
 
