@@ -43,8 +43,6 @@ module.exports = class NewsFeed {
 
         return new Promise((resolve, reject) => {
 
-            this.debug('Fetching ', feed.name);
-
             this.parser.parseURL(feed.url).then((result) => {
 
                 result.items.forEach((item) => {
@@ -106,8 +104,6 @@ module.exports = class NewsFeed {
 
                 // Save cache for later
                 this.cache = cache;
-
-                this.debug(news);
 
                 resolve(news);
             })
