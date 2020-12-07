@@ -75,7 +75,7 @@ class Command {
         var animation = animations[this.counter];
         this.counter = (this.counter + 1) % animations.length;
 
-        return animation();
+        return animation.bind(this)();
     }
 
     run(argv) {
