@@ -77,6 +77,7 @@ class Command {
     }
 
     run(argv) {
+        
         try {
             this.argv    = argv;
             this.queue   = new AnimationQueue();
