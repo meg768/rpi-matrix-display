@@ -4,6 +4,7 @@ var TextAnimation = require('../src/text-animation.js');
 var AnimationQueue = require('rpi-animations').Queue;
 var Animation = require('rpi-animations').Animation;
 var Request = require('yow/request');
+var Timer = require('yow/timer');
 var sprintf = require('yow/sprintf');
 var NewsFeed = require('../src/news-feed.js');
 
@@ -17,8 +18,6 @@ class Command {
         module.exports.describe = 'Display news';
         module.exports.builder  = this.defineArgs.bind(this);
         module.exports.handler  = this.run.bind(this);
-
-
     }
 
  
@@ -46,7 +45,7 @@ class Command {
   
                 news.forEach((item) => {
                     var text = sprintf('%s - %s', item.description, item.text);
-                    this.queue.enqueue(new TextAnimation({text:text}));
+                    this.queue.enqueue(new TextAnimation({text:text, textColor:'red'}));
                 });
   
                 resolve();
@@ -59,14 +58,19 @@ class Command {
     }
 
     run(argv) {
-        Matrix.configure(argv);
-
-        this.queue = new AnimationQueue();
-        console.log('running!!!!!!!!!!!!!!');
-
         try {
+            this.argv  = argv;
+            this.queue = new AnimationQueue();
+            this.timer = new Timer();
+    
+            Matrix.configure(argv);
+    
+            this.queue.on('idle', () => {
+                timer.setTimer(1 * 60 * 1000, this.displayNews);
+            });
+        
+
             this.displayNews().then(() => {
-                console.log('dequq');
                 return this.queue.dequeue();
             })
             .then(() => {
