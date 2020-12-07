@@ -9,38 +9,6 @@ var NewsFeed = require('../src/news-feed.js');
 
 var debug = console.log;
 
-/*
-class NewsAnimation extends Animation {
-
-    constructor(options) {
-        super(options);
-
-        this.news = [];
-    }
-
-    start() {
-
-        return new Promise((resolve, reject) => {
-            var newsfeed = new NewsFeed();
-
-            newsfeed.fetch().then((news) => {
-                this.scrollImage = this.createDisplayImage(context);
-            })
-            .then(() => {
-                return super.start();
-            })
-            .then(() => {
-                resolve();
-            })
-            .catch(error => {
-                reject(error);
-            });
-    
-        });
-
-    }  
-};
-*/
 
 class Command {
 
@@ -49,7 +17,8 @@ class Command {
         module.exports.describe = 'Display news';
         module.exports.builder  = this.defineArgs;
         module.exports.handler  = this.run;
-        
+
+
     }
 
  
@@ -68,23 +37,48 @@ class Command {
 
         return args.argv;
     }
+    
+    displayNews() {
+        return new Promise((resolve, reject) => {
+            var feed = new NewsFeed();
 
-
-	run(argv) {
-
-        var news = new NewsFeed(argv);
-
-        news.fetch((news) => {
-            console.log(news);
-
-        })
-        .catch((error) => {
-            console.error(error);
+            feed.fetch((news) => {
+0   
+                news.forEach((item) => {
+                    console.log(item);
+                    this.queue.enqueue(new TextAnimation({text:sprintf('%s - %s', item.description, item.text)}));
+                });
+  
+                resolve();
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    
         });
+    }
 
+    run(argv) {
+        Matrix.configure(argv);
 
+        this.queue = new AnimationQueue();
 
-	}
+        try {
+            this.displayNews().then(() => {
+                return queue.dequeue();
+            })
+            .then(() => {
+                console.log('Done!')
+            })
+            .catch(error => {
+                console.error(error.stack);
+            })
+        }
+        catch (error) {
+            console.error(error);
+        }
+
+    }
     
 
 
