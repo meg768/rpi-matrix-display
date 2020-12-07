@@ -45,8 +45,8 @@ class Command {
             feed.fetch((news) => {
 0   
                 news.forEach((item) => {
-                    console.log(item);
-                    this.queue.enqueue(new TextAnimation({text:sprintf('%s - %s', item.description, item.text)}));
+                    var text = sprintf('%s - %s', item.description, item.text);
+                    this.queue.enqueue(new TextAnimation({text:text}));
                 });
   
                 resolve();
