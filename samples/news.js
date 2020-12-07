@@ -65,6 +65,7 @@ class Command {
 
         try {
             this.displayNews().then(() => {
+                console.log('dequq');
                 return queue.dequeue();
             })
             .then(() => {
