@@ -94,7 +94,7 @@ class Command {
             });
         
 
-            this.getNextAnimation().then(() => {
+            this.displayNextAnimation().then(() => {
                 return this.queue.dequeue();
             })
             .then(() => {
