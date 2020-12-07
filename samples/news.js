@@ -7,6 +7,7 @@ var Request = require('yow/request');
 var Timer = require('yow/timer');
 var sprintf = require('yow/sprintf');
 var NewsFeed = require('../src/news-feed.js');
+const RainAnimation = require('../src/rain-animation.js');
 
 var debug = console.log;
 
@@ -57,22 +58,43 @@ class Command {
         });
     }
 
+    displayRain() {
+        return new Promise((resolve, reject) => {
+            this.queue.enqueue(new RainAnimation({duration:60 * 1000}));
+            resolve();
+        });        
+
+    }
+
+    displayNextAnimation() {
+        var animations = [
+            this.displayNews,
+            this.displayRain
+        ];
+
+        var animation = animations[this.counter];
+        this.counter = (this.counter + 1) % animations.length;
+
+        return animation();
+    }
+
     run(argv) {
         try {
-            this.argv  = argv;
-            this.queue = new AnimationQueue();
-            this.timer = new Timer();
+            this.argv    = argv;
+            this.queue   = new AnimationQueue();
+            this.timer   = new Timer();
+            this.counter = 0;
     
             Matrix.configure(argv);
     
             this.queue.on('idle', () => {
-                this.timer.setTimer(1 * 60 * 1000, () => {
-                    this.displayNews();
+                this.timer.setTimer(0 * 60 * 1000, () => {
+                    this.displayNextAnimation();
                 });
             });
         
 
-            this.displayNews().then(() => {
+            this.getNextAnimation().then(() => {
                 return this.queue.dequeue();
             })
             .then(() => {
