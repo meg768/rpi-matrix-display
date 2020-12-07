@@ -62,6 +62,7 @@ class Command {
         Matrix.configure(argv);
 
         this.queue = new AnimationQueue();
+        console.log('running!!!!!!!!!!!!!!');
 
         try {
             this.displayNews().then(() => {
