@@ -66,7 +66,9 @@ class Command {
             Matrix.configure(argv);
     
             this.queue.on('idle', () => {
-                this.timer.setTimer(1 * 60 * 1000, this.displayNews.bind(this));
+                this.timer.setTimer(1 * 60 * 1000, () => {
+                    this.displayNews();
+                });
             });
         
 
