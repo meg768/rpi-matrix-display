@@ -15,8 +15,8 @@ class Command {
     constructor() {
         module.exports.command  = 'news [options]';
         module.exports.describe = 'Display news';
-        module.exports.builder  = this.defineArgs;
-        module.exports.handler  = this.run;
+        module.exports.builder  = this.defineArgs.bind(this);
+        module.exports.handler  = this.run.bind(this);
 
 
     }
