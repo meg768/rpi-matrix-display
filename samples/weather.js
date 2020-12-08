@@ -48,6 +48,7 @@ class Command {
         module.exports.handler  = this.run.bind(this);
 
         this.debug = console.log;
+        console.log('ctor');
 
     }
 
@@ -71,7 +72,7 @@ class Command {
     
 
     run(argv) {
-        
+        console.log('RUNNING');
         try {
             console.log('runningXXX');
             var api = new OpenWeather();
@@ -98,6 +99,7 @@ class Command {
 
 };
 
+console.log('WATHER');
 new Command();
 
 
