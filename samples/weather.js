@@ -42,8 +42,8 @@ class OpenWeather {
 class Command {
 
     constructor() {
-        module.exports.command  = 'news [options]';
-        module.exports.describe = 'Display news';
+        module.exports.command  = 'weather [options]';
+        module.exports.describe = 'Display weather';
         module.exports.builder  = this.defineArgs.bind(this);
         module.exports.handler  = this.run.bind(this);
 
