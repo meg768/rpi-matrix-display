@@ -32,7 +32,7 @@ class OpenWeatherMap {
             query.lang    = 'se';
     
             request.get('/data/2.5/onecall', {query:query}).then((response) => {
-                response.body.current.dt = new Date(response.body.current.dt).toISOString();
+                response.body.current.dt = new Date(response.body.current.dt).toDateString();
                 resolve(response);
             })
             .catch((error) => {
