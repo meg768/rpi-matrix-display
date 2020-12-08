@@ -25,6 +25,8 @@ class OpenWeather {
             query.lon     = process.env.OPENWEATHERMAP_LON;
             query.appid   = process.env.OPENWEATHERMAP_APPID;
             query.exclude = 'minutely,hourly';
+            query.units   = 'metric';
+            query.lang    = 'se';
     
             request.get('/data/2.5/onecall', {query:query}).then((response) => {
                 resolve(response);
