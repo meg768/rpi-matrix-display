@@ -21,14 +21,11 @@ class OpenWeather {
             var request = new Request('http://api.openweathermap.org');
     
             var query = {};
-            query.lat   = process.env.OPENWEATHERMAP_LAT;
-            query.lon   = process.env.OPENWEATHERMAP_LON;
-            query.appid = process.env.OPENWEATHERMAP_APPID;
+            query.lat     = process.env.OPENWEATHERMAP_LAT;
+            query.lon     = process.env.OPENWEATHERMAP_LON;
+            query.appid   = process.env.OPENWEATHERMAP_APPID;
+            query.exclude = 'minutely,hourly';
     
-            console.log('Fetching');
-    
-    
-            console.log('Fetching again');
             request.get('/data/2.5/onecall', {query:query}).then((response) => {
                 resolve(response);
             })
