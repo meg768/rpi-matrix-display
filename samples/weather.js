@@ -9,12 +9,15 @@ var RainAnimation = require('../src/rain-animation.js');
 var debug = console.log;
 
 
-class OpenWeather {
+class OpenWeatherMap {
 
     constructor() {
 
     }
 
+    parseWeather(weather) {
+
+    }
     fetch() {
         return new Promise((resolve, reject) => {
             var Request = require('yow/request');
@@ -29,6 +32,7 @@ class OpenWeather {
             query.lang    = 'se';
     
             request.get('/data/2.5/onecall', {query:query}).then((response) => {
+                response.body.current.dt = new Date(response.body.current.dt);
                 resolve(response);
             })
             .catch((error) => {
@@ -72,7 +76,7 @@ class Command {
     run(argv) {
 
         try {
-            var api = new OpenWeather();
+            var api = new OpenWeatherMap();
 
             api.fetch().then((weather) => {
                 this.debug(JSON.stringify(weather, null, '    '));
