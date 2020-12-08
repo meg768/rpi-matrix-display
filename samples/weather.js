@@ -16,18 +16,18 @@ class OpenWeather {
     }
 
     fetch() {
-        var Request = require('yow/request');
-        var request = new Request('http://api.openweathermap.org');
-
-        var query = {};
-        query.lat   = process.env.OPENWEATHERMAP_LAT;
-        query.lon   = process.env.OPENWEATHERMAP_LON;
-        query.appid = process.env.OPENWEATHERMAP_APPID;
-
-        console.log('Fetching');
-
         return new Promise((resolve, reject) => {
-
+            var Request = require('yow/request');
+            var request = new Request('http://api.openweathermap.org');
+    
+            var query = {};
+            query.lat   = process.env.OPENWEATHERMAP_LAT;
+            query.lon   = process.env.OPENWEATHERMAP_LON;
+            query.appid = process.env.OPENWEATHERMAP_APPID;
+    
+            console.log('Fetching');
+    
+    
             console.log('Fetching again');
             request.get('/data/2.5/weather', {query:query}).then((response) => {
                 resolve(response);
@@ -74,6 +74,7 @@ class Command {
         
         try {
             var api = new OpenWeather();
+            console.log('running');
 
             api.fetch().then((weather) => {
                 console.log('sadfasdf');
