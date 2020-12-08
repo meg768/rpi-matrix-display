@@ -29,7 +29,7 @@ class OpenWeather {
     
     
             console.log('Fetching again');
-            request.get('/data/2.5/weather', {query:query}).then((response) => {
+            request.get('/data/2.5/onecall', {query:query}).then((response) => {
                 resolve(response);
             })
             .catch((error) => {
@@ -48,7 +48,6 @@ class Command {
         module.exports.handler  = this.run.bind(this);
 
         this.debug = console.log;
-        console.log('ctor');
 
     }
 
@@ -72,14 +71,11 @@ class Command {
     
 
     run(argv) {
-        console.log('RUNNING');
+
         try {
-            console.log('runningXXX');
             var api = new OpenWeather();
-            console.log('running');
 
             api.fetch().then((weather) => {
-                console.log('sadfasdf');
                 this.debug(JSON.stringify(weather, null, '    '));
             })
             .then(() => {
@@ -99,7 +95,6 @@ class Command {
 
 };
 
-console.log('WATHER');
 new Command();
 
 
