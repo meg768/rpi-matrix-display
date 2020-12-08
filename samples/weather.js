@@ -24,8 +24,11 @@ class OpenWeather {
         query.lon   = process.env.OPENWEATHERMAP_LON;
         query.appid = process.env.OPENWEATHERMAP_APPID;
 
+        console.log('Fetching');
+
         return new Promise((resolve, reject) => {
 
+            console.log('Fetching again');
             request.get('/data/2.5/weather', {query:query}).then((response) => {
                 resolve(response);
             })
