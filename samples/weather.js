@@ -73,6 +73,7 @@ class Command {
     run(argv) {
         
         try {
+            console.log('runningXXX');
             var api = new OpenWeather();
             console.log('running');
 
