@@ -46,7 +46,6 @@ class Command {
 
         this.debug = console.log;
 
-        this.debug('asdfasdfsdf')
     }
 
  
@@ -71,12 +70,10 @@ class Command {
     run(argv) {
         
         try {
-            this.argv    = argv;
-            this.queue   = new AnimationQueue();
-
             var api = new OpenWeather();
 
             api.fetch().then((weather) => {
+                console.log('sadfasdf');
                 this.debug(JSON.stringify(weather, null, '    '));
             })
             .then(() => {
