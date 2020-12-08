@@ -45,6 +45,8 @@ class Command {
         module.exports.handler  = this.run.bind(this);
 
         this.debug = console.log;
+
+        this.debug('asdfasdfsdf')
     }
 
  
