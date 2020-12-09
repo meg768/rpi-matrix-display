@@ -32,10 +32,10 @@ class OpenWeatherMap {
             query.lang    = 'se';
     
             request.get('/data/2.5/onecall', {query:query}).then((response) => {
-                response.body.current.dt = new Date(response.body.current.dt).toString();
+                response.body.current.dt = new Date(response.body.current.dt * 1000).toString();
 
                 response.body.daily.forEach(element => {
-                    element.dt = new Date(element.dt).toString();
+                    element.dt = new Date(element.dt * 1000).toString();
                 });
                 resolve(response);
             })
