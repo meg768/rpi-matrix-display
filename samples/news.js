@@ -30,12 +30,8 @@ class Command {
         return args.argv;
     }
 
-    displayNews() {
 
-        return new Promise((resolve, reject) => {
 
-        });
-    };
 
 
     run(argv) {
