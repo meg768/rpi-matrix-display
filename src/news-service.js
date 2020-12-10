@@ -7,6 +7,7 @@ var isFunction = require('yow/isFunction');
 var isString = require('yow/isString');
 
 
+
 class NewsFeed {
 
     constructor(options) {

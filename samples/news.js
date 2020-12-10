@@ -2,7 +2,7 @@
 var Matrix = require('rpi-matrix');
 var AnimationQueue = require('rpi-animations').Queue;
 var NewsService = require('../src/news-service.js');
-
+var Timer = require('yow/timer');
 
 class Command {
 
@@ -29,16 +29,33 @@ class Command {
 
         return args.argv;
     }
-    
+
+    displayNews() {
+
+        return new Promise((resolve, reject) => {
+
+        });
+    };
+
+
     run(argv) {
         Matrix.configure(argv);
 
+        var timer = new Timer();
         var queue = new AnimationQueue();
-        var service = new NewsService({queue:queue, argv:argv});
 
-        service.run().then(() => {
-            console.log('Done!');
-        });
+        var displayService = () => {
+            var service = new NewsService({queue:queue, argv:argv});
+
+            service.run().then(() => {
+                timer.setTimer(1000 * 60 * 2, () => {
+                    displayService();
+                })
+            });
+    
+        };
+
+        displayService();
 
         queue.dequeue();
     }
