@@ -48,7 +48,7 @@ class Command {
             var service = new NewsService({queue:queue, argv:argv});
 
             service.run().then(() => {
-                timer.setTimer(1000 * 60 * 2, () => {
+                timer.setTimer(1000 * 60 * 5, () => {
                     displayService();
                 })
             });
