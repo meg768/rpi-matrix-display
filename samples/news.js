@@ -46,7 +46,7 @@ class Command {
 
         var displayService = () => {
             var service = new NewsService({queue:queue, argv:argv});
-            service.run();§
+            service.run();
         };
 
         queue.on('idle', () => {
