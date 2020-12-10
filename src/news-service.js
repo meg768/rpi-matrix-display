@@ -1,9 +1,8 @@
 
-var Matrix = require('rpi-matrix');
 var sprintf = require('yow/sprintf');
-var AnimationQueue = require('rpi-animations').Queue;
 var TextAnimation = require('./text-animation.js');
 var Service = require('./service');
+var Parser = require('rss-parser');
 
 
 class NewsFeed {
