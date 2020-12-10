@@ -50,8 +50,8 @@ class OpenWeatherMap {
                     element.sunrise = new Date(element.sunrise * 1000);
                 });
 
-                this.debug(JSON.stringify(current, null, '    '));
-                this.debug(JSON.stringify(tomorrow, null, '    '));
+                console.log(JSON.stringify(current, null, '    '));
+                console.log(JSON.stringify(tomorrow, null, '    '));
 
                 resolve(texts);
             })
