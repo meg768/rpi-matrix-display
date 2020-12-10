@@ -42,7 +42,7 @@ class OpenWeatherMap {
 
                 var texts = [];
                 texts.push(sprintf('Idag %0f° och %s', current.temp, current.weather.description));
-                texts.push(sprintf('I morgon %0f° (%0f°) och %s', tomorrow.weather.max, tomorrow.weather.min, tomorrow.weather.description));
+                texts.push(sprintf('I morgon %0f° (%0f°) och %s', tomorrow.temp.max, tomorrow.temp.min, tomorrow.weather.description));
 
                 response.body.daily.forEach(element => {
                     element.dt = new Date(element.dt * 1000);
