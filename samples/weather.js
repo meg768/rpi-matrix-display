@@ -9,15 +9,13 @@ var RainAnimation = require('../src/rain-animation.js');
 var debug = console.log;
 
 
+
 class OpenWeatherMap {
 
     constructor() {
 
     }
 
-    parseWeather(weather) {
-
-    }
     
     fetch() {
         return new Promise((resolve, reject) => {
@@ -41,8 +39,8 @@ class OpenWeatherMap {
                 var tomorrow = response.body.daily[1];
 
                 var texts = [];
-                texts.push(sprintf('Idag %d° och %s', Math.round(current.temp + 0.5), current.weather[0].description));
-                texts.push(sprintf('I morgon %d° (%d°) och %s', Math.round(tomorrow.temp.max + 0.5), Math.round(tomorrow.temp.min + 0.5), tomorrow.weather[0].description));
+                texts.push(sprintf('Just nu %d° och %s', Math.round(current.temp + 0.5), current.weather[0].description));
+                texts.push(sprintf('I morgon %d°/%d° och %s', Math.round(tomorrow.temp.max + 0.5), Math.round(tomorrow.temp.min + 0.5), tomorrow.weather[0].description));
 
                 response.body.daily.forEach(element => {
                     element.dt = new Date(element.dt * 1000);
