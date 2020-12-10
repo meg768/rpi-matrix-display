@@ -1,10 +1,7 @@
 
 var Matrix = require('rpi-matrix');
 var AnimationQueue = require('rpi-animations').Queue;
-var Timer = require('yow/timer');
-var sprintf = require('yow/sprintf');
-
-var debug = console.log;
+var NewsService = require('../src/news-service.js');
 
 
 class Command {
