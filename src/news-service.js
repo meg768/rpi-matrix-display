@@ -3,6 +3,8 @@ var sprintf = require('yow/sprintf');
 var TextAnimation = require('./text-animation.js');
 var Service = require('./service');
 var Parser = require('rss-parser');
+var isFunction = require('yow/isFunction');
+var isString = require('yow/isString');
 
 
 class NewsFeed {
