@@ -38,12 +38,18 @@ class Command {
         Matrix.configure(argv);
 
         var queue = new AnimationQueue();
-        var service = new WeatherService({queue:queue, argv:argv});
 
-        service.run().then(() => {
-            console.log('Done!');
+        var displayService = () => {
+            var service = new WeatherService({queue:queue, argv:argv});
+            service.run();
+        };
+
+        queue.on('idle', () => {
+            displayService();
         });
 
+        displayService();
+        
         queue.dequeue();
     }
 
