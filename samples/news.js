@@ -1,11 +1,8 @@
 
 var Matrix = require('rpi-matrix');
-var TextAnimation = require('../src/text-animation.js');
 var AnimationQueue = require('rpi-animations').Queue;
 var Timer = require('yow/timer');
 var sprintf = require('yow/sprintf');
-var NewsFeed = require('../src/news-feed.js');
-var RainAnimation = require('../src/rain-animation.js');
 
 var debug = console.log;
 
@@ -36,76 +33,18 @@ class Command {
         return args.argv;
     }
     
-    displayNews() {
-        return new Promise((resolve, reject) => {
-            var feed = new NewsFeed();
-
-            feed.fetch().then((news) => {
-  
-                news.forEach((item) => {
-                    var text = sprintf('%s - %s', item.description, item.text);
-                    this.queue.enqueue(new TextAnimation({text:text, textColor:'red'}));
-                });
-  
-                resolve();
-            })
-            .catch((error) => {
-                reject(error);
-            });
-    
-        });
-    }
-
-    displayRain() {
-        return new Promise((resolve, reject) => {
-            this.queue.enqueue(new RainAnimation({duration:3 * 60 * 1000}));
-            resolve();
-        });        
-
-    }
-
-    displayNextAnimation() {
-        var animations = [
-            this.displayNews,
-            this.displayRain
-        ];
-
-        var animation = animations[this.counter];
-        this.counter = (this.counter + 1) % animations.length;
-
-        return animation.bind(this)();
-    }
-
     run(argv) {
-        
-        try {
-            this.argv    = argv;
-            this.queue   = new AnimationQueue();
-            this.timer   = new Timer();
-            this.counter = 0;
-    
-            Matrix.configure(argv);
-    
-            this.queue.on('idle', () => {                    
-                this.displayNextAnimation();
-            });
-        
+        Matrix.configure(argv);
 
-            this.displayNextAnimation().then(() => {
-                return this.queue.dequeue();
-            })
-            .then(() => {
-            })
-            .catch(error => {
-                console.error(error);
-            })
-        }
-        catch (error) {
-            console.error(error);
-        }
+        var queue = new AnimationQueue();
+        var service = new NewsService({queue:queue, argv:argv});
 
+        service.run().then(() => {
+            console.log('Done!');
+        });
+
+        queue.dequeue();
     }
-    
 
 
 };
