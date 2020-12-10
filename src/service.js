@@ -2,11 +2,12 @@
 var Matrix = require('rpi-matrix');
 var AnimationQueue = require('rpi-animations').Queue;
 
-var queue = new AnimationQueue();
+
 
 module.exports = class Service {
 
     constructor(options) {
+        var {queue} = options;
         this.debug = console.log;
         this.queue = queue;
     }
