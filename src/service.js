@@ -4,7 +4,7 @@ var AnimationQueue = require('rpi-animations').Queue;
 
 var queue = new AnimationQueue();
 
-class Service {
+module.exports = class Service {
 
     constructor(options) {
         this.debug = console.log;
