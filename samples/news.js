@@ -50,10 +50,7 @@ class Command {
         };
 
         queue.on('idle', () => {
-            timer.setTimer(1000 * 60 * 1, () => {
-                displayService();
-            })
-
+            displayService();
         });
 
         displayService();
