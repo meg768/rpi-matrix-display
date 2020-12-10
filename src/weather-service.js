@@ -5,14 +5,11 @@ var AnimationQueue = require('rpi-animations').Queue;
 var TextAnimation = require('./text-animation.js');
 var Service = require('./service');
 
-var queue = new AnimationQueue();
 
 module.exports = class WeatherService extends Service {
 
     constructor(options) {
         super(options);
-
-        this.queue = queue;
     }
 
 
