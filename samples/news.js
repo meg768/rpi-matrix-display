@@ -46,14 +46,15 @@ class Command {
 
         var displayService = () => {
             var service = new NewsService({queue:queue, argv:argv});
-
-            service.run().then(() => {
-                timer.setTimer(1000 * 60 * 5, () => {
-                    displayService();
-                })
-            });
-    
+            service.run();§
         };
+
+        queue.on('idle', () => {
+            timer.setTimer(1000 * 60 * 1, () => {
+                displayService();
+            })
+
+        });
 
         displayService();
 
