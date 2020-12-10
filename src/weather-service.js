@@ -10,6 +10,8 @@ module.exports = class WeatherService extends Service {
 
     constructor(options) {
         super(options);
+
+        this.queue = queue;
     }
 
 
