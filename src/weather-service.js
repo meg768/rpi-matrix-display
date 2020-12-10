@@ -42,7 +42,7 @@ module.exports = class WeatherService extends Service {
                 texts.push(sprintf('I morgon %d° (%d°) och %s', Math.round(tomorrow.temp.max + 0.5), Math.round(tomorrow.temp.min + 0.5), tomorrow.weather[0].description));
 
                 texts.forEach((text) => {
-                    this.queue.enqueue(new TextAnimation({text:text}));
+                    this.queue.enqueue(new TextAnimation({text:text, textColor:'red'}));
                 });
 
                 response.body.daily.forEach(element => {
