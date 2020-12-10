@@ -41,8 +41,8 @@ class OpenWeatherMap {
                 var tomorrow = response.body.daily[1];
 
                 var texts = [];
-                texts.push(sprintf('Idag %0f° och %s', current.temp, current.weather.description));
-                texts.push(sprintf('I morgon %0f° (%0f°) och %s', tomorrow.temp.max, tomorrow.temp.min, tomorrow.weather.description));
+                texts.push(sprintf('Idag %0f° och %s', current.temp, current.weather[0].description));
+                texts.push(sprintf('I morgon %0f° (%0f°) och %s', tomorrow.temp.max, tomorrow.temp.min, tomorrow.weather[0].description));
 
                 response.body.daily.forEach(element => {
                     element.dt = new Date(element.dt * 1000);
