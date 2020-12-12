@@ -7,12 +7,15 @@ module.exports = class Command {
 
         var builder = (argv) => {
             this.argv = argv;
+            console.log('BUILDERRRRR ARRRRGGHHHSS', argv);
             this.run(argv);
 
         };
 
         var handler = (args) => {
+            this.args = args;
             console.log('ARRRRGGHHHSS', args);
+            
             args.usage('Usage: $0 [options]');
 
             args.option('help', {describe:'Displays this information'});
