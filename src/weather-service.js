@@ -10,7 +10,7 @@ module.exports = class WeatherService extends Service {
 
     constructor(options) {
         var {textColor, ...options} = options;
-        
+
         super(options);
 
         this.textColor = textColor;
@@ -54,8 +54,8 @@ module.exports = class WeatherService extends Service {
                     element.sunrise = new Date(element.sunrise * 1000);
                 });
 
-                console.log(JSON.stringify(current, null, '    '));
-                console.log(JSON.stringify(tomorrow, null, '    '));
+//                console.log(JSON.stringify(current, null, '    '));
+  //              console.log(JSON.stringify(tomorrow, null, '    '));
 
                 resolve();
             })

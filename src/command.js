@@ -12,6 +12,7 @@ module.exports = class Command {
         };
 
         var handler = (args) => {
+            console.log('ARRRRGGHHHSS', args);
             args.usage('Usage: $0 [options]');
 
             args.option('help', {describe:'Displays this information'});
