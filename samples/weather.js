@@ -2,9 +2,47 @@
 var Matrix = require('rpi-matrix');
 var AnimationQueue = require('rpi-animations').Queue;
 var WeatherService = require('../src/weather-service.js');
+var Command = require('../src/command.js');
 
 
-class Command {
+
+class WeatherCommand extends Command {
+
+    constructor() {
+        super(module, {name: 'weather', description: 'Display weather'}); 
+    }
+
+ 
+    defineOptions(args) {
+
+    }
+    
+    
+    run(argv) {
+        Matrix.configure(argv);
+
+        var queue = new AnimationQueue();
+
+        var runService = () => {
+            var service = new WeatherService({argv:argv, queue:queue});
+            service.run();
+        };
+
+        queue.on('idle', () => {
+            runService();
+        });
+
+        runService();
+        
+        queue.dequeue();
+    }
+
+
+    
+
+
+};
+class CommandX {
 
     constructor() {
         module.exports.command  = 'weather [options]';
@@ -59,7 +97,7 @@ class Command {
 
 };
 
-new Command();
+new WeatherCommand();
 
 
 
