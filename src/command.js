@@ -6,15 +6,15 @@ module.exports = class Command {
         var {command, description} = options;
 
         var builder = (argv) => {
-            this.argv = argv;
             console.log('BUILDERRRRR ARRRRGGHHHSS', argv);
+            this.argv = argv;
             this.run(argv);
 
         };
 
         var handler = (args) => {
-            this.args = args;
             console.log('ARRRRGGHHHSS', args);
+            this.args = args;
 
             args.usage('Usage: $0 [options]');
 
