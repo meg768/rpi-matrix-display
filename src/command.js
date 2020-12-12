@@ -2,7 +2,7 @@
 
 module.exports = class Command {
 
-    constructor(module, options) {
+    constructor(foo, options) {
         var {command, description} = options;
 
         var builder = (argv) => {
@@ -15,7 +15,7 @@ module.exports = class Command {
         var handler = (args) => {
             this.args = args;
             console.log('ARRRRGGHHHSS', args);
-            
+
             args.usage('Usage: $0 [options]');
 
             args.option('help', {describe:'Displays this information'});
@@ -33,10 +33,10 @@ module.exports = class Command {
 
         };
 
-        module.exports.command  = command;
-        module.exports.describe = description;
-        module.exports.builder  = builder;
-        module.exports.handler  = handler;
+        foo.exports.command  = command;
+        foo.exports.describe = description;
+        foo.exports.builder  = builder;
+        foo.exports.handler  = handler;
 
         this.debug = console.log;
 
