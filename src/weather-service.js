@@ -9,7 +9,13 @@ var Service = require('./service');
 module.exports = class WeatherService extends Service {
 
     constructor(options) {
+        var {textColor, ...options} = options;
+        
         super(options);
+
+        this.textColor = textColor;
+
+
     }
 
 

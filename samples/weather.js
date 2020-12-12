@@ -14,6 +14,7 @@ class WeatherCommand extends Command {
 
  
     defineOptions(args) {
+		args.option('textColor', {describe:'Text color', default:'red'});
 
     }
     
