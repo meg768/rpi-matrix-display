@@ -22,7 +22,7 @@ class Command {
         args.usage('Usage: $0 [options]');
 
         args.option('help', {describe:'Displays this information'});
-        args.option('debug', {describe:'Debug mode', default:false});
+        args.option('debug', {describe:'Debug mode', default:undefined});
 
         args.wrap(null);
 
@@ -39,16 +39,16 @@ class Command {
 
         var queue = new AnimationQueue();
 
-        var displayService = () => {
+        var runService = () => {
             var service = new WeatherService({queue:queue, argv:argv});
             service.run();
         };
 
         queue.on('idle', () => {
-            displayService();
+            runService();
         });
 
-        displayService();
+        runService();
         
         queue.dequeue();
     }
