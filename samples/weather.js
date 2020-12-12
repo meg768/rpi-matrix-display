@@ -40,7 +40,7 @@ class Command {
         var queue = new AnimationQueue();
 
         var runService = () => {
-            var service = new WeatherService({queue:queue, argv:argv});
+            var service = new WeatherService({argv:argv, queue:queue});
             service.run();
         };
 
