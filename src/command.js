@@ -31,8 +31,8 @@ module.exports = class Command {
 
         module.exports.command  = command;
         module.exports.describe = description;
-        module.exports.builder  = builder.bind(this);
-        module.exports.handler  = handler.bind(this);
+        module.exports.builder  = builder;
+        module.exports.handler  = handler;
 
         this.debug = console.log;
 
