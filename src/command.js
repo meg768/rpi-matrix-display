@@ -15,6 +15,7 @@ module.exports = class Command {
     }
 
     defineOptions(args) {
+        console.log('DEFINING OPTIONS command');
     }
  
     handler(args) {
