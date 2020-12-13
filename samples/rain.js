@@ -10,7 +10,6 @@ module.exports = class RainCommand extends Command {
     }
 
     options(args) {
-
 		args.option('duration', {describe:'Animation duration in milliseconds', default:-1});
 	}
 

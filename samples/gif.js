@@ -13,14 +13,10 @@ module.exports = class GifCommand extends Command {
 	}
 
 	options(args) {
-
-		args.usage('Usage: $0 animate [options]');
-
-		args.option('help', { describe: 'Displays this information' });
+		super.options(args);
 		args.option('name', { describe: 'Specifies name of GIF'});
 		args.option('duration', { describe: 'Animate for a specified time (ms)', default:30000});
 		args.option('iterations', { describe: 'Number of iterations to animate' });
-
 	}
 
 

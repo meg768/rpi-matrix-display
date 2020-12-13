@@ -13,16 +13,9 @@ module.exports = class NewsCommand extends Command {
 
  
     options(args) {
-
+        super.options(args);
         args.usage('Usage: $0 [options]');
-
-        args.option('help', {describe:'Displays this information'});
-        args.option('debug', {describe:'Debug mode', default:false});
-
     }
-
-
-
 
 
     run(argv) {
