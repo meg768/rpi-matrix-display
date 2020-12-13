@@ -10,6 +10,7 @@ class WeatherCommand extends Command {
 
     constructor() {
         super(module, {name: 'weather', description: 'Display weather'}); 
+        this.debug(this);
     }
 
  
