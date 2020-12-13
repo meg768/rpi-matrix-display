@@ -6,7 +6,7 @@ var Command = require('../src/command.js');
 
 
 
-mnodule.exports = class WeatherCommand extends Command {
+module.exports = class WeatherCommand extends Command {
 
     constructor() {
         super({command: 'weather', description: 'Display weather'}); 
