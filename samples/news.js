@@ -50,7 +50,5 @@ module.exports = class NewsCommand extends Command {
 
 };
 
-new Command();
-
 
 
