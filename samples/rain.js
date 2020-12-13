@@ -33,7 +33,7 @@ module.exports = class RainCommand extends Command {
 
 };
 
-new Command();
+
 
 
 
