@@ -13,6 +13,7 @@ module.exports = class WeatherCommand extends Command {
     }
 
     options(args) {
+        super.options(args);
 		args.option('textColor', {describe:'Text color', default:'red'});
     }
     

@@ -14,7 +14,6 @@ module.exports = class NewsCommand extends Command {
  
     options(args) {
         super.options(args);
-        args.usage('Usage: $0 [options]');
     }
 
 

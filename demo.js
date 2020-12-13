@@ -33,8 +33,8 @@ class App {
 
 				args.command({
 					command: cmd.command,
-					builder: cmd.options,
-					handler: cmd.run,
+					builder: cmd.builder,
+					handler: cmd.handler,
 					desc:    cmd.description 
 				});  
 			}

@@ -21,7 +21,7 @@ module.exports = class GifCommand extends Command {
 
 
 	run(argv) {
-
+	
 		try {
 			Matrix.configure(argv);
 
