@@ -12,14 +12,10 @@ module.exports = class WeatherCommand extends Command {
         super({command: 'weather', description: 'Display weather'}); 
     }
 
- 
+
     options(args) {
-        console.log('DEFINING OPTIONS weather');
-
 		args.option('textColor', {describe:'Text color', default:'red'});
-
     }
-    
     
     run(argv) {
         Matrix.configure(argv);
