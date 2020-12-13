@@ -3,31 +3,22 @@ var Matrix = require('rpi-matrix');
 var AnimationQueue = require('rpi-animations').Queue;
 var NewsService = require('../src/news-service.js');
 var Timer = require('yow/timer');
+var Command = require('../src/command.js');
 
-class Command {
+module.exports = class NewsCommand extends Command {
 
     constructor() {
-        module.exports.command  = 'news [options]';
-        module.exports.describe = 'Display news';
-        module.exports.builder  = this.defineArgs.bind(this);
-        module.exports.handler  = this.run.bind(this);
+        super({command:'news [options]', description:'Display news'});
     }
 
  
-    defineArgs(args) {
+    options(args) {
 
         args.usage('Usage: $0 [options]');
 
         args.option('help', {describe:'Displays this information'});
         args.option('debug', {describe:'Debug mode', default:false});
 
-        args.wrap(null);
-
-        args.check(function(argv) {
-            return true;
-        });
-
-        return args.argv;
     }
 
 

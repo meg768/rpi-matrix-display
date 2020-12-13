@@ -3,19 +3,16 @@ var Matrix = require('rpi-matrix');
 var GifAnimation = require('../src/gif-animation.js');
 var Animation = require('rpi-animations').Animation;
 var AnimationQueue = require('rpi-animations').Queue;
+var Command = require('../src/command.js');
 
 
-class Command {
+module.exports = class GifCommand extends Command {
 
 	constructor() {
-		module.exports.command = 'gif [options]';
-		module.exports.describe = 'Animate gifs';
-		module.exports.builder = this.defineArgs;
-		module.exports.handler = this.run;
-
+		super({command:'gif [options]', description:'Animate GIFs'});
 	}
 
-	defineArgs(args) {
+	options(args) {
 
 		args.usage('Usage: $0 animate [options]');
 
@@ -24,13 +21,6 @@ class Command {
 		args.option('duration', { describe: 'Animate for a specified time (ms)', default:30000});
 		args.option('iterations', { describe: 'Number of iterations to animate' });
 
-		args.wrap(null);
-
-		args.check(function (argv) {
-			return true;
-		});
-
-		return args.argv;
 	}
 
 
@@ -67,4 +57,3 @@ class Command {
 
 };
 
-new Command();
