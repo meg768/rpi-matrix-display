@@ -6,15 +6,14 @@ var Command = require('../src/command.js');
 
 
 
-class WeatherCommand extends Command {
+mnodule.exports = class WeatherCommand extends Command {
 
     constructor() {
-        super(module, {name: 'weather', description: 'Display weather'}); 
-        this.debug(this);
+        super({command: 'weather', description: 'Display weather'}); 
     }
 
  
-    defineOptions(args) {
+    options(args) {
         console.log('DEFINING OPTIONS weather');
 
 		args.option('textColor', {describe:'Text color', default:'red'});
@@ -101,7 +100,7 @@ class CommandX {
 
 };
 
-new WeatherCommand();
+
 
 
 

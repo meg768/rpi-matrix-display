@@ -2,8 +2,11 @@ var sprintf = require('yow/sprintf');
 
 module.exports = class Command {
 
-    constructor(foo, options) {
-        var {name, description} = options;
+    constructor(options) {
+        var {command, description} = options;
+
+        this.command = command;
+        this.description = description;
 
         var builder = (argv) => {
             console.log('BUILDERRRRR ARRRRGGHHHSS', argv);
@@ -33,15 +36,19 @@ module.exports = class Command {
 
         };
 
-        foo.exports.command  = sprintf('%s [options]', name); 
-        foo.exports.describe = description;
-        foo.exports.builder  = builder;
-        foo.exports.handler  = handler;
+
 
         this.debug = console.log;
 
     }
 
+    options(args) {
+
+    }
+
+    run(argv) {
+    }
+    
 
 
 };

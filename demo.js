@@ -28,7 +28,15 @@ class App {
 			var components = path.parse(fileName);
 
 			if (components.ext == '.js') {
-				args.command(require(fileName));  
+				var Command = require(fileName);
+				var cmd = new Command(); 
+
+				args.command({
+					command: cmd.command,
+					builder: cmd.options,
+					handler: cmd.run,
+					desc:    cmd.description 
+				});  
 			}
 
 		})
