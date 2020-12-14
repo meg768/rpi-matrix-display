@@ -120,7 +120,10 @@ class NewsFeed {
 module.exports = class NewsService extends Service {
 
     constructor(options) {
+        var {textColor, ...options} = options;
         super(options);
+
+        this.textColor = textColor;
     }
 
 
@@ -132,7 +135,7 @@ module.exports = class NewsService extends Service {
             feed.fetch().then((news) => {
                 news.forEach((item) => {
                     var text = sprintf('%s - %s', item.description, item.title);
-                    this.queue.enqueue(new TextAnimation({text:text, textColor:'red'}));
+                    this.queue.enqueue(new TextAnimation({text:text, textColor:textColor}));
                 });
 
                 resolve();
