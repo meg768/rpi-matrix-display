@@ -83,14 +83,21 @@ module.exports = class MatrixCommand extends Command {
         service.run();
     }
 
+    runNextService() {
+        this.runService();
+    }
+
+    runAnimations() {
+        this.queue.on('idle', () => {
+            this.runNextService();
+        });
+        
+        this.runService();
+    }
+
     run() {
         Matrix.configure(this.argv);
-
-        this.queue.on('idle', () => {
-            this.runService();
-        });
-
-        this.runService();
+        this.runAnimations();
         this.queue.dequeue();
     }
 

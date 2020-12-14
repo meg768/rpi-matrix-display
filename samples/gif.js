@@ -3,13 +3,13 @@ var Matrix = require('rpi-matrix');
 var GifAnimation = require('../src/gif-animation.js');
 var Animation = require('rpi-animations').Animation;
 var AnimationQueue = require('rpi-animations').Queue;
-var Command = require('../src/command.js');
+var MatrixCommand = require('../src/matrix-command.js');
 
 
-module.exports = class GifCommand extends Command {
+module.exports = class GifCommand extends MatrixCommand {
 
-	constructor() {
-		super({command:'gif [options]', description:'Animate GIFs'});
+	constructor(options) {
+		super({...options, command:'gif [options]', description:'Animate GIFs'});
 	}
 
 	options(args) {
@@ -19,30 +19,18 @@ module.exports = class GifCommand extends Command {
 		args.option('iterations', { describe: 'Number of iterations to animate' });
 	}
 
+	runAnimations() {
 
-	run() {
-		Matrix.configure(this.argv);
+		this.queue.enqueue(new GifAnimation(this.argv));
 
-		var argv = {...this.argv, debug:this.debug};
-
-		if (argv.name == undefined) {
-			var queue = new AnimationQueue();
-
-			queue.on('idle', () => {
-				queue.enqueue(new GifAnimation(argv));
+		if (this.argv.name == undefined) {
+			this.queue.on('idle', () => {
+				this.queue.enqueue(new GifAnimation(this.argv));
 			});
 
-			queue.enqueue(new GifAnimation(argv));
-			queue.dequeue();
+			this.queue.enqueue(new GifAnimation(argv));
 		}
-		else {
-			var sample = new GifAnimation(argv);
-			sample.run();
-		}
-
 	}
-
-
 
 };
 

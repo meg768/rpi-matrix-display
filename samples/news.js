@@ -1,14 +1,14 @@
 
-var Matrix = require('rpi-matrix');
-var AnimationQueue = require('rpi-animations').Queue;
 var NewsService = require('../src/news-service.js');
 var Timer = require('yow/timer');
-var Command = require('../src/command.js');
+var MatrixCommand = require('../src/matrix-command.js');
 
-module.exports = class NewsCommand extends Command {
+module.exports = class NewsCommand extends MatrixCommand {
 
-    constructor() {
-        super({command:'news [options]', description:'Display news'});
+    constructor(options) {
+        super({...options, command:'news [options]', description:'Display news'});
+
+        this.timer = new Timer();
     }
 
  
@@ -16,27 +16,14 @@ module.exports = class NewsCommand extends Command {
         super.options(args);
     }
 
+    getService() {
+        return NewsService;
+    }
 
-    run() {
-        Matrix.configure(this.argv);
-
-        var timer = new Timer();
-        var queue = new AnimationQueue();
-
-        var displayService = () => {
-            var service = new NewsService({...this.argv, debug:this.debug, queue:queue});
-            return service.run();
-        };
-
-        queue.on('idle', () => {
-            timer.setTimer(1000 * 60 * 5, () => {
-                displayService();
-            });
+    runNextService() {
+        this.timer.setTimer(1000 * 60 * 1, () => {
+            this.runService();
         });
-
-        displayService();
-
-        queue.dequeue();
     }
 
 

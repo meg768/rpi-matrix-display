@@ -1,12 +1,11 @@
 
-var Matrix = require('rpi-matrix');
 var RainAnimation = require('../src/rain-animation.js');
-var Command = require('../src/command.js');
+var MatrixCommand = require('../src/matrix-command.js');
 
-module.exports = class RainCommand extends Command {
+module.exports = class RainCommand extends MatrixCommand {
 
-    constructor() {
-		super({command: 'rain [options]', description:'Fill matrix with rain'});
+    constructor(options) {
+		super({command: 'rain [options]', description:'Fill matrix with rain', ...options});
     }
 
     options(args) {
@@ -14,14 +13,11 @@ module.exports = class RainCommand extends Command {
 		args.option('duration', {describe:'Animation duration in milliseconds', default:-1});
 	}
 
-
-	run() {			
-		Matrix.configure(this.argv);
-
-		var animation = new RainAnimation({...this.argv, debug:this.debug});
-		
+	runAnimations() {
+		var animation = new RainAnimation({...this.argv, debug:this.debug});		
 		animation.run();
-    }
+	}
+
 
 };
 
