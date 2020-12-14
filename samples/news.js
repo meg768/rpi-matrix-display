@@ -17,14 +17,14 @@ module.exports = class NewsCommand extends Command {
     }
 
 
-    run(argv) {
-        Matrix.configure(argv);
+    run() {
+        Matrix.configure(this.argv);
 
         var timer = new Timer();
         var queue = new AnimationQueue();
 
         var displayService = () => {
-            var service = new NewsService({queue:queue, argv:argv});
+            var service = new NewsService({...this.argv, debug:this.debug, queue:queue});
             return service.run();
         };
 

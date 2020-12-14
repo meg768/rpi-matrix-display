@@ -14,13 +14,18 @@ module.exports = class Command {
         };
 
         this.handler = (argv) => {
-            var {debug, ...argv} = argv; 
+            try {
+                var {debug, ...argv} = argv; 
 
-            if (debug) {
-                this.debug = console.log;
+                if (debug) {
+                    this.debug = console.log;
+                }
+        
+                this.run(this.argv = argv);
             }
-    
-            this.run(this.argv = argv);
+            catch (error) {
+                console.error(error.stack);
+            }            
         };
     }
 

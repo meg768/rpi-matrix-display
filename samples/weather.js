@@ -17,13 +17,13 @@ module.exports = class WeatherCommand extends Command {
 		args.option('textColor', {describe:'Text color', default:'red'});
     }
     
-    run(argv) {
-        Matrix.configure(argv);
+    run() {
+        Matrix.configure(this.argv);
 
         var queue = new AnimationQueue();
 
         var runService = () => {
-            var service = new WeatherService({argv:this.argv, debug:this.debug, queue:queue});
+            var service = new WeatherService({...this.argv, debug:this.debug, queue:queue});
             service.run();
         };
 

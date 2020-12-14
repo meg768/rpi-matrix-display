@@ -15,20 +15,13 @@ module.exports = class RainCommand extends Command {
 	}
 
 
-	run(argv) {
-
-		try {
+	run() {
 			
-			Matrix.configure(argv);
+		Matrix.configure(this.argv);
 
-            var animation = new RainAnimation(argv);
-            
-			animation.run();
-		}
-		catch (error) {
-			console.error(error.stack);
-		}
-
+		var animation = new RainAnimation({...this.argv, debug:this.debug});
+		
+		animation.run();
     }
 
 };

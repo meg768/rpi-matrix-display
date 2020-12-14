@@ -1,19 +1,16 @@
 
 var Matrix = require('rpi-matrix');
 var AnimationQueue = require('rpi-animations').Queue;
-
+var isFunction = require('yow/isFunction');
 
 
 module.exports = class Service {
 
     constructor(options) {
-        var {queue, argv} = options;
-        this.debug = console.log;
-        this.argv  = argv;
-        this.queue = queue;
+        var {debug, queue} = options;
 
-        if (this.argv == undefined)
-            this.debug = () => {};
+        this.debug = isFunction(debug) ? debug : (() => {});
+        this.queue = queue;
     }
 
     run() {

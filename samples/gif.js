@@ -20,31 +20,24 @@ module.exports = class GifCommand extends Command {
 	}
 
 
-	run(argv) {
-	
-		try {
-			Matrix.configure(argv);
+	run() {
+		Matrix.configure(this.argv);
 
-			if (argv.name == undefined) {
-				var queue = new AnimationQueue();
+		var argv = {...this.argv, debug:this.debug};
 
-				queue.on('idle', () => {
-					queue.enqueue(new GifAnimation(argv));
-				});
+		if (argv.name == undefined) {
+			var queue = new AnimationQueue();
 
+			queue.on('idle', () => {
 				queue.enqueue(new GifAnimation(argv));
-	
-				queue.dequeue();
-			}
-			else {
-				var sample = new GifAnimation(argv);
-				sample.run();
-	
-			}
+			});
 
+			queue.enqueue(new GifAnimation(argv));
+			queue.dequeue();
 		}
-		catch (error) {
-			console.error(error.stack);
+		else {
+			var sample = new GifAnimation(argv);
+			sample.run();
 		}
 
 	}
