@@ -87,10 +87,10 @@ class App {
 		
 		try {
 
-			var defaultConfig = this.getDefaultConfig();
+			//var defaultConfig = this.getDefaultConfig();
 
 			args.usage('Usage: $0 <command> [options]')
-
+/*
             args.option('led-cols',                {describe:'Number of columns for display', default:defaultConfig['led-cols']});
             args.option('led-rows',                {describe:'Number of rows for display', default:defaultConfig['led-rows']});
             args.option('led-chain',               {describe:'Number of daisy-chained panels', default:defaultConfig['led-chain']});
@@ -107,7 +107,7 @@ class App {
             args.option('led-multiplexing',        {describe:'Multiplexing type (0-4).', default:defaultConfig['led-multiplexing']});
             args.option('led-show-refresh',        {describe:'Show refresh rate.', default:defaultConfig['led-show-refresh']});
             args.option('led-slowdown-gpio',       {describe:'Slowdown GPIO. Needed for faster Pis/slower panels', default:defaultConfig['led-slowdown-gpio']});
-
+*/
 			this.loadSamples();  
 
 			args.help();
