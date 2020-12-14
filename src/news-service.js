@@ -135,7 +135,7 @@ module.exports = class NewsService extends Service {
             feed.fetch().then((news) => {
                 news.forEach((item) => {
                     var text = sprintf('%s - %s', item.description, item.title);
-                    this.queue.enqueue(new TextAnimation({text:text, textColor:textColor}));
+                    this.queue.enqueue(new TextAnimation({text:text, textColor:this.textColor}));
                 });
 
                 resolve();
