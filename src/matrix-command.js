@@ -54,7 +54,7 @@ module.exports = class MatrixCommand extends Command {
     
     options(args) {
         super.options(args);
-/*
+
         var defaultConfig = this.getDefaultConfig();
 
         args.option('led-cols',                {describe:'Number of columns for display', default:defaultConfig['led-cols']});
@@ -73,7 +73,6 @@ module.exports = class MatrixCommand extends Command {
         args.option('led-multiplexing',        {describe:'Multiplexing type (0-4).', default:defaultConfig['led-multiplexing']});
         args.option('led-show-refresh',        {describe:'Show refresh rate.', default:defaultConfig['led-show-refresh']});
         args.option('led-slowdown-gpio',       {describe:'Slowdown GPIO. Needed for faster Pis/slower panels', default:defaultConfig['led-slowdown-gpio']});
-*/
 
     }
     
@@ -91,7 +90,7 @@ module.exports = class MatrixCommand extends Command {
         this.queue.on('idle', () => {
             this.runNextService();
         });
-        
+
         this.runService();
     }
 
