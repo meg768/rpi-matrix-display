@@ -14,6 +14,7 @@ module.exports = class WeatherCommand extends MatrixCommand {
     }
     
     getService() {
+        this.debug(this.argv);
         return WeatherService;
     }
 
