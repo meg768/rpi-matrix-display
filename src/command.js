@@ -15,7 +15,6 @@ module.exports = class Command {
 
         this.handler = (argv) => {
             var {debug, ...argv} = argv; 
-            this.argv = argv;
 
             if (debug) {
                 this.debug = console.log;

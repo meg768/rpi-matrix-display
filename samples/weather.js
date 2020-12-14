@@ -23,7 +23,7 @@ module.exports = class WeatherCommand extends Command {
         var queue = new AnimationQueue();
 
         var runService = () => {
-            var service = new WeatherService({argv:argv, queue:queue});
+            var service = new WeatherService({argv:this.argv, debug:this.debug, queue:queue});
             service.run();
         };
 
