@@ -21,7 +21,7 @@ module.exports = class NewsCommand extends MatrixCommand {
     }
 
     runNextService() {
-        this.timer.setTimer(1000 * 60 * 1, () => {
+        this.timer.setTimer(1000 * 60 * 5, () => {
             this.runService();
         });
     }
