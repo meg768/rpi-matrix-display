@@ -3,10 +3,33 @@ var Matrix = require('rpi-matrix');
 var AnimationQueue = require('rpi-animations').Queue;
 var WeatherService = require('../src/weather-service.js');
 var Command = require('../src/command.js');
+var MatrixCommand = require('../src/matrix-command.js');
 
 
 
-module.exports = class WeatherCommand extends Command {
+module.exports = class WeatherCommand extends MatrixCommand {
+
+    constructor(options) {
+        super({command: 'weather [options]', description: 'Display weather', ...options}); 
+    }
+
+    options(args) {
+        super.options(args);
+		args.option('textColor', {describe:'Text color', default:'red'});
+    }
+    
+    getService() {
+        return WeatherService;
+    }
+
+
+};
+
+
+
+
+
+class WeatherCommandX extends Command {
 
     constructor() {
         super({command: 'weather [options]', description: 'Display weather'}); 

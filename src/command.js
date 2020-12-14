@@ -25,6 +25,7 @@ module.exports = class Command {
             }
             catch (error) {
                 console.error(error.stack);
+                process.exit(-1);
             }            
         };
     }
