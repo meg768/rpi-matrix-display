@@ -1,7 +1,7 @@
 
 module.exports = class {
 
-    constructor(options) {
+    constructor(options = {}) {
         var {debug, ...options} = options;
         this.debug = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
     }

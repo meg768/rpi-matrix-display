@@ -16,7 +16,7 @@ module.exports = class WeatherCommand extends MatrixCommand {
     enqueueAnimations() {
         return new Promise((resolve, reject) => {
 
-            var feed = new WeatherFeed();
+            var feed = new WeatherFeed(this.argv);
     
             feed.fetch().then((items) => {
                 items.forEach((item) => {

@@ -4,8 +4,8 @@ module.exports = class {
 
     constructor(options) {
         var Parser = require('rss-parser');
-        var debug = {options}
-
+        var {debug, ...options} = options;
+        
         this.parser = new Parser();
         this.cache = {};
         this.debug = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
