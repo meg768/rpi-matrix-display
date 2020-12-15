@@ -14,11 +14,9 @@ module.exports = class Command {
 
         this.handler = (argv) => {
             try {
-                var {debug, ...argv} = argv; 
-
                 this.argv = argv;
-                this.debug = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
-        
+                this.debug = typeof argv.debug === 'function' ? argv.debug : (argv.debug ? console.log : () => {});
+                
                 this.run();
             }
             catch (error) {
