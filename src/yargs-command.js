@@ -29,7 +29,7 @@ module.exports = class Command {
 
     options(yargs) {
         yargs.usage(`Usage: $0 ${this.command} [options]`);
-        yargs.option('debug', { describe: 'Debug mode', type:'boolean', default:false});
+        yargs.option('debug', { describe: 'Debug mode', type:'boolean'});
     }
 
     run() {
