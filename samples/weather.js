@@ -1,6 +1,7 @@
 
 var WeatherFeed = require('../src/weather-feed.js');
 var MatrixCommand = require('../src/matrix-command.js');
+var TextAnimation = require('../src/text-animation.js');
 
 module.exports = class WeatherCommand extends MatrixCommand {
 
