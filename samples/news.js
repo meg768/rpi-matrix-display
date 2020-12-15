@@ -1,12 +1,13 @@
 
 var TextAnimation = require('../src/text-animation.js');
-var Timer = require('yow/timer');
 var NewsFeed = require('../src/news-feed.js');
 var MatrixCommand = require('../src/matrix-command.js');
 
 module.exports = class extends MatrixCommand {
 
     constructor(options) {
+        var Timer = require('yow/timer');
+
         super({...options, command:'news [options]', description:'Display news'});
 
         this.timer = new Timer();

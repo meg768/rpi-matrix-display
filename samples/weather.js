@@ -6,7 +6,11 @@ var TextAnimation = require('../src/text-animation.js');
 module.exports = class WeatherCommand extends MatrixCommand {
 
     constructor(options) {
+        var Timer = require('yow/timer');
+
         super({command: 'weather [options]', description: 'Display weather', ...options}); 
+
+        this.timer = new Timer();
     }
 
     options(args) {
