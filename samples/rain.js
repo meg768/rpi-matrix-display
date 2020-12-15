@@ -15,7 +15,7 @@ module.exports = class RainCommand extends MatrixCommand {
 
 	runAnimations() {
 		var animation = new RainAnimation({...this.argv, debug:this.debug});		
-		animation.run();
+		return animation.run();
 	}
 
 

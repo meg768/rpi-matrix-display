@@ -1,21 +1,14 @@
 
-var sprintf = require('yow/sprintf');
-var Parser = require('rss-parser');
-var isFunction = require('yow/isFunction');
-var isString = require('yow/isString');
 
-
-
-
-
-module.exports = class NewsFeed {
+module.exports = class {
 
     constructor(options) {
+        var Parser = require('rss-parser');
         var debug = {options}
 
         this.parser = new Parser();
         this.cache = {};
-        this.debug = () => {};
+        this.debug = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
 
         this.feeds = [
             {url:'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS',            description:'Sydsvenska Dagbladet'},
@@ -28,18 +21,12 @@ module.exports = class NewsFeed {
             {url:'https://rss.aftonbladet.se/rss2/small/pages/sections/aftonbladet', name: 'Aftonbladet',    description:'Aftonbladet'}
         ];
 
-        if (isFunction(debug))
-            this.debug = debug;
-        else if (debug != undefined) {
-            if (isString(debug) && Number(debug))
-                this.debug = console.log;
-            else if (debug)
-                this.debug = console.log;
-        }
+
     }
 
 
     fetchFeed(feed) {
+        var sprintf = require('yow/sprintf');
 
         return new Promise((resolve, reject) => {
 
@@ -51,7 +38,7 @@ module.exports = class NewsFeed {
                     news.timestamp   = new Date(item.isoDate);
                     news.name        = feed.name;
                     news.description = feed.description;
-                    news.text        = item.title;
+                    news.title       = item.title;
 
                     this.cache[key]  = news;
                 });
@@ -116,3 +103,4 @@ module.exports = class NewsFeed {
 
     }
 }
+

@@ -1,11 +1,11 @@
 
 var Matrix = require('rpi-matrix');
 var AnimationQueue = require('rpi-animations').Queue;
-var Command = require('../src/command.js');
+var YargsCommand = require('../src/yargs-command.js');
 
 
 
-module.exports = class MatrixCommand extends Command {
+module.exports = class extends YargsCommand {
 
     constructor(options) {
         super(options); 
@@ -76,24 +76,6 @@ module.exports = class MatrixCommand extends Command {
 
     }
     
-    runService() {
-        var Service = this.getService();
-        var service = new Service({...this.argv, debug:this.debug, queue:this.queue});
-        service.run();
-    }
-
-    runNextService() {
-        this.runService();
-    }
-
-    runAnimations() {
-        this.queue.on('idle', () => {
-            this.runNextService();
-        });
-
-        this.runService();
-    }
-
     run() {
         Matrix.configure(this.argv);
         this.runAnimations();

@@ -1,27 +1,17 @@
 
-var Matrix = require('rpi-matrix');
-var sprintf = require('yow/sprintf');
-var AnimationQueue = require('rpi-animations').Queue;
-var TextAnimation = require('./text-animation.js');
-var Service = require('./service');
-
-
-module.exports = class WeatherService extends Service {
+module.exports = class {
 
     constructor(options) {
-        var {textColor, ...options} = options;
-
-        super(options);
-
-        this.textColor = textColor;
-
-
+        var {debug, ...options} = options;
+        this.debug = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
     }
 
 
-    run() {
+    fetch() {
+        var sprintf = require('yow/sprintf');
+        var Request = require('yow/request');
+
         return new Promise((resolve, reject) => {
-            var Request = require('yow/request');
             var request = new Request('http://api.openweathermap.org');
     
             var query = {};
@@ -44,9 +34,7 @@ module.exports = class WeatherService extends Service {
                 texts.push(sprintf('Just nu %d° och %s', Math.round(current.temp + 0.5), current.weather[0].description));
                 texts.push(sprintf('I morgon %d° (%d°) och %s', Math.round(tomorrow.temp.max + 0.5), Math.round(tomorrow.temp.min + 0.5), tomorrow.weather[0].description));
 
-                texts.forEach((text) => {
-                    this.queue.enqueue(new TextAnimation({text:text, textColor:this.textColor}));
-                });
+
 
                 response.body.daily.forEach(element => {
                     element.dt = new Date(element.dt * 1000);
@@ -57,7 +45,7 @@ module.exports = class WeatherService extends Service {
 //                console.log(JSON.stringify(current, null, '    '));
   //              console.log(JSON.stringify(tomorrow, null, '    '));
 
-                resolve();
+                resolve(texts);
             })
             .catch((error) => {
                 reject(error);

@@ -21,11 +21,13 @@ module.exports = class GifCommand extends MatrixCommand {
 
 	runAnimations() {
 
-		this.queue.enqueue(new GifAnimation(this.argv));
+		var argv = {...this.argv, debug:this.debug};
+
+		this.queue.enqueue(new GifAnimation(argv));
 
 		if (this.argv.name == undefined) {
 			this.queue.on('idle', () => {
-				this.queue.enqueue(new GifAnimation(this.argv));
+				this.queue.enqueue(new GifAnimation(argv));
 			});
 
 			this.queue.enqueue(new GifAnimation(argv));

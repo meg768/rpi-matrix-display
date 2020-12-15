@@ -1,5 +1,5 @@
 
-var WeatherService = require('../src/weather-service.js');
+var WeatherFeed = require('../src/weather-feed.js');
 var MatrixCommand = require('../src/matrix-command.js');
 
 module.exports = class WeatherCommand extends MatrixCommand {
@@ -13,11 +13,36 @@ module.exports = class WeatherCommand extends MatrixCommand {
 		args.option('textColor', {describe:'Text color', default:'red'});
     }
     
-    getService() {
-        this.debug(this.argv);
-        return WeatherService;
+    enqueueAnimations() {
+        return new Promise((resolve, reject) => {
+
+            var feed = new WeatherFeed();
+    
+            feed.fetch().then((items) => {
+                items.forEach((item) => {
+                    this.queue.enqueue(new TextAnimation({...this.argv, text:item}));
+                });
+
+                resolve();
+            })
+            .catch((error) => {
+                reject(error);
+            });
+        });
     }
 
+
+
+	runAnimations() {
+        this.enqueueAnimations();
+
+        this.queue.on('idle', () => {
+            this.timer.SetTimer(60 * 1000, () => {
+                this.enqueueAnimations();
+            })
+        });
+
+	}
 
 };
 

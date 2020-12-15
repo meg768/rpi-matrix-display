@@ -1,9 +1,10 @@
 
-var NewsService = require('../src/news-service.js');
+var TextAnimation = require('../src/text-animation.js');
 var Timer = require('yow/timer');
+var NewsFeed = require('../src/news-feed.js');
 var MatrixCommand = require('../src/matrix-command.js');
 
-module.exports = class NewsCommand extends MatrixCommand {
+module.exports = class extends MatrixCommand {
 
     constructor(options) {
         super({...options, command:'news [options]', description:'Display news'});
@@ -16,15 +17,41 @@ module.exports = class NewsCommand extends MatrixCommand {
         super.options(args);
     }
 
-    getService() {
-        return NewsService;
-    }
+    enqueueAnimations() {
+        var sprintf = require('yow/sprintf');
 
-    runNextService() {
-        this.timer.setTimer(1000 * 60 * 5, () => {
-            this.runService();
+        return new Promise((resolve, reject) => {
+
+            var feed = new NewsFeed();
+    
+            feed.fetch().then((news) => {
+                news.forEach((item) => {
+                    var text = sprintf('%s - %s', item.description, item.title);
+                    this.queue.enqueue(new TextAnimation({...this.argv, text:text}));
+                });
+
+                resolve();
+            })
+            .catch((error) => {
+                reject(error);
+            });
         });
     }
+
+
+
+	runAnimations() {
+        this.enqueueAnimations();
+
+        this.queue.on('idle', () => {
+            this.timer.SetTimer(60 * 1000, () => {
+                this.enqueueAnimations();
+            })
+        });
+
+	}
+
+
 
 
 };
