@@ -1,4 +1,3 @@
-var sprintf = require('yow/sprintf');
 
 module.exports = class Command {
 
@@ -17,11 +16,10 @@ module.exports = class Command {
             try {
                 var {debug, ...argv} = argv; 
 
-                if (debug) {
-                    this.debug = console.log;
-                }
+                this.argv = argv;
+                this.debug = this.argv.debug = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
         
-                this.run(this.argv = argv);
+                this.run();
             }
             catch (error) {
                 console.error(error.stack);
@@ -36,7 +34,7 @@ module.exports = class Command {
         yargs.option('debug', { describe: 'Debug mode', type:'boolean', default:false});
     }
 
-    run(argv) {
+    run() {
     }
 
 };
