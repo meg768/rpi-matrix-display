@@ -17,7 +17,7 @@ module.exports = class Command {
                 var {debug, ...argv} = argv; 
 
                 this.argv = argv;
-                this.debug = this.argv.debug = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
+                this.debug = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
         
                 this.run();
             }
