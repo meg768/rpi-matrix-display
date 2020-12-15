@@ -79,7 +79,6 @@ module.exports = class extends YargsCommand {
     run() {
         Matrix.configure(this.argv);
         this.runAnimations();
-        this.queue.dequeue();
     }
 
 
