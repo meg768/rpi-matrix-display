@@ -23,7 +23,7 @@ module.exports = class extends MatrixCommand {
 
         return new Promise((resolve, reject) => {
 
-            var feed = new NewsFeed();
+            var feed = new NewsFeed(this.argv);
     
             feed.fetch().then((news) => {
                 news.forEach((item) => {
