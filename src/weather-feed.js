@@ -42,8 +42,8 @@ module.exports = class {
                     element.sunrise = new Date(element.sunrise * 1000);
                 });
 
-//                console.log(JSON.stringify(current, null, '    '));
-  //              console.log(JSON.stringify(tomorrow, null, '    '));
+                this.debug(JSON.stringify(current, null, '    '));
+                this.debug(JSON.stringify(tomorrow, null, '    '));
 
                 resolve(texts);
             })
