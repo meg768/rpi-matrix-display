@@ -38,7 +38,7 @@ module.exports = class WeatherCommand extends MatrixCommand {
         this.enqueueAnimations();
 
         this.queue.on('idle', () => {
-            this.timer.SetTimer(60 * 1000, () => {
+            this.timer.setTimer(60 * 1000, () => {
                 this.enqueueAnimations();
             })
         });
