@@ -2,6 +2,7 @@
 var WeatherFeed = require('../src/weather-feed.js');
 var MatrixCommand = require('../src/matrix-command.js');
 var TextAnimation = require('../src/text-animation.js');
+var WeatherAnimation = require('../src/weather-animation.js');
 
 module.exports = class WeatherCommand extends MatrixCommand {
 
@@ -17,8 +18,12 @@ module.exports = class WeatherCommand extends MatrixCommand {
         super.options(args);
 		args.option('textColor', {describe:'Text color', default:'red'});
     }
-    
+
     enqueueAnimations() {
+        this.queue.enqueue(new WeatherAnimation({...this.argv}));
+    }
+
+    XXXenqueueAnimations() {
         return new Promise((resolve, reject) => {
 
             var feed = new WeatherFeed(this.argv);

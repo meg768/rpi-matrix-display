@@ -32,7 +32,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
 
     constructor(options) {
 
-        super(options);
+        super({...options, name:'TextAnimation'});
 
         var {text = 'ABC 123', fontSize = 0.65, emojiSize = 0.75, fontStyle = 'bold', fontName = 'Arial', textColor = 'auto'} = options;
 
