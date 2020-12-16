@@ -25,7 +25,7 @@ module.exports = class extends TextAnimation {
     }
 
 
-    fetchFeed(feed) {
+    fetch(feed) {
         var sprintf = require('yow/sprintf');
 
         return new Promise((resolve, reject) => {
@@ -59,7 +59,7 @@ module.exports = class extends TextAnimation {
             var promises = [];
             
             this.feeds.forEach((feed) => {
-                promises.push(this.fetchFeed(feed));
+                promises.push(this.fetch(feed));
             });
 
             Promise.all(promises).then(() => {
@@ -110,7 +110,7 @@ module.exports = class extends TextAnimation {
     start() {
 
         return new Promise((resolve, reject) => {
-            this.fetch().then((text) => {
+            this.getText().then((text) => {
                 this.text = text;
             })
             .then(() => {
