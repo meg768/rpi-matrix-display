@@ -216,7 +216,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
     }
 
     getText() {
-        Promise.resolve(this.text);
+        return Promise.resolve(this.text);
     }
 
     start() {
