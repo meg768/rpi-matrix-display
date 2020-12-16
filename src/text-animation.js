@@ -58,6 +58,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
     }
 
 
+
     createTextImage(text) {
         
         var myctx = this.matrix.canvas.getContext('2d');
@@ -214,6 +215,10 @@ module.exports = class TextAnimation extends ScrollAnimation  {
 
     }
 
+    getText() {
+        Promise.resolve(this.text);
+    }
+
     start() {
 
         var ctx = this.matrix.canvas.getContext('2d');
@@ -221,7 +226,10 @@ module.exports = class TextAnimation extends ScrollAnimation  {
         ctx.fillStyle = this.textColor;
 
         return new Promise((resolve, reject) => {
-            this.parse(this.text).then((context) => {
+            this.getText().then((text) => {
+                return this.parse(text);
+            })
+            .then((context) => {
                 this.scrollImage = this.createDisplayImage(context);
             })
             .then(() => {

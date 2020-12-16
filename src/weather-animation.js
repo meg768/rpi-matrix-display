@@ -8,7 +8,7 @@ module.exports = class extends TextAnimation {
     }
 
 
-    fetch() {
+    getText() {
         var sprintf = require('yow/sprintf');
         var Request = require('yow/request');
 
@@ -31,9 +31,9 @@ module.exports = class extends TextAnimation {
                 var current  = response.body.current;
                 var tomorrow = response.body.daily[1];
 
-                var texts = [];
-                texts.push(sprintf('Just nu %d° och %s', Math.round(current.temp + 0.5), current.weather[0].description));
-                texts.push(sprintf('I morgon %d° (%d°) och %s', Math.round(tomorrow.temp.max + 0.5), Math.round(tomorrow.temp.min + 0.5), tomorrow.weather[0].description));
+                var text = [];
+                text.push(sprintf('Just nu %d° och %s', Math.round(current.temp + 0.5), current.weather[0].description));
+                text.push(sprintf('I morgon %d° (%d°) och %s', Math.round(tomorrow.temp.max + 0.5), Math.round(tomorrow.temp.min + 0.5), tomorrow.weather[0].description));
 
                 response.body.daily.forEach(element => {
                     element.dt = new Date(element.dt * 1000);
@@ -44,7 +44,7 @@ module.exports = class extends TextAnimation {
                 this.debug(JSON.stringify(current, null, '    '));
                 this.debug(JSON.stringify(tomorrow, null, '    '));
 
-                resolve(texts);
+                resolve(text);
             })
             .catch((error) => {
                 reject(error);
@@ -57,8 +57,8 @@ module.exports = class extends TextAnimation {
 
 
         return new Promise((resolve, reject) => {
-            this.fetch().then((items) => {
-                this.text = items.join('      ');
+            this.getText().then((text) => {
+                this.text = text;
             })
             .then(() => {
                 return super.start();
