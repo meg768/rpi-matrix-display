@@ -230,6 +230,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
 
         return new Promise((resolve, reject) => {
             this.getText().then((text) => {
+                this.debug(text);
                 return this.parse(text);
             })
             .then((context) => {
