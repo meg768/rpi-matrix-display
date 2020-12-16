@@ -44,7 +44,7 @@ module.exports = class extends TextAnimation {
                 this.debug(JSON.stringify(current, null, '    '));
                 this.debug(JSON.stringify(tomorrow, null, '    '));
 
-                resolve(text);
+                resolve(text.join('          '));
             })
             .catch((error) => {
                 reject(error);
@@ -53,26 +53,6 @@ module.exports = class extends TextAnimation {
     }
 
 
-    start() {
-
-
-        return new Promise((resolve, reject) => {
-            this.getText().then((text) => {
-                this.text = text;
-            })
-            .then(() => {
-                return super.start();
-            })
-            .then(() => {
-                resolve();
-            })
-            .catch(error => {
-                reject(error);
-            });
-    
-        });
-
-    }  
     
 
 
