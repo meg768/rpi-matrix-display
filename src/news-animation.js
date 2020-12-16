@@ -107,25 +107,6 @@ module.exports = class extends TextAnimation {
     }
 
 
-    start() {
-
-        return new Promise((resolve, reject) => {
-            this.getText().then((text) => {
-                this.text = text;
-            })
-            .then(() => {
-                return super.start();
-            })
-            .then(() => {
-                resolve();
-            })
-            .catch(error => {
-                reject(error);
-            });
-    
-        });
-
-    }  
     
 }
 
