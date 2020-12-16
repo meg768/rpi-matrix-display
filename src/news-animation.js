@@ -52,7 +52,7 @@ module.exports = class extends TextAnimation {
         });
     }
 
-    fetch() {
+    getText() {
 
         return new Promise((resolve, reject) => {
 
@@ -92,7 +92,13 @@ module.exports = class extends TextAnimation {
                 // Save cache for later
                 this.cache = cache;
 
-                resolve(news);
+                var text = [];
+
+                news.forEach((item) => {
+                    text.push(`${item.description} - ${item.title}`);
+                });
+
+                resolve(text.join('      '));
             })
             .catch((error) => {
                 reject(error);
@@ -104,8 +110,8 @@ module.exports = class extends TextAnimation {
     start() {
 
         return new Promise((resolve, reject) => {
-            this.fetch().then((items) => {
-                this.text = items.join('      ');
+            this.fetch().then((text) => {
+                this.text = text;
             })
             .then(() => {
                 return super.start();
