@@ -1,6 +1,7 @@
 
 var TextAnimation = require('../src/text-animation.js');
 var WeatherAnimation = require('../src/weather-animation.js');
+var NewsAnimation = require('../src/news-animation.js');
 var NewsFeed = require('../src/news-feed.js');
 var MatrixCommand = require('../src/matrix-command.js');
 
@@ -20,7 +21,7 @@ module.exports = class extends MatrixCommand {
     }
 
     enqueueAnimations() {
-        this.queue.enqueue(new WeatherAnimation({...this.argv}));
+        this.queue.enqueue(new NewsAnimation({...this.argv}));
     }
 
     XXXenqueueAnimations() {
