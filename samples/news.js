@@ -1,5 +1,6 @@
 
 var TextAnimation = require('../src/text-animation.js');
+var WeatherAnimation = require('../src/weather-animation.js');
 var NewsFeed = require('../src/news-feed.js');
 var MatrixCommand = require('../src/matrix-command.js');
 
