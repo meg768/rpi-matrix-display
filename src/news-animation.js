@@ -1,14 +1,14 @@
+var TextAnimation = require('./text-animation.js');
 
-
-module.exports = class {
+module.exports = class extends TextAnimation {
 
     constructor(options = {}) {
+        super(options);
+
         var Parser = require('rss-parser');
-        var {debug, ...options} = options;
 
         this.parser = new Parser();
         this.cache = {};
-        this.debug = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
 
         this.feeds = [
             {url:'https://www.sydsvenskan.se/rss.xml?latest',                        name: 'SDS',            description:'Sydsvenska Dagbladet'},
@@ -99,5 +99,27 @@ module.exports = class {
             })
         });
     }
+
+
+    start() {
+
+        return new Promise((resolve, reject) => {
+            this.fetch().then((items) => {
+                this.text = items.join('      ');
+            })
+            .then(() => {
+                return super.start();
+            })
+            .then(() => {
+                resolve();
+            })
+            .catch(error => {
+                reject(error);
+            });
+    
+        });
+
+    }  
+    
 }
 

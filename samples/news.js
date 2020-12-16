@@ -19,6 +19,10 @@ module.exports = class extends MatrixCommand {
     }
 
     enqueueAnimations() {
+        this.queue.enqueue(new WeatherAnimation({...this.argv}));
+    }
+
+    XXXenqueueAnimations() {
         var sprintf = require('yow/sprintf');
 
         return new Promise((resolve, reject) => {
@@ -45,7 +49,7 @@ module.exports = class extends MatrixCommand {
         this.enqueueAnimations();
 
         this.queue.on('idle', () => {
-            this.timer.setTimer(3 * 60 * 1000, () => {
+            this.timer.setTimer(5 * 1000, () => {
                 this.enqueueAnimations();
             })
         });
