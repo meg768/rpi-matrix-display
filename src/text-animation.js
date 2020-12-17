@@ -57,7 +57,12 @@ module.exports = class TextAnimation extends ScrollAnimation  {
 
     }
 
-
+    createSpaceImage() {
+        
+        var canvas = Matrix.Canvas.createCanvas(this.matrix.width, this.matrix.height);
+        var ctx = canvas.getContext('2d');
+        return ctx.getImageData(0, 0, canvas.width, canvas.height);
+    }
 
     createTextImage(text) {
         
@@ -126,6 +131,10 @@ module.exports = class TextAnimation extends ScrollAnimation  {
                     ctx.fillStyle = util.format('rgb(%d,%d,%d)', item.color[0], item.color[1], item.color[2]);
                     resolve();
                 }
+                else if (item.type == 'space') {
+                    item.image = this.createSpaceImage();
+                    resolve();
+                }
                 else {
                     throw new Error('Invalid item: ' + JSON.stringify(item));
                 }
@@ -145,30 +154,49 @@ module.exports = class TextAnimation extends ScrollAnimation  {
             var emojiRegExp = new RegExp(/(\:[\w\-\+]+\:)/g);
             var colorRegExp = new RegExp(/(\{[\w\-\+]+\})/g);
 
+            var generateText = (text) => {
+                var words = text.split('\t');
+
+                words.forEach((word) => {
+                    output.push({type:'text', text:word});
+
+                    if (words.length > 1)
+                        output.push({type:'space'});
+                });
+            }
+
+            var generateEmoji = (text) => {
+                var name  = text.replace(/:/g, '');
+                var emoji = this.emojis[name];
+
+                if (emoji != undefined) 
+                    output.push({type:'emoji', name:name, fileName:emoji.fileName});
+                else
+                    generateText(text);
+            }
+
+            var generateColor = (text) => {
+                var name  = text.replace('{', '').replace('}', '');    
+                var color = this.colors[name];
+
+                if (color != undefined) {
+                    output.push({type:'color', name:name, color:color});
+                }
+                else
+                    generateText(text);
+            }
+
+
             text.split(regexp).forEach((text) => {
     
                 if (text.match(emojiRegExp)) {
-                    var name  = text.replace(/:/g, '');
-                    var emoji = this.emojis[name];
-    
-                    if (emoji != undefined) {
-                        output.push({type:'emoji', name:name, fileName:emoji.fileName});
-                    }
-                    else
-                        output.push({type:'text', text:text});
+                    generateEmoji(text);
                 }
                 else if (text.match(colorRegExp)) {
-                    var name  = text.replace('{', '').replace('}', '');    
-                    var color = this.colors[name];
-    
-                    if (color != undefined) {
-                        output.push({type:'color', name:name, color:color});
-                    }
-                    else
-                        output.push({type:'text', text:text});
+                    generateColor(text);
                 }
                 else {
-                    output.push({type:'text', text:text});
+                    generateText(text);
                 }
             });
     
