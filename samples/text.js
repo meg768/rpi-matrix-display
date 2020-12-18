@@ -1,8 +1,8 @@
 
 var TextAnimation = require('../src/text-animation.js');
-var MatrixCommand = require('../src/matrix-command.js');
+var AnimationCommand = require('../src/animation-command.js');
 
-module.exports = class extends MatrixCommand {
+module.exports = class extends AnimationCommand {
 
     constructor(options) {
         var Timer = require('yow/timer');

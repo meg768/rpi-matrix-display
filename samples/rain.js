@@ -1,8 +1,8 @@
 
 var RainAnimation = require('../src/rain-animation.js');
-var MatrixCommand = require('../src/matrix-command.js');
+var AnimationCommand = require('../src/animation-command.js');
 
-module.exports = class RainCommand extends MatrixCommand {
+module.exports = class RainCommand extends AnimationCommand {
 
     constructor(options) {
 		super({command: 'rain [options]', description:'Fill matrix with rain', ...options});
@@ -10,7 +10,6 @@ module.exports = class RainCommand extends MatrixCommand {
 
     options(args) {
 		super.options(args);
-		args.option('duration', {describe:'Animation duration in milliseconds', default:-1});
 	}
 
 	runAnimations() {
