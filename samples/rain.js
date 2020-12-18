@@ -1,6 +1,6 @@
 
 var RainAnimation = require('../src/rain-animation.js');
-var MatrixCommand = require('../src/animation-command.js');
+var MatrixCommand = require('../src/matrix-command.js');
 
 module.exports = class RainCommand extends MatrixCommand {
 
