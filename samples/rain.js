@@ -10,8 +10,8 @@ module.exports = class RainCommand extends MatrixCommand {
 
     options(args) {
 		super.options(args);
-		args.option('duration', { describe: 'Animate for a specified time (ms)', default:30000});
-		args.option('iterations', { describe: 'Number of iterations to animate'});
+		args.option('duration',   {describe: 'Animate for a specified time (ms)', default:30000});
+		args.option('iterations', {describe: 'Number of iterations to animate'});
 
 	}
 

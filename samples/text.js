@@ -15,9 +15,13 @@ module.exports = class extends MatrixCommand {
  
     options(args) {
         super.options(args);
-		args.option('duration', { describe: 'Animate for a specified time (ms)', default:30000});
-		args.option('iterations', { describe: 'Number of iterations to animate'});
-		args.option('textColor', {describe:'Text color', default:'red'});
+        args.option('textColor',   {describe: 'Text color', default:'red'});
+        args.option('iterations',  {describe: 'Number of iterations to animate each animation'});
+        args.option('text',        {describe: 'Text to display', default:'ABC 123'});
+        args.option('emojiSize',   {describe: 'Size of emojis relative to matrix height', default:0.75});
+        args.option('fontStyle',   {describe: 'Font style', default:'bold'});
+        args.option('fontName',    {describe: 'Font name', default:'Arial'});
+        args.option('scrollDelay', {describe: 'Scrolling speed', default:10});
 
     }
 
