@@ -1,9 +1,9 @@
 
 var GifAnimation = require('../src/gif-animation.js');
-var AnimationCommand = require('../src/animation-command.js');
+var MatrixCommand = require('../src/matrix-command.js');
 
 
-module.exports = class GifCommand extends AnimationCommand {
+module.exports = class GifCommand extends MatrixCommand {
 
 	constructor(options) {
 		super({...options, command:'gif [options]', description:'Animate GIFs'});
@@ -12,6 +12,8 @@ module.exports = class GifCommand extends AnimationCommand {
 	options(args) {
 		super.options(args);
 		args.option('name', { describe: 'Specifies name of GIF'});
+		args.option('duration', { describe: 'Animate for a specified time (ms)', default:30000});
+		args.option('iterations', { describe: 'Number of iterations to animate'});
 	}
 
 	runAnimations() {
