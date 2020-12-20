@@ -10,7 +10,7 @@ module.exports = class WeatherCommand extends MatrixCommand {
 
         this.timer = new Timer();
         this.animations = [];
-        this.index = 0;
+        this.animationIndex = 0;
     }
 
     options(args) {
@@ -44,10 +44,8 @@ module.exports = class WeatherCommand extends MatrixCommand {
     }
 
     runNextAnimation() {
-        var animation = this.animations[this.index];
-
-        this.debug(animation);
-        this.index = (this.index + 1) % this.animations.length;
+        var animation = this.animations[this.animationIndex];
+        this.animationIndex = (this.animationIndex + 1) % this.animations.length;
         return animation();
     }
 
