@@ -24,10 +24,10 @@ module.exports = class WeatherCommand extends MatrixCommand {
 
     }
 
-    runWeatherAnimation() {
-        var Animation = require('../src/weather-animation.js');
-        this.queue.enqueue(new Animation({...this.argv}));
-
+    runNextAnimation() {
+        var animation = this.animations[this.animationIndex];
+        this.animationIndex = (this.animationIndex + 1) % this.animations.length; 
+        return this.queue.enqueue(animation());
     }
 
     setupAnimations() {
