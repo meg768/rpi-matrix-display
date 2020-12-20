@@ -34,6 +34,7 @@ module.exports = class WeatherCommand extends MatrixCommand {
         if (this.argv.news) {
             this.animations.push(() => {
                 var Animation = require('../src/news-animation.js');
+                this.debug(this.argv);
                 return new Animation({...this.argv});                
             });
         }
