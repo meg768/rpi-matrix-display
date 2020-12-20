@@ -21,49 +21,47 @@ module.exports = class WeatherCommand extends MatrixCommand {
 		args.option('rain', {describe:'Display matrix rain', type: 'boolean', default:false});
     }
 
+    runWeatherAnimation() {
+        var Animation = require('../src/weather-animation.js');
+        this.queue.enqueue(new Animation({...this.argv}));
+
+    }
+
+    runNewsAnimation() {
+        var Animation = require('../src/news-animation.js');
+        this.queue.enqueue(new Animation({...this.argv}));
+
+    }
+
+    runRainAnimation() {
+        var Animation = require('../src/rain-animation.js');
+        this.queue.enqueue(new Animation({...this.argv, duration:2000}));
+    }
+
+    runGifAnimation() {
+        var Animation = require('../src/gif-animation.js');
+        this.queue.enqueue(new Animation({...this.argv, duration:2000}));
+    }
+
     runNextAnimation() {
-        var runAnimation = this.animations[this.index];
+        var animation = this.animations[this.index];
 
         this.index = (this.index + 1) % this.animations.length;
-        this.queue.enqueue(runAnimation());
+        return animation();
     }
 
 	runAnimations() {
-        if (this.argv.news) {
-            this.debug('Adding news');
-            var Animation = require('../src/news-animation.js');
+        if (this.argv.news)
+            this.animations.push(this.runNewsAnimation);
 
-            this.animations.push(() => {
-                return new Animation({...this.argv});
-            });
-        }
+        if (this.argv.weather)
+            this.animations.push(this.runWeatherAnimation);
 
-        if (this.argv.weather) {
-            var Animation = require('../src/weather-animation.js');
+        if (this.argv.gif)
+            this.animations.push(this.runGifAnimation);
 
-            this.animations.push(() => {
-                return new Animation({...this.argv});
-            });
-        }
-
-
-        if (this.argv.rain) {
-            var Animation = require('../src/rain-animation.js');
-
-            this.animations.push(() => {
-                return new Animation({...this.argv, duration:2000});
-            });
-        }
-
-        if (this.argv.gif) {
-            var Animation = require('../src/gif-animation.js');
-
-            if (Matrix.width == Matrix.height) {
-                this.animations.push(() => {
-                    return new Animation({...this.argv, duration:2000});
-                });    
-            }
-        }
+        if (this.argv.rain)
+            this.animations.push(this.runRainAnimation);
 
         this.runNextAnimation();
 
