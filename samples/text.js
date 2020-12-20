@@ -35,7 +35,7 @@ module.exports = class extends MatrixCommand {
         this.enqueueAnimations();
 
         this.queue.on('idle', () => {
-            this.timer.setTimer(5 * 1000, () => {
+            this.timer.setTimer(1 * 1000, () => {
                 this.enqueueAnimations();
             })
         });

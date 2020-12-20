@@ -10,7 +10,7 @@ module.exports = class extends YargsCommand {
     constructor(options) {
         super(options); 
 
-        this.queue = new AnimationQueue();
+		this.queue = new AnimationQueue();
     }
 
 
