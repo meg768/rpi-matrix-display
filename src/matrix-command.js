@@ -78,6 +78,7 @@ module.exports = class extends YargsCommand {
     
     run() {
         Matrix.configure(this.argv);
+		this.debug(this.argv);
         this.runAnimations();
     }
 
