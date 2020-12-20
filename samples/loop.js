@@ -46,11 +46,11 @@ module.exports = class WeatherCommand extends MatrixCommand {
         }
 
 
-        if (this.argv.weather) {
+        if (this.argv.rain) {
             var Animation = require('../src/rain-animation.js');
 
             this.animations.push(() => {
-                return new Animation({...this.argv});
+                return new Animation({...this.argv, duration:2000});
             });
         }
 
@@ -59,7 +59,7 @@ module.exports = class WeatherCommand extends MatrixCommand {
 
             if (Matrix.width == Matrix.height) {
                 this.animations.push(() => {
-                    return new Animation({...this.argv});
+                    return new Animation({...this.argv, duration:2000});
                 });    
             }
         }
