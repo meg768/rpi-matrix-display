@@ -18,7 +18,10 @@ module.exports = class WeatherCommand extends MatrixCommand {
 		args.option('news', {describe:'Display RSS news feeds', type: 'boolean', default:true});
 		args.option('gif', {describe:'Display random gif animations', type: 'boolean', default:false});
 		args.option('weather', {describe:'Display weather information', type: 'boolean', default:false});
-		args.option('rain', {describe:'Display matrix rain', type: 'boolean', default:false});
+        args.option('rain', {describe:'Display matrix rain', type: 'boolean', default:false});
+        
+        args.option('scrollDelay', {describe:'Text scroll delay in ms', type: 'number', default:10});
+
     }
 
     runWeatherAnimation() {
@@ -51,10 +54,10 @@ module.exports = class WeatherCommand extends MatrixCommand {
 
 	runAnimations() {
         if (this.argv.news)
-            this.animations.push(this.runNewsAnimation.bind(this));
+            this.animations.push(this.runNewsAnimation);
 
         if (this.argv.weather)
-            this.animations.push(this.runWeatherAnimation.bind(this));
+            this.animations.push(this.runWeatherAnimation);
 
         if (this.argv.gif)
             this.animations.push(this.runGifAnimation);
