@@ -46,6 +46,7 @@ module.exports = class WeatherCommand extends MatrixCommand {
     runNextAnimation() {
         var animation = this.animations[this.index];
 
+        this.debug(animation);
         this.index = (this.index + 1) % this.animations.length;
         return animation();
     }
