@@ -21,6 +21,7 @@ module.exports = class WeatherCommand extends MatrixCommand {
         args.option('rain', {describe:'Display matrix rain', type: 'boolean', default:true});
         
         args.option('scrollDelay', {describe:'Text scroll delay in ms', type: 'number', default:10});
+        args.option('textColor', {describe:'Text color', default:'red'});
 
     }
 
@@ -38,6 +39,13 @@ module.exports = class WeatherCommand extends MatrixCommand {
             });
         }
 
+        if (this.argv.rain) {
+            this.animations.push(() => {
+                var Animation = require('../src/rain-animation.js');
+                return new Animation({...this.argv, duration:30000});                
+            });
+        }
+
         if (this.argv.weather) {
             this.animations.push(() => {
                 var Animation = require('../src/weather-animation.js');
@@ -45,17 +53,10 @@ module.exports = class WeatherCommand extends MatrixCommand {
             });
         }
 
-        if (this.argv.rain) {
-            this.animations.push(() => {
-                var Animation = require('../src/rain-animation.js');
-                return new Animation({...this.argv, duration:2000});                
-            });
-        }
-
         if (this.argv.gif) {
             this.animations.push(() => {
                 var Animation = require('../src/gif-animation.js');
-                return new Animation({...this.argv, duration:2000});                
+                return new Animation({...this.argv, duration:30000});                
             });
         }
 
