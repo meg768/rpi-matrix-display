@@ -30,6 +30,16 @@ module.exports = class WeatherCommand extends MatrixCommand {
 
     }
 
+    setupAnimations() {
+        if (this.argv.news) {
+            this.animations.push(() => {
+                var Animation = require('../src/news-animation.js');
+                return new Animation({...this.argv});                
+            });
+        }
+
+
+    }
     runNewsAnimation() {
         var Animation = require('../src/news-animation.js');
         this.queue.enqueue(new Animation({...this.argv}));
@@ -49,22 +59,11 @@ module.exports = class WeatherCommand extends MatrixCommand {
     runNextAnimation() {
         var animation = this.animations[this.animationIndex];
         this.animationIndex = (this.animationIndex + 1) % this.animations.length;
-        return animation();
+        this.queue.enqueue(animation());
     }
 
 	runAnimations() {
-        if (this.argv.news)
-            this.animations.push(this.runNewsAnimation);
-
-        if (this.argv.weather)
-            this.animations.push(this.runWeatherAnimation);
-
-        if (this.argv.gif)
-            this.animations.push(this.runGifAnimation);
-
-        if (this.argv.rain)
-            this.animations.push(this.runRainAnimation);
-
+        this.setupAnimations();
         this.runNextAnimation();
 
         this.queue.on('idle', () => {
