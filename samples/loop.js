@@ -16,9 +16,9 @@ module.exports = class WeatherCommand extends MatrixCommand {
     options(args) {
         super.options(args);
 		args.option('news', {describe:'Display RSS news feeds', type: 'boolean', default:true});
-		args.option('gif', {describe:'Display random gif animations', type: 'boolean', default:false});
-		args.option('weather', {describe:'Display weather information', type: 'boolean', default:false});
-        args.option('rain', {describe:'Display matrix rain', type: 'boolean', default:false});
+		args.option('gif', {describe:'Display random gif animations', type: 'boolean', default:true});
+		args.option('weather', {describe:'Display weather information', type: 'boolean', default:true});
+        args.option('rain', {describe:'Display matrix rain', type: 'boolean', default:true});
         
         args.option('scrollDelay', {describe:'Text scroll delay in ms', type: 'number', default:10});
 
@@ -34,35 +34,33 @@ module.exports = class WeatherCommand extends MatrixCommand {
         if (this.argv.news) {
             this.animations.push(() => {
                 var Animation = require('../src/news-animation.js');
-                this.debug(this.argv);
                 return new Animation({...this.argv});                
             });
         }
 
+        if (this.argv.weather) {
+            this.animations.push(() => {
+                var Animation = require('../src/weather-animation.js');
+                return new Animation({...this.argv});                
+            });
+        }
+
+        if (this.argv.rain) {
+            this.animations.push(() => {
+                var Animation = require('../src/rain-animation.js');
+                return new Animation({...this.argv, duration:2000});                
+            });
+        }
+
+        if (this.argv.gif) {
+            this.animations.push(() => {
+                var Animation = require('../src/gif-animation.js');
+                return new Animation({...this.argv, duration:2000});                
+            });
+        }
 
     }
-    runNewsAnimation() {
-        var Animation = require('../src/news-animation.js');
-        this.queue.enqueue(new Animation({...this.argv}));
-
-    }
-
-    runRainAnimation() {
-        var Animation = require('../src/rain-animation.js');
-        this.queue.enqueue(new Animation({...this.argv, duration:2000}));
-    }
-
-    runGifAnimation() {
-        var Animation = require('../src/gif-animation.js');
-        this.queue.enqueue(new Animation({...this.argv, duration:2000}));
-    }
-
-    runNextAnimation() {
-        var animation = this.animations[this.animationIndex];
-        this.animationIndex = (this.animationIndex + 1) % this.animations.length;
-        this.queue.enqueue(animation());
-    }
-
+    
 	runAnimations() {
         this.setupAnimations();
         this.runNextAnimation();
