@@ -52,10 +52,10 @@ module.exports = class WeatherCommand extends MatrixCommand {
 
 	runAnimations() {
         if (this.argv.news)
-            this.animations.push(this.runNewsAnimation);
+            this.animations.push(this.runNewsAnimation.bind(this));
 
         if (this.argv.weather)
-            this.animations.push(this.runWeatherAnimation);
+            this.animations.push(this.runWeatherAnimation.bind(this));
 
         if (this.argv.gif)
             this.animations.push(this.runGifAnimation);
