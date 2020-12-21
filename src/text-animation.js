@@ -236,6 +236,7 @@ module.exports = class TextAnimation extends Animation  {
     }
 */
     render() {
+        var isArray = require('yow/isArray');
 
         if (this.iterations != undefined && this.iterations <= 0) {
             this.cancel();            
