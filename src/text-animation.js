@@ -156,6 +156,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
             var images = [];
 
             var parseText = (text) => {
+                this.debug('Parsing text', text);
                 return new Promise((resolve, reject) => {
                     images.push(this.createTextImage(text));
                     resolve();
@@ -163,6 +164,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
             }
 
             var parseEmoji = (text) => {
+                this.debug('Parsing emoji', text);
                 var name  = text.replace(/:/g, '');
                 var emoji = this.emojis[name];
 
@@ -181,6 +183,8 @@ module.exports = class TextAnimation extends ScrollAnimation  {
             }
 
             var parseColor = (text) => {
+                this.debug('Parsing color', text);
+
                 var name  = text.replace('{', '').replace('}', '');    
                 var color = this.colors[name];
 
