@@ -4,6 +4,7 @@ var sprintf = require('yow/sprintf');
 
 var Matrix = require('rpi-matrix');
 var Animation = require('rpi-animations').Animation;
+var ScrollAnimation = require('./scroll-animation.js');
 
 var loadEmojis = once((folder) => {
     var fs = require('fs');
@@ -27,7 +28,7 @@ var loadEmojis = once((folder) => {
 });
 
 
-module.exports = class TextAnimation extends Animation  {
+module.exports = class TextAnimation extends ScrollAnimation  {
 
     constructor(options) {
         var {text = 'ABC 123', fontSize = 0.65, emojiSize = 0.75, fontStyle = 'bold', fontName = 'Arial', textColor = 'auto', scrollDelay = 10, ...options} = options;
@@ -221,7 +222,7 @@ module.exports = class TextAnimation extends Animation  {
     }
 */
 
-    render() {
+    renderx() {
         this.matrix.render(this.scrollImage.data, {scroll:'left', scrollDelay:this.this.scrollDelay});
     }
 
