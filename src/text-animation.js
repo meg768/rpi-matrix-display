@@ -223,7 +223,7 @@ module.exports = class TextAnimation extends Animation  {
 */
 
     render() {
-        this.matrix.render(this.scrollImage.data, {scroll:'left', scrollDelay:this.this.scrollDelay});
+        this.matrix.render(this.scrollImage.data, {scroll:'left', scrollDelay:this.scrollDelay});
     }
 
     start() {
