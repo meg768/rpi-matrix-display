@@ -199,42 +199,7 @@ module.exports = class TextAnimation extends Animation  {
         });
 
     }
-/*
-    render() {
-
-        if (this.iterations != undefined && this.iterations <= 0) {
-            this.cancel();            
-        }
-        else {
-            this.matrix.render(this.scrollImage.data, {scroll:'left', scrollDelay:10});
-
-            this.gif.drawCurrentFrame();
-            this.matrix.canvas.getContext("2d").drawImage(this.gif.canvas, 0, 0);
     
-            this.matrix.render();
-            this.matrix.sleep(this.gif.getCurrentFrameDelay() * 10);
-    
-            this.gif.nextFrame();
-    
-            if (this.gif.currentFrame == 0) {
-                if (this.iterations != undefined && this.iterations > 0) 
-                    this.iterations--;
-            }    
-        }
-    }
-*/
-/*
-    render() {
-        // Get current image to scroll
-        var image = this.images[this.imageIndex];
-
-        // Render it
-        this.matrix.render(image.data, {scroll:'left', scrollDelay:this.scrollDelay});
-
-        // Move on to next image
-        this.imageIndex = (this.imageIndex + 1) % this.images.length;
-    }
-*/
     render() {
         var isArray = require('yow/isArray');
 
