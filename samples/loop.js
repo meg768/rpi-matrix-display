@@ -1,7 +1,7 @@
 var Matrix = require('rpi-matrix');
 var MatrixCommand = require('../src/matrix-command.js');
 
-module.exports = class WeatherCommand extends MatrixCommand {
+module.exports = class extends MatrixCommand {
 
     constructor(options) {
         var Timer = require('yow/timer');
