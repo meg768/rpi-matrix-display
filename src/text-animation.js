@@ -260,6 +260,7 @@ module.exports = class TextAnimation extends Animation  {
                     this.imageIndex = (this.imageIndex + 1) % this.images.length;
                     
                     if (this.imageIndex == 0) {
+                        console.log('NEXT ITERATION');
                         if (this.iterations != undefined && this.iterations > 0) 
                             this.iterations--;
                     }
