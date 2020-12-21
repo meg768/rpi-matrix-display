@@ -23,7 +23,8 @@ module.exports = class extends MatrixCommand {
             {name: '/text',    animation:require('../src/text-animation.js')},
             {name: '/rain',    animation:require('../src/rain-animation.js')},
             {name: '/weather', animation:require('../src/weather-animation.js')},
-            {name: '/gif',     animation:require('../src/gif-animation.js')},
+            {name: '/news',    animation:require('../src/news-animation.js')},
+            {name: '/gif',     animation:require('../src/gif-animation.js')}
         ];
 
         paths.forEach((path) => {
