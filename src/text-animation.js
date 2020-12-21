@@ -114,7 +114,6 @@ module.exports = class TextAnimation extends ScrollAnimation  {
             }
 
             var parseEmoji = (text) => {
-                console.log('Parsing emoji', text);
                 var name  = text.replace(/:/g, '');
                 var emoji = this.emojis[name];
                 console.log('Parsing emoji', text, emoji);
@@ -125,10 +124,14 @@ module.exports = class TextAnimation extends ScrollAnimation  {
                 return new Promise((resolve, reject) => {
                     console.log('Loading emoji', emoji);
                     Matrix.Canvas.loadImage(emoji).then((image) => {
-                        images.push(this.createEmojiImage(image));
+                        console.log('Loading finished', emoji);
+                        var x = this.createEmojiImage(image);
+                        console.log('created image');
+                        images.push(x);
                         resolve();    
                     })
                     .catch(error => {
+                        console.log('error loading emoji');
                         reject(error);
                     });
                 });
