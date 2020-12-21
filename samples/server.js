@@ -19,6 +19,27 @@ module.exports = class extends MatrixCommand {
         app.use(bodyParser.urlencoded({ limit: '50mb', extended: false}));
         app.use(bodyParser.json({limit: '50mb'}));
 
+        var paths = [
+            {name: '/text',    animation:require('../src/text-animation.js')},
+            {name: '/rain',    animation:require('../src/rain-animation.js')},
+            {name: '/weather', animation:require('../src/weather-animation.js')},
+            {name: '/gif',     animation:require('../src/gif-animation.js')},
+        ];
+
+        paths.forEach((path) => {
+            app.post(path.name, (request, response) => {
+                try {
+                    this.queue.enqueue(new path.animation({...request.query, ...request.body}));
+                    response.status(200).json({ status:'OK'});    
+                }
+                catch(error) {
+                    response.status(401).json({status:error.message});    
+    
+                }
+    
+            });           
+        });
+        /*
         app.post('/text', (request, response) => {
             var Animation = require('../src/text-animation.js');
             this.queue.enqueue(new Animation({...request.query, ...request.body}));
@@ -48,6 +69,7 @@ module.exports = class extends MatrixCommand {
 
             }
         });
+        */
 
         app.listen(this.argv.port);
 
