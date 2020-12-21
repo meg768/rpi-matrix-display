@@ -149,70 +149,67 @@ module.exports = class TextAnimation extends ScrollAnimation  {
     parse(text) {
 
         return new Promise((resolve, reject) => {
+            var output = [];
             var regexp = new RegExp(/(\:[\w\-\+]+\:|\{[\w\-\+]+\})/g);
             var emojiRegExp = new RegExp(/(\:[\w\-\+]+\:)/g);
             var colorRegExp = new RegExp(/(\{[\w\-\+]+\})/g);
 
-            var images = [];
+            var generateText = (text) => {
+                var words = text.split('\t');
 
-            var parseText = (text) => {
-                return new Promise((resolve, reject) => {
-                    images.push(this.createTextImage(text));
-                    resolve();
+                words.forEach((word) => {
+                    output.push({type:'text', text:word});
+
+                    if (words.length > 1)
+                        output.push({type:'space'});
                 });
             }
 
-            var parseEmoji = (text) => {
+            var generateEmoji = (text) => {
                 var name  = text.replace(/:/g, '');
                 var emoji = this.emojis[name];
 
-                if (emoji == undefined)
-                    return parseText(text);
-
-                return new Promise((resolve, reject) => {
-                    Matrix.Canvas.loadImage(emoji).then((image) => {
-                        images.push(this.createEmojiImage(image));
-                        resolve();    
-                    })
-                    .catch(error => {
-                        reject(error);
-                    });
-                });
+                if (emoji != undefined) 
+                    output.push({type:'emoji', name:name, fileName:emoji.fileName});
+                else
+                    generateText(text);
             }
 
-            var parseColor = (text) => {
+            var generateColor = (text) => {
                 var name  = text.replace('{', '').replace('}', '');    
                 var color = this.colors[name];
 
-                if (color == undefined)
-                    return parseText(text);
-
-                return new Promise((resolve, reject) => {
-                    var ctx = this.matrix.canvas.getContext('2d');
-                    ctx.fillStyle = util.format('rgb(%d,%d,%d)', color[0], color[1], color[2]);
-                    resolve();
-                });
+                if (color != undefined) {
+                    output.push({type:'color', name:name, color:color});
+                }
+                else
+                    generateText(text);
             }
 
-            var promise = Promise.resolve();
 
             text.split(regexp).forEach((text) => {
     
-                promise = promise.then(() => {
-                    if (text.match(emojiRegExp)) {
-                        return parseEmoji(text);
-                    }
-                    else if (text.match(colorRegExp)) {
-                        return parseColor(text);
-                    }
-                    else {
-                        return parseText(text);
-                    }    
-                });
+                if (text.match(emojiRegExp)) {
+                    generateEmoji(text);
+                }
+                else if (text.match(colorRegExp)) {
+                    generateColor(text);
+                }
+                else {
+                    generateText(text);
+                }
             });
     
+            var promise = Promise.resolve();
+
+            output.forEach((item) => {
+                promise = promise.then(() => {
+                    return this.prepare(item);
+                })
+            })
+
             promise.then(() => {
-                resolve(images);
+                resolve(output);
             })
             .catch(error => {
                 reject(error);
@@ -222,21 +219,24 @@ module.exports = class TextAnimation extends ScrollAnimation  {
         });
     }
 
-    createDisplayImage(images) {
+    createDisplayImage(items) {
 
         var totalWidth = 0;
         var offset = 0;
 
-        images.forEach((image) => {
-            totalWidth += image.width;
+        items.forEach((item) => {
+            if (item.image != undefined)
+                totalWidth += item.image.width;
         });
 
         var canvas = Matrix.Canvas.createCanvas(totalWidth + this.matrix.width, this.matrix.height);
         var ctx = canvas.getContext('2d');
 
-        images.forEach((image) => {
-            ctx.putImageData(image, offset, (this.matrix.height - image.height) / 2);
-            offset += image.width;    
+        items.forEach((item) => {
+            if (item.image != undefined) {
+                ctx.putImageData(item.image, offset, (this.matrix.height - item.image.height) / 2);
+                offset += item.image.width;    
+            }
         });
 
         return ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -260,8 +260,8 @@ module.exports = class TextAnimation extends ScrollAnimation  {
             this.getText().then((text) => {
                 return this.parse(text);
             })
-            .then((images) => {
-                this.scrollImage = this.createDisplayImage(images);
+            .then((context) => {
+                this.scrollImage = this.createDisplayImage(context);
             })
             .then(() => {
                 return super.start();
