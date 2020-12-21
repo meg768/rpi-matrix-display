@@ -232,6 +232,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
                 resolve();
             })
             .catch(error => {
+                console.log(error);
                 reject(error);
             });
     
