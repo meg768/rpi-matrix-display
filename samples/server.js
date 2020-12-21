@@ -42,37 +42,7 @@ module.exports = class extends MatrixCommand {
     
             });           
         });
-        /*
-        app.post('/text', (request, response) => {
-            var Animation = require('../src/text-animation.js');
-            this.queue.enqueue(new Animation({...request.query, ...request.body}));
-            response.status(200).json({ status:'OK'});
-        });
 
-        app.post('/news', (request, response) => {
-            var Animation = require('../src/news-animation.js');
-            this.queue.enqueue(new Animation({...request.query, ...request.body}));
-            response.status(200).json({ status:'OK'});
-        });
-
-        app.post('/rain', (request, response) => {
-            var Animation = require('../src/rain-animation.js');
-            this.queue.enqueue(new Animation({...request.query, ...request.body}));
-            response.status(200).json({ status:'OK'});
-        });
-
-        app.post('/gif', (request, response) => {
-            try {
-                var Animation = require('../src/gif-animation.js');
-                this.queue.enqueue(new Animation({...request.query, ...request.body}));
-                response.status(200).json({ status:'OK'});    
-            }
-            catch(error) {
-                response.status(401).json({status:error.message});    
-
-            }
-        });
-        */
 
         app.listen(this.argv.port);
 
