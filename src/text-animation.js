@@ -108,7 +108,6 @@ module.exports = class TextAnimation extends ScrollAnimation  {
             var images = [];
 
             var parseText = (text) => {
-                console.log('Parsing text', text);
 
                 if (text.length > 0)
                     images.push(this.createTextImage(text));
@@ -124,24 +123,17 @@ module.exports = class TextAnimation extends ScrollAnimation  {
                     return parseText(text);
 
                 return new Promise((resolve, reject) => {
-                    console.log('Loading emoji', emoji);
                     Matrix.Canvas.loadImage(emoji).then((image) => {
-                        console.log('Loading finished', emoji);
-                        var x = this.createEmojiImage(image);
-                        console.log('created image');
-                        images.push(x);
+                        images.push(this.createEmojiImage(image));
                         resolve();    
                     })
                     .catch(error => {
-                        console.log('error loading emoji');
                         reject(error);
                     });
                 });
             }   
 
             var parseColor = (text) => {
-                console.log('Parsing color', text);
-
                 var name  = text.replace('{', '').replace('}', '');    
                 var color = this.colors[name];
 
@@ -174,11 +166,9 @@ module.exports = class TextAnimation extends ScrollAnimation  {
             });
     
             promise.then(() => {
-                console.log('Goot images', images.length);
                 resolve(images);
             })
             .catch(error => {
-                console.log('error');
                 reject(error);
             });
  
@@ -234,7 +224,6 @@ module.exports = class TextAnimation extends ScrollAnimation  {
                 resolve();
             })
             .catch(error => {
-                console.log(error);
                 reject(error);
             });
     
