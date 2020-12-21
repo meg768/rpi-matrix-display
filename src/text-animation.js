@@ -109,14 +109,16 @@ module.exports = class TextAnimation extends ScrollAnimation  {
 
             var parseText = (text) => {
                 console.log('Parsing text', text);
-                images.push(this.createTextImage(text));
+
+                if (text.length > 0)
+                    images.push(this.createTextImage(text));
+
                 return Promise.resolve();
             }
 
             var parseEmoji = (text) => {
                 var name  = text.replace(/:/g, '');
                 var emoji = this.emojis[name];
-                console.log('Parsing emoji', text, emoji);
 
                 if (emoji == undefined)
                     return parseText(text);
