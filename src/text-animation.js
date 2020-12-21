@@ -123,6 +123,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
                     return parseText(text);
 
                 return new Promise((resolve, reject) => {
+                    console.log('Loading emoji', emoji);
                     Matrix.Canvas.loadImage(emoji).then((image) => {
                         images.push(this.createEmojiImage(image));
                         resolve();    
