@@ -257,9 +257,9 @@ module.exports = class TextAnimation extends Animation  {
                     this.matrix.render(image.data, {scroll:'left', scrollDelay:this.scrollDelay});
 
                     // Move on to next image
-                    var index = (this.imageIndex + 1) % this.images.length;
+                    this.imageIndex = (this.imageIndex + 1) % this.images.length;
                     
-                    if (index == 0) {
+                    if (this.imageIndex == 0) {
                         console.log('NEXT ITERATION');
                         if (this.iterations != undefined && this.iterations > 0) 
                             this.iterations--;
