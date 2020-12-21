@@ -44,7 +44,7 @@ module.exports = class extends TextAnimation {
                 this.debug(JSON.stringify(current, null, '    '));
                 this.debug(JSON.stringify(tomorrow, null, '    '));
 
-                resolve(text.join('\t'));
+                resolve(text);
             })
             .catch((error) => {
                 reject(error);

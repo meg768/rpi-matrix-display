@@ -98,7 +98,7 @@ module.exports = class extends TextAnimation {
                     text.push(`${item.description} - ${item.title}`);
                 });
 
-                resolve(text.join('\t'));
+                resolve(text);
             })
             .catch((error) => {
                 reject(error);
