@@ -28,12 +28,12 @@ var loadEmojis = once((folder) => {
 });
 
 
-module.exports = class TextAnimation extends ScrollAnimation  {
+module.exports = class TextAnimation extends Animation  {
 
     constructor(options) {
         var {text = 'ABC 123', fontSize = 0.65, emojiSize = 0.75, fontStyle = 'bold', fontName = 'Arial', textColor = 'auto', scrollDelay = 10, ...options} = options;
 
-        super({...options, name:'TextAnimation'});
+        super({...options, name:'TextAnimation', debug:true});
 
         if (textColor == 'auto') {
             var now = new Date();
@@ -222,7 +222,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
     }
 */
 
-    renderx() {
+    render() {
         this.matrix.render(this.scrollImage.data, {scroll:'left', scrollDelay:this.this.scrollDelay});
     }
 
