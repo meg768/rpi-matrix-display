@@ -4,7 +4,6 @@ var sprintf = require('yow/sprintf');
 
 var Matrix = require('rpi-matrix');
 var Animation = require('rpi-animations').Animation;
-var ScrollAnimation = require('./scroll-animation.js');
 
 var loadEmojis = once((folder) => {
     var fs = require('fs');
@@ -51,6 +50,9 @@ module.exports = class TextAnimation extends Animation  {
         this.textColor    = textColor;
         this.scrollDelay  = scrollDelay;
         this.emojis       = loadEmojis(path.join(__dirname, '../emojis'));
+
+        this.images       = [];
+        this.imageIndex   = 0;
 
 
 
@@ -223,7 +225,14 @@ module.exports = class TextAnimation extends Animation  {
 */
 
     render() {
-        this.matrix.render(this.scrollImage.data, {scroll:'left', scrollDelay:this.scrollDelay});
+        // Get current image to scroll
+        var image = this.images[this.imageIndex];
+
+        // Render it
+        this.matrix.render(image.data, {scroll:'left', scrollDelay:this.scrollDelay});
+
+        // Move on to next image
+        this.imageIndex = (this.imageIndex + 1) % this.images.length;
     }
 
     start() {
@@ -237,7 +246,8 @@ module.exports = class TextAnimation extends Animation  {
                 return this.parse(text);
             })
             .then((image) => {
-                this.scrollImage = image;
+                this.images = [image];
+                this.imageIndex = 0;
             })
             .then(() => {
                 return super.start();
