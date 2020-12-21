@@ -258,12 +258,6 @@ module.exports = class TextAnimation extends Animation  {
 
                     // Move on to next image
                     this.imageIndex = (this.imageIndex + 1) % this.images.length;
-                    
-                    if (this.imageIndex == 0) {
-                        console.log('NEXT ITERATION');
-                        if (this.iterations != undefined && this.iterations > 0) 
-                            this.iterations--;
-                    }
 
                 }
 
@@ -299,6 +293,9 @@ module.exports = class TextAnimation extends Animation  {
                 promise.then(() => {
                     this.images = images;
                     this.imageIndex = 0;
+
+                    if (this.iterations != undefined)
+                        this.iterations = this.iterations * this.images.length; 
                 })
 
                 return promise;
