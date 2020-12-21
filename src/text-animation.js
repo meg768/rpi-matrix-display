@@ -171,8 +171,8 @@ module.exports = class TextAnimation extends ScrollAnimation  {
                 });
             });
     
-            console.log('Goot images', images.length);
             promise.then(() => {
+                console.log('Goot images', images.length);
                 resolve(images);
             })
             .catch(error => {
