@@ -24,9 +24,7 @@ module.exports = class extends MatrixCommand {
             this.debug('query:', request.query);
 
             var Animation = require('../src/text-animation.js');
-            var options = Object.assign({}, request.body, request.query);
-
-            this.queue.enqueue(new Animation(options));
+            this.queue.enqueue(new Animation({request.query, ...request.body}));
             response.status(200).json({ status:'OK'});
         });
 
