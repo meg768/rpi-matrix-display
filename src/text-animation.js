@@ -242,25 +242,32 @@ module.exports = class TextAnimation extends Animation  {
             this.cancel();            
         }
         else {
-            if (!isArray(this.images) || this.imageIndex >= this.images.length) {
+            if (!isArray(this.images)) {
                 this.cancel();
             }
             else {
                 // Get current image to scroll
                 var image = this.images[this.imageIndex];
 
-                // Render it
-                this.matrix.render(image.data, {scroll:'left', scrollDelay:this.scrollDelay});
-
-                // Move on to next image
-                this.imageIndex++;
-                
-                if (this.imageIndex >= this.images.length) {
-                    this.imageIndex = 0;
-
-                    if (this.iterations != undefined && this.iterations > 0) 
-                        this.iterations--;
+                if (image == undefined) {
+                    this.cancel();
                 }
+                else {
+                    // Render it
+                    this.matrix.render(image.data, {scroll:'left', scrollDelay:this.scrollDelay});
+
+                    // Move on to next image
+                    this.imageIndex++;
+                    
+                    if (this.imageIndex >= this.images.length) {
+                        this.imageIndex = 0;
+
+                        if (this.iterations != undefined && this.iterations > 0) 
+                            this.iterations--;
+                    }
+
+                }
+
             }
         }                                                                                                                  
     }
