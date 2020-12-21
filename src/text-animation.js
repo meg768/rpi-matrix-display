@@ -102,6 +102,27 @@ module.exports = class TextAnimation extends ScrollAnimation  {
         
             }
 
+            var generateScrollImage = (images) => {
+
+                var totalWidth = 0;
+                var offset = 0;
+        
+                images.forEach((image) => {
+                    totalWidth += image.width;
+                });
+        
+                var canvas = Matrix.Canvas.createCanvas(totalWidth + this.matrix.width, this.matrix.height);
+                var ctx = canvas.getContext('2d');
+        
+                images.forEach((image) => {
+                    ctx.putImageData(image, offset, (this.matrix.height - image.height) / 2);
+                    offset += image.width;    
+                });
+        
+                return ctx.getImageData(0, 0, canvas.width, canvas.height);
+        
+            }
+        
             var parseText = (text) => {
 
                 if (text.length > 0)
@@ -161,7 +182,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
             });
     
             promise.then(() => {
-                resolve(images);
+                resolve(generateScrollImage(images));
             })
             .catch(error => {
                 reject(error);
@@ -171,26 +192,6 @@ module.exports = class TextAnimation extends ScrollAnimation  {
         });
     }
 
-    createDisplayImage(images) {
-
-        var totalWidth = 0;
-        var offset = 0;
-
-        images.forEach((image) => {
-            totalWidth += image.width;
-        });
-
-        var canvas = Matrix.Canvas.createCanvas(totalWidth + this.matrix.width, this.matrix.height);
-        var ctx = canvas.getContext('2d');
-
-        images.forEach((image) => {
-            ctx.putImageData(image, offset, (this.matrix.height - image.height) / 2);
-            offset += image.width;    
-        });
-
-        return ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-    }
 
     getText() {
         return new Promise((resolve, reject) => {
@@ -198,6 +199,30 @@ module.exports = class TextAnimation extends ScrollAnimation  {
         });
 
     }
+/*
+    render() {
+
+        if (this.iterations != undefined && this.iterations <= 0) {
+            this.cancel();            
+        }
+        else {
+            this.matrix.render(this.scrollImage.data, {scroll:'left', scrollDelay:10});
+
+            this.gif.drawCurrentFrame();
+            this.matrix.canvas.getContext("2d").drawImage(this.gif.canvas, 0, 0);
+    
+            this.matrix.render();
+            this.matrix.sleep(this.gif.getCurrentFrameDelay() * 10);
+    
+            this.gif.nextFrame();
+    
+            if (this.gif.currentFrame == 0) {
+                if (this.iterations != undefined && this.iterations > 0) 
+                    this.iterations--;
+            }    
+        }
+    }
+*/
 
     start() {
 
@@ -209,8 +234,8 @@ module.exports = class TextAnimation extends ScrollAnimation  {
             this.getText().then((text) => {
                 return this.parse(text);
             })
-            .then((images) => {
-                this.scrollImage = this.createDisplayImage(images);
+            .then((image) => {
+                this.scrollImage = image;
             })
             .then(() => {
                 return super.start();
