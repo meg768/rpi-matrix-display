@@ -18,7 +18,7 @@ var loadEmojis = once((folder) => {
         var components = path.parse(fileName);
 
         if (components.ext == '.png') {
-            images[components.name] = {fileName:fileName};
+            images[components.name] = fileName;
         }
 
     })
@@ -130,7 +130,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
                         reject(error);
                     });
                 });
-            }
+            }   
 
             var parseColor = (text) => {
                 console.log('Parsing color', text);
