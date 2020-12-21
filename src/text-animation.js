@@ -57,46 +57,8 @@ module.exports = class TextAnimation extends ScrollAnimation  {
 
     }
 
-    createSpaceImage() {
-        
-        var canvas = Matrix.Canvas.createCanvas(this.matrix.width, this.matrix.height);
-        var ctx = canvas.getContext('2d');
-        return ctx.getImageData(0, 0, canvas.width, canvas.height);
-    }
 
-    createTextImage(text) {
-        
-        var myctx = this.matrix.canvas.getContext('2d');
-        var textSize = myctx.measureText(text); 
 
-        var canvas = Matrix.Canvas.createCanvas(textSize.width, this.matrix.height);
-
-        var ctx = canvas.getContext('2d');
-        ctx.font = myctx.font;
-        ctx.fillStyle = myctx.fillStyle;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-
-        ctx.fillText(text, canvas.width / 2, canvas.height / 2);
-
-        return ctx.getImageData(0, 0, canvas.width, canvas.height);
-    }
-
-    createEmojiImage(image) {
-        var margin = this.matrix.height * (1 - this.emojiSize);
-        var scale = (this.matrix.height - margin) / image.height;  
-
-        var imageWidth = image.width * scale;
-        var imageHeight = image.height * scale;
-
-        var canvas = Matrix.Canvas.createCanvas(imageWidth, imageHeight);
-        var ctx = canvas.getContext('2d');
-
-        ctx.drawImage(image, 0, 0, imageWidth, imageHeight);  
-        
-        return ctx.getImageData(0, 0, canvas.width, canvas.height);    
-
-    }
 
     parse(text) {
 
@@ -107,10 +69,43 @@ module.exports = class TextAnimation extends ScrollAnimation  {
 
             var images = [];
 
+            var generateTextImage = (text) => {
+                var myctx = this.matrix.canvas.getContext('2d');
+                var textSize = myctx.measureText(text); 
+        
+                var canvas = Matrix.Canvas.createCanvas(textSize.width, this.matrix.height);
+        
+                var ctx = canvas.getContext('2d');
+                ctx.font = myctx.font;
+                ctx.fillStyle = myctx.fillStyle;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+        
+                ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+        
+                return ctx.getImageData(0, 0, canvas.width, canvas.height);
+            }
+        
+            var generateEmojiImage = (image) => {
+                var margin = this.matrix.height * (1 - this.emojiSize);
+                var scale = (this.matrix.height - margin) / image.height;  
+        
+                var imageWidth = image.width * scale;
+                var imageHeight = image.height * scale;
+        
+                var canvas = Matrix.Canvas.createCanvas(imageWidth, imageHeight);
+                var ctx = canvas.getContext('2d');
+        
+                ctx.drawImage(image, 0, 0, imageWidth, imageHeight);  
+                
+                return ctx.getImageData(0, 0, canvas.width, canvas.height);    
+        
+            }
+
             var parseText = (text) => {
 
                 if (text.length > 0)
-                    images.push(this.createTextImage(text));
+                    images.push(generateTextImage(text));
 
                 return Promise.resolve();
             }
@@ -124,7 +119,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
 
                 return new Promise((resolve, reject) => {
                     Matrix.Canvas.loadImage(emoji).then((image) => {
-                        images.push(this.createEmojiImage(image));
+                        images.push(generateEmojiImage(image));
                         resolve();    
                     })
                     .catch(error => {
