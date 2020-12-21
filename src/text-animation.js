@@ -236,18 +236,36 @@ module.exports = class TextAnimation extends Animation  {
     }
 
     start() {
-
+        var isArray = require('yow/isArray');
+        
         var ctx = this.matrix.canvas.getContext('2d');
         ctx.font = this.fontStyle + ' ' + (this.matrix.height * this.fontSize) + 'px ' + this.fontName;
         ctx.fillStyle = this.textColor;
 
         return new Promise((resolve, reject) => {
             this.getText().then((text) => {
-                return this.parse(text);
-            })
-            .then((image) => {
-                this.images = [image];
-                this.imageIndex = 0;
+
+                if (!isArray(text))
+                    text = [text];
+
+                var promise = Promise.resolve();
+                var images = [];
+
+                text.forEach((text) => {
+                    promise = promise.then(() => {
+                        return this.parse(text);
+                    })
+                    .then((image) => {
+                        images.push(image);
+                    })
+                });
+
+                promise.then(() => {
+                    this.images = images;
+                    this.imageIndex = 0;
+                })
+
+                return promise;
             })
             .then(() => {
                 return super.start();
