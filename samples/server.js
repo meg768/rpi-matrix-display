@@ -19,7 +19,7 @@ module.exports = class extends MatrixCommand {
         app.use(bodyParser.urlencoded({ limit: '50mb', extended: false}));
         app.use(bodyParser.json({limit: '50mb'}));
 
-        app.get('/text', (request, response) => {
+        app.post('/text', (request, response) => {
             this.debug('body:', request.body);
             this.debug('query:', request.query);
 
