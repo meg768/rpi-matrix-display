@@ -15,9 +15,9 @@ module.exports = class extends MatrixCommand {
         var express = require('express');
         var app = express();
 
-        app.post('/text', (request, response) => {
+        app.get('/text', (request, response) => {
             this.debug(request);
-            
+
             var Animation = require('../src/text-animation.js');
             var options = Object.assign({}, request.body, request.query);
 
