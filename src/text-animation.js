@@ -98,54 +98,6 @@ module.exports = class TextAnimation extends ScrollAnimation  {
 
     }
 
-    prepare(item) {
-        var util = require('util');
-
-        return new Promise((resolve, reject) => {
-
-            try {
-                if (item.type == 'emoji') {
-                    if (item.fileName != undefined) {
-                        Matrix.Canvas.loadImage(item.fileName).then((image) => {
-                            item.image = this.createEmojiImage(image);    
-                        })
-                        .then(() => {
-                            resolve();
-                        })
-                        .catch(error => {
-                            reject(error);
-                        });
-            
-                    }
-                    else
-                        throw new Error('No image for emoji!');
-                }
-                else if (item.type == 'text') {
-                    if (item.text.length > 0)
-                       item.image = this.createTextImage(item.text);
-
-                    resolve();
-                }
-                else if (item.type == 'color') {
-                    var ctx = this.matrix.canvas.getContext('2d');
-                    ctx.fillStyle = util.format('rgb(%d,%d,%d)', item.color[0], item.color[1], item.color[2]);
-                    resolve();
-                }
-                else if (item.type == 'space') {
-                    item.image = this.createSpaceImage();
-                    resolve();
-                }
-                else {
-                    throw new Error('Invalid item: ' + JSON.stringify(item));
-                }
-    
-            }
-            catch(error) {
-                reject(error);
-            }
-        });
-    }
-
     parse(text) {
 
         return new Promise((resolve, reject) => {
@@ -157,10 +109,8 @@ module.exports = class TextAnimation extends ScrollAnimation  {
 
             var parseText = (text) => {
                 console.log('Parsing text', text);
-                return new Promise((resolve, reject) => {
-                    images.push(this.createTextImage(text));
-                    resolve();
-                });
+                images.push(this.createTextImage(text));
+                return Promise.resolve();
             }
 
             var parseEmoji = (text) => {
@@ -191,11 +141,12 @@ module.exports = class TextAnimation extends ScrollAnimation  {
                 if (color == undefined)
                     return parseText(text);
 
-                return new Promise((resolve, reject) => {
-                    var ctx = this.matrix.canvas.getContext('2d');
-                    ctx.fillStyle = util.format('rgb(%d,%d,%d)', color[0], color[1], color[2]);
-                    resolve();
-                });
+                var ctx = this.matrix.canvas.getContext('2d');
+                var util = require('util');
+
+                ctx.fillStyle = util.format('rgb(%d,%d,%d)', color[0], color[1], color[2]);
+
+                return Promise.resolve();
             }
 
             var promise = Promise.resolve();
