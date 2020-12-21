@@ -117,6 +117,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
                 console.log('Parsing emoji', text);
                 var name  = text.replace(/:/g, '');
                 var emoji = this.emojis[name];
+                console.log('Parsing emoji', text, emoji);
 
                 if (emoji == undefined)
                     return parseText(text);
