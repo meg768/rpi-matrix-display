@@ -176,6 +176,7 @@ module.exports = class TextAnimation extends ScrollAnimation  {
                 resolve(images);
             })
             .catch(error => {
+                console.log('error');
                 reject(error);
             });
  
