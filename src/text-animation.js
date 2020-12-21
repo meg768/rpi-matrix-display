@@ -41,6 +41,7 @@ module.exports = class TextAnimation extends Animation  {
             textColor = sprintf('hsl(%d,100%%,50%%)', hue);    
         }
 
+        this.matrix       = new Matrix({mode: 'canvas'});
         this.text         = text;
         this.fontSize     = fontSize;
         this.emojiSize    = emojiSize;
