@@ -1,10 +1,9 @@
-var root = '..';
 var path = require('path');
 var once = require('yow/once');
 var sprintf = require('yow/sprintf');
 
 var Matrix = require('rpi-matrix');
-var ScrollAnimation = require('./scroll-animation.js');
+var Animation = require('rpi-animations').Animation;
 
 var loadEmojis = once((folder) => {
     var fs = require('fs');
@@ -28,13 +27,12 @@ var loadEmojis = once((folder) => {
 });
 
 
-module.exports = class TextAnimation extends ScrollAnimation  {
+module.exports = class TextAnimation extends Animation  {
 
     constructor(options) {
+        var {text = 'ABC 123', fontSize = 0.65, emojiSize = 0.75, fontStyle = 'bold', fontName = 'Arial', textColor = 'auto', scrollDelay = 10, ...options} = options;
 
         super({...options, name:'TextAnimation'});
-
-        var {text = 'ABC 123', fontSize = 0.65, emojiSize = 0.75, fontStyle = 'bold', fontName = 'Arial', textColor = 'auto'} = options;
 
         if (textColor == 'auto') {
             var now = new Date();
@@ -43,21 +41,18 @@ module.exports = class TextAnimation extends ScrollAnimation  {
             textColor = sprintf('hsl(%d,100%%,50%%)', hue);    
         }
 
-        this.text       = text;
-        this.fontSize   = fontSize;
-        this.emojiSize  = emojiSize;
-        this.fontStyle  = fontStyle;
-        this.fontName   = fontName;
-        this.textColor  = textColor;
-
-        this.colors     = require('color-name');
-        this.emojis     = loadEmojis(path.join(__dirname, '../emojis'));
+        this.text         = text;
+        this.fontSize     = fontSize;
+        this.emojiSize    = emojiSize;
+        this.fontStyle    = fontStyle;
+        this.fontName     = fontName;
+        this.textColor    = textColor;
+        this.scrollDelay  = scrollDelay;
+        this.emojis       = loadEmojis(path.join(__dirname, '../emojis'));
 
 
 
     }
-
-
 
 
     parse(text) {
@@ -150,8 +145,9 @@ module.exports = class TextAnimation extends ScrollAnimation  {
             }   
 
             var parseColor = (text) => {
+                var colorNames = require('color-name');
                 var name  = text.replace('{', '').replace('}', '');    
-                var color = this.colors[name];
+                var color = colorNames[name];
 
                 if (color == undefined)
                     return parseText(text);
@@ -223,6 +219,10 @@ module.exports = class TextAnimation extends ScrollAnimation  {
         }
     }
 */
+
+    render() {
+        this.matrix.render(this.scrollImage.data, {scroll:'left', scrollDelay:this.this.scrollDelay});
+    }
 
     start() {
 
