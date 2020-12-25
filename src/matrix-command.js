@@ -1,6 +1,6 @@
 
 var Matrix = require('rpi-matrix');
-var AnimationQueue = require('./animations-queue.js');
+var AnimationQueue = require('./animation-queue.js');
 var YargsCommand = require('./yargs-command.js');
 
 
