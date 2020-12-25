@@ -32,7 +32,7 @@ module.exports = class TextAnimation extends Animation  {
     constructor(options) {
         var {text = 'ABC 123', fontSize = 0.65, fontStyle = 'bold', fontName = 'Arial', textColor = 'auto', scrollDelay = 10, ...options} = options;
 
-        super({...options, renderTimeout:undefined, name:'TextAnimation'});
+        super({...options, name:'TextAnimation'});
 
         if (textColor == 'auto') {
             var now = new Date();
@@ -201,7 +201,6 @@ module.exports = class TextAnimation extends Animation  {
     }
 	
 	next(loop) {
-		console.log('NEXT LOOP');
 		setTimeout(loop, 0);
 	}
 
@@ -224,7 +223,6 @@ module.exports = class TextAnimation extends Animation  {
                     this.cancel();
                 }
                 else {
-					console.log('Displaying text!');
                     // Render it
                     this.matrix.render(image.data, {scroll:'left', scrollDelay:this.scrollDelay});
 

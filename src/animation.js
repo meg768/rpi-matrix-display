@@ -60,7 +60,6 @@ module.exports = class extends Events {
 	}
 
     loop() {
-        this.debug(`Running loop ${this.name}...`);
         var start = new Date();
 
         return new Promise((resolve, reject) => {
@@ -98,16 +97,6 @@ module.exports = class extends Events {
                         this.iteration++;
 
 					this.next(loop);
-
-/*
-					if (this.renderTimeout != undefined) {
-						console.log('timeout loop');
-						setTimeout(loop, this.renderTimeout);
-
-					}
-					else
-						setImmediate(loop);
-						*/
                 }
 			}
 
