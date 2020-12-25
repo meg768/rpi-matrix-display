@@ -201,10 +201,11 @@ module.exports = class TextAnimation extends Animation  {
     }
 	
 	next(loop) {
+		console.log('NEXT LOOP');
 		setTimeout(loop, 0);
 	}
 
-	
+
     render() {
         var isArray = require('yow/isArray');
 
