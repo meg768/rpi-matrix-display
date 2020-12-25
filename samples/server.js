@@ -31,9 +31,9 @@ module.exports = class extends MatrixCommand {
             app.post(path.name, (request, response) => {
                 try {
                     var options = {...request.query, ...request.body};
-                    this.debug(options);
+                    this.debug('Enqueue options', options);
                     this.queue.enqueue(new path.animation(options));
-                    response.status(200).json({ status:'OK'});    
+                    response.status(200).json({status:'OK'});    
                 }
                 catch(error) {
                     response.status(401).json({status:error.message});    
