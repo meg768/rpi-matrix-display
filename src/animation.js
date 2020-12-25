@@ -6,7 +6,7 @@ module.exports = class extends Events {
     constructor(options = {}) {
         super();
 
-        var {debug, renderFrequency, renderTimeout, name = 'Noname', priority = 'normal', iterations = undefined, duration = undefined} = options;
+        var {debug, renderFrequency, name = 'Noname', priority = 'normal', iterations = undefined, duration = undefined} = options;
 
         this.name            = name;
         this.priority        = priority;
@@ -15,7 +15,6 @@ module.exports = class extends Events {
         this.iterations      = iterations;
 		this.renderTime      = undefined;
         this.renderFrequency = renderFrequency;
-		this.renderTimeout   = renderTimeout;
         this.debug           = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
     }
 
