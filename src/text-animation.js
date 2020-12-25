@@ -200,7 +200,7 @@ module.exports = class TextAnimation extends Animation  {
 
     }
 	
-	nextx(loop) {
+	next(loop) {
 		setTimeout(loop, 0);
 	}
 
