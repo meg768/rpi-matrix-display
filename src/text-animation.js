@@ -32,7 +32,7 @@ module.exports = class TextAnimation extends Animation  {
     constructor(options) {
         var {text = 'ABC 123', fontSize = 0.65, fontStyle = 'bold', fontName = 'Arial', textColor = 'auto', scrollDelay = 10, ...options} = options;
 
-        super({...options, renderTimeout: 1000, name:'TextAnimation'});
+        super({...options, renderTimeout:undefined, name:'TextAnimation'});
 
         if (textColor == 'auto') {
             var now = new Date();
