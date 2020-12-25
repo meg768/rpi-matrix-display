@@ -55,6 +55,9 @@ module.exports = class extends Events {
         });
     }
 
+	next(loop) {
+		setImmediate(loop);
+	}
 
     loop() {
         this.debug(`Running loop ${this.name}...`);
@@ -94,9 +97,9 @@ module.exports = class extends Events {
                     if (this.iterations != undefined)
                         this.iteration++;
 
-					setTimeout(loop, 0);
+					this.next(loop);
 
-					/*
+/*
 					if (this.renderTimeout != undefined) {
 						console.log('timeout loop');
 						setTimeout(loop, this.renderTimeout);
@@ -104,7 +107,7 @@ module.exports = class extends Events {
 					}
 					else
 						setImmediate(loop);
-					*/
+						*/
                 }
 			}
 
