@@ -94,6 +94,9 @@ module.exports = class extends Events {
                     if (this.iterations != undefined)
                         this.iteration++;
 
+					setTimeout(loop, 0);
+
+					/*
 					if (this.renderTimeout != undefined) {
 						console.log('timeout loop');
 						setTimeout(loop, this.renderTimeout);
@@ -101,6 +104,7 @@ module.exports = class extends Events {
 					}
 					else
 						setImmediate(loop);
+					*/
                 }
 			}
 
