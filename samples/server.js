@@ -53,7 +53,7 @@ module.exports = class extends MatrixCommand {
         var TextAnimation = require('../src/text-animation.js');
         this.setupExpress();
 
-        this.queue.enqueue(new TextAnimation({text:':smiley:'}));
+        this.queue.enqueue(new TextAnimation({text:':smiley:', iterations:1}));
 
         this.queue.on('idle', () => {
         });
