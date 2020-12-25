@@ -93,7 +93,8 @@ module.exports = class extends Events {
                     if (this.iterations != undefined)
                         this.iteration++;
 
-                    setImmediate(loop);
+					//setImmediate(loop);
+					setTimeout(0, loop);
                 }
             }
 
