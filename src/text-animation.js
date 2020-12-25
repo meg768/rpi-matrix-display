@@ -218,6 +218,7 @@ module.exports = class TextAnimation extends Animation  {
                     this.cancel();
                 }
                 else {
+					console.log('Displaying text!');
                     // Render it
                     this.matrix.render(image.data, {scroll:'left', scrollDelay:this.scrollDelay});
 
