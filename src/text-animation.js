@@ -199,7 +199,12 @@ module.exports = class TextAnimation extends Animation  {
         });
 
     }
-    
+	
+	next(loop) {
+		setTimeout(loop, 0);
+	}
+
+	
     render() {
         var isArray = require('yow/isArray');
 
