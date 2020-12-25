@@ -56,10 +56,16 @@ module.exports = class extends Events {
     }
 
 	next(loop) {
-		if (this.renderDelay == undefined)
+		if (this.renderDelay == undefined) {
+			console.log('set immediate');
 			setImmediate(loop);
-		else
+
+		}
+		else {
+			console.log('delayt', this.renderDelay);
 			setTimeout(loop, this.renderDelay);
+
+		}
 	}
 
     loop() {
