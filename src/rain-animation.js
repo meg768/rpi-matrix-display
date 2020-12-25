@@ -1,5 +1,5 @@
 var Matrix = require('rpi-matrix');
-var Animation = require('rpi-animations').Animation;
+var Animation = require('./animation.js');
 var random = require('yow/random');
 
 class Worm {

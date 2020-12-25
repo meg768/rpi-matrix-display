@@ -1,8 +1,7 @@
 
 var Matrix = require('rpi-matrix');
-var AnimationQueue = require('rpi-animations').Queue;
-var YargsCommand = require('../src/yargs-command.js');
-
+var AnimationQueue = require('./animations-queue.js');
+var YargsCommand = require('./yargs-command.js');
 
 
 module.exports = class extends YargsCommand {

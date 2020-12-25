@@ -3,7 +3,7 @@ var once = require('yow/once');
 var sprintf = require('yow/sprintf');
 
 var Matrix = require('rpi-matrix');
-var Animation = require('rpi-animations').Animation;
+var Animation = require('./animation.js');
 
 var loadEmojis = once((folder) => {
     var fs = require('fs');

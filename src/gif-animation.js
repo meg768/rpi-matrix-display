@@ -3,7 +3,7 @@ var random = require('yow/random');
 var once = require('yow/once');
 var fs = require('fs');
 
-var Animation = require('rpi-animations').Animation;
+var Animation = require('./animation.js');
 
 
 var loadGifFiles = once((width, height) => {
