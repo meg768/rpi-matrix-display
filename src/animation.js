@@ -6,16 +6,15 @@ module.exports = class extends Events {
     constructor(options = {}) {
         super();
 
-        var {debug, renderFrequency = undefined, renderDelay = undefined, name = 'Noname', priority = 'normal', iterations = undefined, duration = undefined} = options;
+        var {debug, renderFrequency, name = 'Noname', priority = 'normal', iterations = undefined, duration = undefined} = options;
 
         this.name            = name;
         this.priority        = priority;
         this.cancelled       = false;
         this.duration        = duration;
         this.iterations      = iterations;
-		this.renderTime      = undefined;
         this.renderFrequency = renderFrequency;
-        this.renderDelay     = renderDelay;
+        this.renderTime      = undefined;
         this.debug           = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
     }
 
@@ -56,19 +55,11 @@ module.exports = class extends Events {
     }
 
 	next(loop) {
-		if (this.renderDelay == undefined) {
-			console.log('set immediate');
-			setImmediate(loop);
-
-		}
-		else {
-			console.log('delayt', this.renderDelay);
-			setTimeout(loop, this.renderDelay);
-
-		}
-	}
+        setImmediate(loop);
+    }
 
     loop() {
+        this.debug(`Running loop ${this.name}...`);
         var start = new Date();
 
         return new Promise((resolve, reject) => {
@@ -105,9 +96,9 @@ module.exports = class extends Events {
                     if (this.iterations != undefined)
                         this.iteration++;
 
-					this.next(loop);
+                    this.next(loop);
                 }
-			}
+            }
 
             loop();
         });
