@@ -7,20 +7,10 @@ var MatrixCommand = require('../src/matrix-command.js');
 module.exports = class extends MatrixCommand {
 
     constructor(options) {
-		var TextAnimation    = require('../src/text-animation.js');
-		var RainAnimation    = require('../src/rain-animation.js');
-		var NewsAnimation    = require('../src/news-animation.js');
-		var WeatherAnimation = require('../src/weather-animation.js');
-		var GifAnimation     = require('../src/gif-animation.js');
+
 
 		super({command: 'server [options]', description: 'Run matrix server', ...options}); 
 
-		this.animations = {};
-		this.animations['text']    = TextAnimation;
-		this.animations['rain']    = RainAnimation;
-		this.animations['weather'] = WeatherAnimation;
-		this.animations['gif']     = GifAnimation;
-		this.animations['news']    = NewsAnimation;
 
 	}
 
@@ -100,6 +90,18 @@ module.exports = class extends MatrixCommand {
 
 
 	runAnimations() {
+		var TextAnimation    = require('../src/text-animation.js');
+		var RainAnimation    = require('../src/rain-animation.js');
+		var NewsAnimation    = require('../src/news-animation.js');
+		var WeatherAnimation = require('../src/weather-animation.js');
+		var GifAnimation     = require('../src/gif-animation.js');
+		
+		this.animations = {};
+		this.animations['text']    = TextAnimation;
+		this.animations['rain']    = RainAnimation;
+		this.animations['weather'] = WeatherAnimation;
+		this.animations['gif']     = GifAnimation;
+		this.animations['news']    = NewsAnimation;
 
 
 
