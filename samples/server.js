@@ -95,7 +95,7 @@ module.exports = class extends MatrixCommand {
 		var NewsAnimation    = require('../src/news-animation.js');
 		var WeatherAnimation = require('../src/weather-animation.js');
 		var GifAnimation     = require('../src/gif-animation.js');
-		
+
 		this.animations = {};
 		this.animations['text']    = TextAnimation;
 		this.animations['rain']    = RainAnimation;
@@ -105,12 +105,9 @@ module.exports = class extends MatrixCommand {
 
 
 
-		this.xdefaultAnimation = {
-			name: 'text',
+		this.defaultAnimation = {
+			name: 'rain',
 			options: {
-				text: 'Default animation',
-				scrollDelay: 7,
-				iterations: 1,
 			}
 		};
 
