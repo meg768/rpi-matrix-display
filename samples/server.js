@@ -39,11 +39,12 @@ module.exports = class extends MatrixCommand {
 
 		for (var name in this.animations) {
 			console.log(`/${name}`);
+			var Animation = this.animations[name];
             app.post(`/${name}`, (request, response) => {
                 try {
 					var options = {...request.query, ...request.body};
 					console.log('Running animation', name, options);
-					this.runAnimation(name, options);
+					this.queue.enqueue(new Animation(options));
                     response.status(200).json({status:'OK'});    
                 }
                 catch(error) {
