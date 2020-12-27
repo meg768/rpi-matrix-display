@@ -37,24 +37,55 @@ module.exports = class extends MatrixCommand {
         app.use(bodyParser.urlencoded({ limit: '50mb', extended: false}));
         app.use(bodyParser.json({limit: '50mb'}));
 
-		for (var name in this.animations) {
-			console.log(`/${name}`);
-			var Animation = this.animations[name];
-            app.post(`/${name}`, (request, response) => {
-                try {
-					var options = {...request.query, ...request.body};
-					console.log('Running animation', name, options);
-					this.queue.enqueue(new Animation(options));
-                    response.status(200).json({status:'OK'});    
-                }
-                catch(error) {
-                    response.status(401).json({status:error.message});    
-    
-                }
-    
-            });           
+		app.post(`/news`, (request, response) => {
+			try {
+				this.runAnimation('news', {...request.query, ...request.body});
+				response.status(200).json({status:'OK'});    
+			}
+			catch(error) {
+				response.status(401).json({status:error.message});    
+			}
+		});           
 
-		}
+		app.post(`/text`, (request, response) => {
+			try {
+				this.runAnimation('text', {...request.query, ...request.body});
+				response.status(200).json({status:'OK'});    
+			}
+			catch(error) {
+				response.status(401).json({status:error.message});    
+			}
+		});           
+
+		app.post(`/gif`, (request, response) => {
+			try {
+				this.runAnimation('gif', {...request.query, ...request.body});
+				response.status(200).json({status:'OK'});    
+			}
+			catch(error) {
+				response.status(401).json({status:error.message});    
+			}
+		});           
+
+		app.post(`/rain`, (request, response) => {
+			try {
+				this.runAnimation('rain', {...request.query, ...request.body});
+				response.status(200).json({status:'OK'});    
+			}
+			catch(error) {
+				response.status(401).json({status:error.message});    
+			}
+		});           
+
+		app.post(`/weather`, (request, response) => {
+			try {
+				this.runAnimation('weather', {...request.query, ...request.body});
+				response.status(200).json({status:'OK'});    
+			}
+			catch(error) {
+				response.status(401).json({status:error.message});    
+			}
+		});           
 
         app.listen(this.argv.port);
 
