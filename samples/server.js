@@ -37,6 +37,19 @@ module.exports = class extends MatrixCommand {
         app.use(bodyParser.urlencoded({ limit: '50mb', extended: false}));
         app.use(bodyParser.json({limit: '50mb'}));
 
+		for (var name in this.animations) {
+
+			app.post(`/${name}`, (request, response) => {
+				try {
+					this.runAnimation(name, {...request.query, ...request.body});
+					response.status(200).json({status:'OK'});    
+				}
+				catch(error) {
+					response.status(401).json({status:error.message});    
+				}
+			});           
+		}
+		/*
 		app.post(`/news`, (request, response) => {
 			try {
 				this.runAnimation('news', {...request.query, ...request.body});
@@ -86,6 +99,7 @@ module.exports = class extends MatrixCommand {
 				response.status(401).json({status:error.message});    
 			}
 		});           
+		*/
 
         app.listen(this.argv.port);
 
