@@ -38,7 +38,8 @@ module.exports = class extends MatrixCommand {
         app.use(bodyParser.json({limit: '50mb'}));
 
 		for (var name in this.animations) {
-
+			console.log('NAME', name, 'ANIMATION', this.animations[name], '!!!!');
+			
 			app.post(`/${name}`, (request, response) => {
 				try {
 					this.runAnimation(name, {...request.query, ...request.body});
