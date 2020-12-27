@@ -1,9 +1,27 @@
 var MatrixCommand = require('../src/matrix-command.js');
 
+
+
+
+
 module.exports = class extends MatrixCommand {
 
     constructor(options) {
-        super({command: 'server [options]', description: 'Run matrix server', ...options}); 
+		var TextAnimation    = require('../src/text-animation.js');
+		var RainAnimation    = require('../src/rain-animation.js');
+		var NewsAnimation    = require('../src/news-animation.js');
+		var WeatherAnimation = require('../src/weather-animation.js');
+		var GifAnimation     = require('../src/gif-animation.js');
+
+		super({command: 'server [options]', description: 'Run matrix server', ...options}); 
+
+		this.animations = {
+			'text'    : TextAnimation,
+			'rain'    : RainAnimation,
+			'weather' : WeatherAnimation,
+			'news'    : NewsAnimation,
+			'gif'     : GifAnimation
+		};
 
 	}
 
@@ -48,13 +66,7 @@ module.exports = class extends MatrixCommand {
 
 	runAnimations() {
 
-        this.animations = {
-			'text'    : require('../src/text-animation.js'),
-			'rain'    : require('../src/rain-animation.js'),
-			'weather' : require('../src/weather-animation.js'),
-			'news'    : require('../src/news-animation.js'),
-			'gif'     : require('../src/gif-animation.js')
-		};
+
 
 		this.xdefaultAnimation = {
 			name: 'text',
