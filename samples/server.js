@@ -15,13 +15,12 @@ module.exports = class extends MatrixCommand {
 
 		super({command: 'server [options]', description: 'Run matrix server', ...options}); 
 
-		this.animations = {
-			'text'    : TextAnimation,
-			'rain'    : RainAnimation,
-			'weather' : WeatherAnimation,
-			'news'    : NewsAnimation,
-			'gif'     : GifAnimation
-		};
+		this.animations = {};
+		this.animations['text']    = TextAnimation;
+		this.animations['rain']    = RainAnimation;
+		this.animations['weather'] = WeatherAnimation;
+		this.animations['gif']     = GifAnimation;
+		this.animations['news']    = NewsAnimation;
 
 	}
 
