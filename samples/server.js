@@ -56,7 +56,7 @@ module.exports = class extends MatrixCommand {
 			'gif'     : require('../src/gif-animation.js')
 		};
 
-		this.defaultAnimation = {
+		this.xdefaultAnimation = {
 			name: 'text',
 			options: {
 				text: 'Default animation',
