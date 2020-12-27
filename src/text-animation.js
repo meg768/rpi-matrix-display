@@ -286,5 +286,3 @@ module.exports = class TextAnimation extends Animation  {
 
 };
 
-
-

@@ -4,7 +4,8 @@ module.exports = class extends MatrixCommand {
 
     constructor(options) {
         super({command: 'server [options]', description: 'Run matrix server', ...options}); 
-    }
+
+	}
 
     options(args) {
         super.options(args);
@@ -13,25 +14,16 @@ module.exports = class extends MatrixCommand {
 
     setupExpress() {
         var express = require('express');
-        var app = express();
         var bodyParser = require('body-parser');
+        var app = express();
 
         app.use(bodyParser.urlencoded({ limit: '50mb', extended: false}));
         app.use(bodyParser.json({limit: '50mb'}));
 
-        var paths = [
-            {name: '/text',    animation:require('../src/text-animation.js')},
-            {name: '/rain',    animation:require('../src/rain-animation.js')},
-            {name: '/weather', animation:require('../src/weather-animation.js')},
-            {name: '/news',    animation:require('../src/news-animation.js')},
-            {name: '/gif',     animation:require('../src/gif-animation.js')}
-        ];
-
-        paths.forEach((path) => {
-            app.post(path.name, (request, response) => {
+		for (var name in this.animations) {
+            app.post(`/{$name}`, (request, response) => {
                 try {
-                    var options = {...request.query, ...request.body};
-                    this.queue.enqueue(new path.animation(options));
+					this.runAnimation(name, {...request.query, ...request.body});
                     response.status(200).json({status:'OK'});    
                 }
                 catch(error) {
@@ -40,19 +32,39 @@ module.exports = class extends MatrixCommand {
                 }
     
             });           
-        });
 
+		}
 
         app.listen(this.argv.port);
 
-    }
+	}
+	
+	runAnimation(name, options) {
+        var Animation = this.animations[name];
+        this.queue.enqueue(new Animation(options));
+	}
 
 
 	runAnimations() {
-        var TextAnimation = require('../src/text-animation.js');
-        this.setupExpress();
 
-        this.queue.enqueue(new TextAnimation({text:':smiley:', iterations:1}));
+        this.animations = {
+			'text'    : require('../src/text-animation.js'),
+			'rain'    : require('../src/rain-animation.js'),
+			'weather' : require('../src/weather-animation.js'),
+			'news'    : require('../src/news-animation.js'),
+			'gif'     : require('../src/gif-animation.js')
+		};
+
+		this.defaultAnimation = {
+			name: 'text',
+			options: {
+				text: 'Default animation',
+				iterations: 1,
+			}
+		};
+
+        this.setupExpress();
+		this.runAnimation('text', {text:':smiley:', iterations:1});
 
         this.queue.on('idle', () => {
         });
