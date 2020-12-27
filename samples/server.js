@@ -21,6 +21,7 @@ module.exports = class extends MatrixCommand {
         app.use(bodyParser.json({limit: '50mb'}));
 
 		for (var name in this.animations) {
+			console.log(`/{$name}`);
             app.post(`/{$name}`, (request, response) => {
                 try {
 					this.runAnimation(name, {...request.query, ...request.body});
@@ -67,6 +68,9 @@ module.exports = class extends MatrixCommand {
 		this.runAnimation('text', {text:':smiley:', iterations:1});
 
         this.queue.on('idle', () => {
+			if (this.defaultAnimation) {
+				this.runAnimation(this.defaultAnimation.name, this.defaultAnimation.options);
+			}
         });
 
 	}
