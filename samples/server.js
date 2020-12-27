@@ -42,7 +42,9 @@ module.exports = class extends MatrixCommand {
 			console.log(`/${name}`);
             app.post(`/${name}`, (request, response) => {
                 try {
-					this.runAnimation(name, {...request.query, ...request.body});
+					var options = {...request.query, ...request.body};
+					console.log('Running animation', name, options);
+					this.runAnimation(name, options);
                     response.status(200).json({status:'OK'});    
                 }
                 catch(error) {
