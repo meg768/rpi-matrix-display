@@ -50,6 +50,16 @@ module.exports = class extends MatrixCommand {
 			}
 		});           
 
+		app.get(`/text`, (request, response) => {
+			try {
+				this.runAnimation('text', {...request.query, ...request.body});
+				response.status(200).json({status:'OK'});    
+			}
+			catch(error) {
+				response.status(401).json({status:error.message});    
+			}
+		});           
+
 		app.post(`/text`, (request, response) => {
 			try {
 				this.runAnimation('text', {...request.query, ...request.body});
