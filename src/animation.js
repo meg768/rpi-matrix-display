@@ -1,23 +1,26 @@
 module.exports = require('rpi-animations').Animation;
 
-
-/*
-//var Sleep = require('sleep');
+var Sleep = require('sleep');
 var Events = require('events');
 
 module.exports = class extends Events {
 
     constructor(options = {}) {
-        super();
+
+		var toNumber = (number, defaultValue = undefined) => {
+			return Number.isNaN(Number(number)) ? defaultValue : Number(number);
+		};
+
+		super();
 
         var {debug, renderFrequency = undefined, name = 'Noname', priority = 'normal', iterations = undefined, duration = undefined} = options;
 
         this.name            = name;
         this.priority        = priority;
         this.cancelled       = false;
-        this.duration        = duration;
-        this.iterations      = iterations;
-        this.renderFrequency = renderFrequency;
+        this.duration        = toNumber(duration);
+        this.iterations      = toNumber(iterations);
+        this.renderFrequency = toNumber(renderFrequency);
         this.renderTime      = undefined;
         this.debug           = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
     }
@@ -144,5 +147,3 @@ module.exports = class extends Events {
 
     }
 }
-
-*/
