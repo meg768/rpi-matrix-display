@@ -98,6 +98,7 @@ module.exports = class extends Events {
                     resolve();
                 }
                 else if (this.iterations != undefined && (this.iteration >= this.iterations)) {
+					console.log('Finished', this.iteration, this.iterations);
                     resolve();
                 }
                 else {
