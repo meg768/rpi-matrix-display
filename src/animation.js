@@ -89,12 +89,14 @@ module.exports = class extends Events {
                 var now = new Date();
 
                 if (this.cancelled) {
+					console.log('++++++++++++++++++++++Cancelled');
                     this.emit('cancelled');
                     this.emit('canceled');
             
                     resolve();
                 }
                 else if (this.duration != undefined && this.duration >= 0 && now - start > this.duration) {
+					console.log('++++++++++++++++++++++Duration');
                     resolve();
                 }
                 else if (this.iterations != undefined && this.iterations >= 0 && this.iteration >= this.iterations) {
