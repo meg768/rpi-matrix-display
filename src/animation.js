@@ -11,7 +11,6 @@ module.exports = class extends Events {
 
 	constructor(options = {}) {
 
-
 		var toValidNumber = (number) => {
 			number = Number.isNaN(Number(number)) ? -1 : Number(number);
 			return number > 0 ? number : undefined;
@@ -29,9 +28,6 @@ module.exports = class extends Events {
 		this.renderFrequency = toValidNumber(renderFrequency);
 		this.renderTime      = undefined;
 		this.debug           = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
-
-		console.log(this);
-	
 	}
 
     render() {
