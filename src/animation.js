@@ -1,31 +1,37 @@
 //module.exports = require('rpi-animations').Animation;
 
+
+
+
 var Sleep = require('sleep');
 var Events = require('events');
 
 module.exports = class extends Events {
 
-    constructor(options = {}) {
 
-		var toNumber = (number, defaultValue = undefined) => {
-			return Number.isNaN(Number(number)) ? defaultValue : Number(number);
+	constructor(options = {}) {
+
+
+		var toValidNumber = (number) => {
+			number = Number.isNaN(Number(number)) ? -1 : Number(number);
+			return number > 0 ? number : undefined;
 		};
 
 		super();
-
-        var {debug, renderFrequency = undefined, name = 'Noname', priority = 'normal', iterations = undefined, duration = undefined} = options;
-
-        this.name            = name;
-        this.priority        = priority;
-        this.cancelled       = false;
-        this.duration        = toNumber(duration);
-        this.iterations      = toNumber(iterations);
-        this.renderFrequency = toNumber(renderFrequency);
-        this.renderTime      = undefined;
-        this.debug           = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
+	
+		var {debug, renderFrequency = undefined, name = 'Noname', priority = 'normal', iterations = undefined, duration = undefined} = options;
+	
+		this.name            = name;
+		this.priority        = priority;
+		this.cancelled       = false;
+		this.duration        = toValidNumber(duration);
+		this.iterations      = toValidNumber(iterations);
+		this.renderFrequency = toValidNumber(renderFrequency);
+		this.renderTime      = undefined;
+		this.debug           = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
 
 		console.log(this);
-
+	
 	}
 
     render() {
@@ -77,7 +83,7 @@ module.exports = class extends Events {
             var render = () => {
                 var now = new Date();
 
-                if (this.renderFrequency == undefined || this.renderFrequency == 0 || this.renderTime == undefined || now - this.renderTime >= this.renderFrequency) {
+                if (this.renderFrequency == undefined || this.renderTime == undefined || now - this.renderTime >= this.renderFrequency) {
                     this.debug(`Rendering ${this.name}...`);
                     this.render();
                     this.renderTime = now;
@@ -89,18 +95,15 @@ module.exports = class extends Events {
                 var now = new Date();
 
                 if (this.cancelled) {
-					console.log('++++++++++++++++++++++Cancelled');
                     this.emit('cancelled');
                     this.emit('canceled');
             
                     resolve();
                 }
-                else if (this.duration != undefined && this.duration >= 0 && now - start > this.duration) {
-					console.log('++++++++++++++++++++++Duration');
+                else if (this.duration != undefined && now - start > this.duration) {
                     resolve();
                 }
-                else if (this.iterations != undefined && this.iterations >= 0 && this.iteration >= this.iterations) {
-					console.log('-------------------------Finished', this.iteration, this.iterations);
+                else if (this.iterations != undefined && this.iteration >= this.iterations) {
                     resolve();
                 }
                 else {
