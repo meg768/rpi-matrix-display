@@ -91,7 +91,7 @@ module.exports = class GifAnimation extends Animation {
     stop() {
         return new Promise((resolve, reject) => {
 
-            super.stop().then(() => {
+            super.stop().then(() => {				
                 this.matrix.clear();
                 this.matrix.render({blend:50});
                 this.gif = null;
