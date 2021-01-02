@@ -21,8 +21,8 @@ module.exports = class extends MatrixCommand {
     setupExpress() {
         var express = require('express');
         var bodyParser = require('body-parser');
-        var app = express();
-		var server = require('http').createServer(app);
+        //var app = express();
+		var server = require('http').createServer();
 		var io = require('socket.io')(server);
 
 		/*
