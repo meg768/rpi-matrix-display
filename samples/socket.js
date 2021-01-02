@@ -23,7 +23,7 @@ module.exports = class extends MatrixCommand {
         var bodyParser = require('body-parser');
         var app = express();
 		var server = require('http').createServer(app);
-		var io = require('socket.io')(http);
+		var io = require('socket.io')(server);
 
 		
         app.use(bodyParser.urlencoded({ limit: '50mb', extended: false}));
