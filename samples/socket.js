@@ -25,7 +25,7 @@ module.exports = class extends MatrixCommand {
 		var server = require('http').createServer(app);
 		var io = require('socket.io')(server);
 
-		
+		/*
         app.use(bodyParser.urlencoded({ limit: '50mb', extended: false}));
         app.use(bodyParser.json({limit: '50mb'}));
 		
@@ -90,7 +90,7 @@ module.exports = class extends MatrixCommand {
 			}
 		});           
 
-
+		*/
 		io.on('connection', (socket) => {
 			console.log('a user connected');
 
@@ -109,7 +109,7 @@ module.exports = class extends MatrixCommand {
 			});
 		});
 
-
+		console.log('Listening to port', this.argv.port);
         server.listen(this.argv.port);
 
 	}
