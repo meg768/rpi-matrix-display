@@ -19,78 +19,9 @@ module.exports = class extends MatrixCommand {
     }
 
     setupExpress() {
-        var express = require('express');
-        var bodyParser = require('body-parser');
-        //var app = express();
 		var server = require('http').createServer();
 		var io = require('socket.io')(server);
 
-		/*
-        app.use(bodyParser.urlencoded({ limit: '50mb', extended: false}));
-        app.use(bodyParser.json({limit: '50mb'}));
-		
-
-		app.post(`/news`, (request, response) => {
-			try {
-				this.runAnimation('news', {...request.query, ...request.body});
-				response.status(200).json({status:'OK'});    
-			}
-			catch(error) {
-				response.status(401).json({status:error.message});    
-			}
-		});           
-
-		app.get(`/text`, (request, response) => {
-			try {
-				this.runAnimation('text', {...request.body, ...request.query});
-				response.status(200).json({status:'OK'});    
-			}
-			catch(error) {
-				response.status(401).json({status:error.message});    
-			}
-		});           
-
-		app.post(`/text`, (request, response) => {
-			try {
-				this.runAnimation('text', {...request.query, ...request.body});
-				response.status(200).json({status:'OK'});    
-			}
-			catch(error) {
-				response.status(401).json({status:error.message});    
-			}
-		});           
-
-		app.post(`/gif`, (request, response) => {
-			try {
-				this.runAnimation('gif', {...request.query, ...request.body});
-				response.status(200).json({status:'OK'});    
-			}
-			catch(error) {
-				response.status(401).json({status:error.message});    
-			}
-		});           
-
-		app.post(`/rain`, (request, response) => {
-			try {
-				this.runAnimation('rain', {...request.query, ...request.body});
-				response.status(200).json({status:'OK'});    
-			}
-			catch(error) {
-				response.status(401).json({status:error.message});    
-			}
-		});           
-
-		app.post(`/weather`, (request, response) => {
-			try {
-				this.runAnimation('weather', {...request.query, ...request.body});
-				response.status(200).json({status:'OK'});    
-			}
-			catch(error) {
-				response.status(401).json({status:error.message});    
-			}
-		});           
-
-		*/
 		io.on('connection', (socket) => {
 			console.log('a user connected');
 
@@ -110,7 +41,7 @@ module.exports = class extends MatrixCommand {
 		});
 
 		console.log('Listening to port', this.argv.port);
-        server.listen(3987);
+        server.listen(this.argv.port);
 
 	}
 	
