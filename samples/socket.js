@@ -110,7 +110,7 @@ module.exports = class extends MatrixCommand {
 		});
 
 		console.log('Listening to port', this.argv.port);
-        server.listen(this.argv.port);
+        server.listen(3987);
 
 	}
 	
