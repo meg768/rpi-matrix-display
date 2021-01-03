@@ -34,7 +34,7 @@ module.exports = class extends MatrixCommand {
 				response.status(200).json({status:'OK'});    
 			}
 			catch(error) {
-				response.status(401).json({status:error.message});    
+				response.status(401).json({error:error.message});    
 			}
 		});           
 
@@ -44,7 +44,7 @@ module.exports = class extends MatrixCommand {
 				response.status(200).json({status:'OK'});    
 			}
 			catch(error) {
-				response.status(401).json({status:error.message});    
+				response.status(401).json({error:error.message});    
 			}
 		});           
 
@@ -55,25 +55,18 @@ module.exports = class extends MatrixCommand {
 				console.log('A user disconnected');
 			});	
 
-			socket.on('animate', (animation, payload, fn) => {
+			socket.on('animate', (animation, payload, resolve, reject) => {
 
-				var callback = (args) => {
-					if (typeof fn == 'function') {
-						console.log(`Callback is a function - calling...`);
-						fn(args);
-					}
-					else {
-						console.log('Callback is not a function', callback);
-					}
-				};				
-
+				resolve = typeof resolve == "function" ? resolve : () => {};
+				reject  = typeof reject  == "function" ? reject  : () => {};
+			
 				try {
 					this.runAnimation(animation, payload);
-					callback({status:'OK'});
+					resolve({status:'OK'});
 				}
 				catch(error) {
 					console.error(error.message);
-					callback({status:error.message});
+					reject(error);
 				}
 	
 			});
@@ -91,7 +84,7 @@ module.exports = class extends MatrixCommand {
 		if (Animation == undefined)
 			throw new Error(`Animation '${name}' was not found.`);
 
-		console.log(`Displaying animation ${name} with payload ${JSON.stringify(options)}...`);
+		console.log(`Displaying animation '${name}' with payload ${JSON.stringify(options)}...`);
 
 		this.queue.enqueue(new Animation(options));
 	}
