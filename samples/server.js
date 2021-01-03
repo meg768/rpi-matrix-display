@@ -41,7 +41,7 @@ module.exports = class extends MatrixCommand {
 		}
 */
 
-		app.post(`/animate:animation`, (request, response) => {
+		app.post(`/animate/:animation`, (request, response) => {
 			try {
 				this.runAnimation(request.params.animation, {...request.query, ...request.body});
 				response.status(200).json({status:'OK'});    
