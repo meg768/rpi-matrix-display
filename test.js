@@ -27,6 +27,7 @@ class App {
 			};
 
 			socket.emit('animate', 'news', options, (promise) => {
+				console.log(promise);
 				promise.then((args) => {
 					console.log('Resolved:', JSON.stringify(args));
 				})
