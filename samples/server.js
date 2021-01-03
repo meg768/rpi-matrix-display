@@ -60,6 +60,7 @@ module.exports = class extends MatrixCommand {
 				callback = typeof callback == "function" ? callback : () => {};
 			
 				try {
+					throw new Error('Upps');
 					this.runAnimation(animation, payload);
 					callback({status:'OK'});
 				}
