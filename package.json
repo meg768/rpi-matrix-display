@@ -31,6 +31,7 @@
     "rpi-matrix": "^1.0.71",
     "rss-parser": "^3.9.0",
     "socket.io": "^3.0.4",
+    "socket.io-client": "^3.0.4",
     "yargs": "^12.0.5",
     "yow": "^1.0.106"
   }

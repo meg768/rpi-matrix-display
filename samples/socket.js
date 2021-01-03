@@ -31,6 +31,7 @@ module.exports = class extends MatrixCommand {
 			
 			socket.on('news', (payload) => {
 				try {
+					this.runAnimation('news', payload);
 					console.log('Displaying news');
 				}
 				catch(error) {
