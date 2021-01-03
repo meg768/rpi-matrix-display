@@ -18,7 +18,12 @@ class App {
 
 		socket.on('connect', () => {
 			console.log('connected');
-			socket.emit('news');
+			var options = {
+				priority: '!',
+				textColor: 'red'
+			};
+			
+			socket.emit('news', options);
 		});
 		socket.on('disconnect', () => {
 			console.log('disconnected');
