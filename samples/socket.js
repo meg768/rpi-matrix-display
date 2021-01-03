@@ -29,7 +29,7 @@ module.exports = class extends MatrixCommand {
 				console.log('user disconnected');
 			});	
 
-			socket.on('animate', XXX, (payload) => {
+			socket.on('animate', (XXX, payload) => {
 				try {
 					this.runAnimation(XXX, payload);
 					console.log('Displaying animation', XXX, payload);
