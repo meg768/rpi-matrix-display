@@ -40,6 +40,17 @@ module.exports = class extends MatrixCommand {
 			});           			
 		}
 */
+
+		app.post(`/animate:animation`, (request, response) => {
+			try {
+				this.runAnimation(request.params.animation, {...request.query, ...request.body});
+				response.status(200).json({status:'OK'});    
+			}
+			catch(error) {
+				response.status(401).json({status:error.message});    
+			}
+		});           
+
 		app.post(`/news`, (request, response) => {
 			try {
 				this.runAnimation('news', {...request.query, ...request.body});
@@ -106,8 +117,12 @@ module.exports = class extends MatrixCommand {
 	}
 	
 	runAnimation(name, options) {
-        var Animation = this.animations[name];
-        this.queue.enqueue(new Animation(options));
+		var Animation = this.animations[name];
+		
+		if (Animation == undefined)
+			throw new Error(`Animation '${name}' was not found`);
+
+		this.queue.enqueue(new Animation(options));
 	}
 
 

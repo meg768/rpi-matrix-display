@@ -21,7 +21,9 @@ class App {
 			var options = {
 				priority: '!',
 				duration: 5000,
-				textColor: 'red'
+				fontSize: 0.5,
+				scrollDelay: 7,
+				textColor: 'green'
 			};
 
 			socket.emit('animate', 'news', options, (args) => {

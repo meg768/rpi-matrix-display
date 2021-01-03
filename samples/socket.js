@@ -23,18 +23,20 @@ module.exports = class extends MatrixCommand {
 		var io = require('socket.io')(server);
 
 		io.on('connection', (socket) => {
-			console.log('a user connected');
+			console.log('A user connected');
 
 			socket.on('disconnect', () => {
-				console.log('user disconnected');
+				console.log('A user disconnected');
 			});	
 
-			socket.on('animate', (XXX, payload, callback) => {
+			socket.on('animate', (animation, payload, callback) => {
 				try {
-					this.runAnimation(XXX, payload);
-					console.log('Displaying animation', XXX, payload);
+					console.log(`Displaying animation ${animation} with payload ${payload}...`);
+
+					this.runAnimation(animation, payload);
+
 					if (typeof callback == 'function') {
-						console.log('Callback is  a function - calling...');
+						console.log(`Callback is a function - calling...`);
 						callback({status:'OK'});
 
 					}
@@ -49,16 +51,6 @@ module.exports = class extends MatrixCommand {
 	
 			});
 
-			socket.on('news', (payload) => {
-				try {
-					this.runAnimation('news', payload);
-					console.log('Displaying news');
-				}
-				catch(error) {
-					console.error(error.message);
-				}
-	
-			});
 		});
 
 		console.log('Listening to port', this.argv.port);
