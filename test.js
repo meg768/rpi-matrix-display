@@ -26,8 +26,14 @@ class App {
 				textColor: 'green'
 			};
 
-			socket.emit('animate', 'news', options, (args) => {
-				console.log('CAllback!!!!!!', args);
+			socket.emit('animate', 'news', options, (promise) => {
+				promise.then((args) => {
+					console.log('Resolved:', JSON.stringify(args));
+				})
+				.catch((error) => {
+					console.log('Rejected', error);
+
+				})
 			});
 		});
 		socket.on('disconnect', () => {

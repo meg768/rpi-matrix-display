@@ -64,7 +64,6 @@ module.exports = class extends MatrixCommand {
 					callback(Promise.resolve({status:'OK'}));
 				}
 				catch(error) {
-					console.error(error.message);
 					callback(Promise.reject(error));
 				}
 	
