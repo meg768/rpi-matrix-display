@@ -26,15 +26,8 @@ class App {
 				textColor: 'green'
 			};
 
-			socket.emit('animate', 'news', options, (promise) => {
-				console.log(promise);
-				promise.then((args) => {
-					console.log('Resolved:', JSON.stringify(args));
-				})
-				.catch((error) => {
-					console.log('Rejected', error);
-
-				})
+			socket.emit('animate', 'news', options, (response) => {
+				console.log(response);
 			});
 		});
 		socket.on('disconnect', () => {

@@ -61,10 +61,10 @@ module.exports = class extends MatrixCommand {
 			
 				try {
 					this.runAnimation(animation, payload);
-					callback(Promise.resolve({status:'OK'}));
+					callback({status:'OK'});
 				}
 				catch(error) {
-					callback(Promise.reject(error));
+					callback({error:error.message});
 				}
 	
 			});
