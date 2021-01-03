@@ -55,18 +55,17 @@ module.exports = class extends MatrixCommand {
 				console.log('A user disconnected');
 			});	
 
-			socket.on('animate', (animation, payload, resolve, reject) => {
+			socket.on('animate', (animation, payload, callback) => {
 
-				resolve = typeof resolve == "function" ? resolve : () => {};
-				reject  = typeof reject  == "function" ? reject  : () => {};
+				callback = typeof callback == "function" ? callback : () => {};
 			
 				try {
 					this.runAnimation(animation, payload);
-					resolve({status:'OK'});
+					callback(Promise.resolve({status:'OK'}));
 				}
 				catch(error) {
 					console.error(error.message);
-					reject(error);
+					callback(Promise.reject(error));
 				}
 	
 			});
