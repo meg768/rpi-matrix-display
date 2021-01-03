@@ -19,7 +19,7 @@ module.exports = class extends MatrixCommand {
         args.option('port', {describe:'Port', default:4000});
     }
 
-    setupExpress() {
+    setupServer() {
         var bodyParser = require('body-parser');
 		var app = require('express')();
 		var server = require('http').createServer(app);
@@ -61,7 +61,6 @@ module.exports = class extends MatrixCommand {
 					if (typeof fn == 'function') {
 						console.log(`Callback is a function - calling...`);
 						fn(args);
-
 					}
 					else {
 						console.log('Callback is not a function', callback);
@@ -120,7 +119,7 @@ module.exports = class extends MatrixCommand {
 			}
 		};
 
-        this.setupExpress();
+        this.setupServer();
 		this.runAnimation('text', {text:':smiley:', iterations:1});
 
         this.queue.on('idle', () => {
