@@ -20,10 +20,13 @@ class App {
 			console.log('connected');
 			var options = {
 				priority: '!',
+				duration: 5000,
 				textColor: 'red'
 			};
-			
-			socket.emit('news', options);
+
+			socket.emit('animate', 'news', options, (args) => {
+				console.log('CAllback!!!!!!', args);
+			});
 		});
 		socket.on('disconnect', () => {
 			console.log('disconnected');

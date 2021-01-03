@@ -29,10 +29,19 @@ module.exports = class extends MatrixCommand {
 				console.log('user disconnected');
 			});	
 
-			socket.on('animate', (XXX, payload) => {
+			socket.on('animate', (XXX, payload, callback) => {
 				try {
 					this.runAnimation(XXX, payload);
 					console.log('Displaying animation', XXX, payload);
+					if (typeof callback == 'function') {
+						console.log('Callback is  a function - calling...');
+						callback({status:'OK'});
+
+					}
+					else {
+						console.log('Callback is not a function', callback);
+
+					}
 				}
 				catch(error) {
 					console.error(error.message);
