@@ -91,7 +91,7 @@ module.exports = class extends MatrixCommand {
 		if (Animation == undefined)
 			throw new Error(`Animation '${name}' was not found.`);
 
-		console.log(`Displaying animation ${name} with payload ${options}...`);
+		console.log(`Displaying animation ${name} with payload ${JSON.stringify(options)}...`);
 
 		this.queue.enqueue(new Animation(options));
 	}
