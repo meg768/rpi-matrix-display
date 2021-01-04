@@ -7,11 +7,7 @@ var MatrixCommand = require('../src/matrix-command.js');
 module.exports = class extends MatrixCommand {
 
     constructor(options) {
-
-
 		super({command: 'server [options]', description: 'Run matrix server', ...options}); 
-
-
 	}
 
     options(args) {
@@ -49,10 +45,10 @@ module.exports = class extends MatrixCommand {
 		});           
 
 		io.on('connection', (socket) => {
-			console.log('A user connected');
+			this.debug('A socket connected.');
 
 			socket.on('disconnect', () => {
-				console.log('A user disconnected');
+				this.debug('A socket disconnected.');
 			});	
 
 			socket.on('animate', (animation, payload, callback) => {
@@ -82,7 +78,7 @@ module.exports = class extends MatrixCommand {
 		if (Animation == undefined)
 			throw new Error(`Animation '${name}' was not found.`);
 
-		console.log(`Displaying animation '${name}' with payload ${JSON.stringify(options)}...`);
+		this.debug(`Displaying animation '${name}' with payload ${JSON.stringify(options)}...`);
 
 		this.queue.enqueue(new Animation(options));
 	}
