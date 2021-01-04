@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var io = require('socket.io-client');
-var socket = io('http://85.24.185.150:3987');
+var socket = io('http://85.24.185.150:4000');
 
 socket.on('connect', () => {
 	var options = {

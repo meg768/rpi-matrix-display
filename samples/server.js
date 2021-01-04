@@ -58,16 +58,15 @@ module.exports = class extends MatrixCommand {
 			socket.on('animate', (animation, payload, callback) => {
 
 				callback = typeof callback == "function" ? callback : () => {};
-			
+
 				try {
-					throw new Error('Upps');
 					this.runAnimation(animation, payload);
 					callback({status:'OK'});
 				}
 				catch(error) {
 					callback({error:error.message});
 				}
-	
+
 			});
 
 		});
