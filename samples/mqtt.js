@@ -18,8 +18,11 @@ module.exports = class extends MatrixCommand {
 		var client  = mqtt.connect('mqtt://85.24.185.150');
  
 		client.on('connect',  () => {
+			this.debug('Connected!');
 			client.subscribe('test',  (err) => {
+				this.debug('Subscribed!');
 				if (!err) {
+					this.debug('Publishing!');
 					client.publish('test', 'Hello mqtt');
 				}
 			})
