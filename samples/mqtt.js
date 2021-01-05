@@ -15,7 +15,7 @@ module.exports = class extends MatrixCommand {
 
     setup() {
 		var mqtt = require('mqtt')
-		var client  = mqtt.connect('85.24.185.150');
+		var client  = mqtt.connect('mqtt://85.24.185.150');
  
 		client.on('connect',  () => {
 			client.subscribe('test',  (err) => {
