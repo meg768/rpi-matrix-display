@@ -22,11 +22,18 @@ module.exports = class extends TextAnimation {
             query.exclude = 'minutely,hourly';
             query.units   = 'metric';
             query.lang    = 'se';
-    
-            request.get('/data/2.5/onecall', {query:query}).then((response) => {
-                response.body.current.dt = new Date(response.body.current.dt * 1000);
+	
+			this.debug(`Calling http://api.openweathermap.org...`);
+
+			request.get('/data/2.5/onecall', {query:query}).then((response) => {
+				this.debug(`Responce recieved from http://api.openweathermap.org...`);
+
+				response.body.current.dt = new Date(response.body.current.dt * 1000);
                 response.body.current.sunset = new Date(response.body.current.sunset * 1000);
                 response.body.current.sunrise = new Date(response.body.current.sunrise * 1000);
+
+				this.debug(`Current ${response.body.current}`);
+				this.debug(`Tomorrow ${response.body.daily[1]}`);
 
                 var current  = response.body.current;
                 var tomorrow = response.body.daily[1];

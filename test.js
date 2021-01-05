@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 var io = require('socket.io-client');
-var socket = io('http://85.24.185.150:4000');
+var socket = io('http://85.24.185.150:9696');
 
 socket.on('connect', () => {
 	var options = {
 		text: 'Hello World',
 		priority: '!',
 		duration: 5000,
-		fontSize: 0.5,
+		fontSize: 0.3,
 		scrollDelay: 6,
 		textColor: 'green'
 	};
