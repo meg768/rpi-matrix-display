@@ -52,7 +52,7 @@ module.exports = class extends MatrixCommand {
 			});
 		})
 		
-		client.on('message', (topic, payload) => {
+		client.on('message', (topic, message) => {
 
 			topic = topic.toString();
 			message = message.toString();
