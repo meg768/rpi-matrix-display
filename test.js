@@ -1,19 +1,16 @@
 #!/usr/bin/env node
 
-var io = require('socket.io-client');
-var socket = io('http://85.24.185.150:9696');
+var mqtt = require('mqtt')
+var client  = mqtt.connect('mqtt://85.24.185.150');
 
-socket.on('connect', () => {
-	var options = {
-		text: 'Hello World',
-		priority: '!',
-		duration: 5000,
-		fontSize: 0.3,
-		scrollDelay: 6,
-		textColor: 'green'
-	};
-
-	socket.emit('animate', 'text', options, (response) => {
-		console.log(response);
-	});
+		
+client.on('message', (topic, message) => {
+	console.log('Got message');
+	// message is Buffer
+	console.log('topic', topic)
+	console.log('message', message.toString());
+	client.end();
 });
+
+
+console.log('Done.');

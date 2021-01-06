@@ -27,14 +27,13 @@ module.exports = class extends MatrixCommand {
 				}
 			})
 		})
-		   /*
-		client.on('test/message', (topic, message) => {
+		
+		client.on('message', (topic, message) => {
 			// message is Buffer
 			console.log('topic', topic)
 			console.log('message', message.toString());
 			client.end();
-		})
-		*/
+		});
 
 	
 
