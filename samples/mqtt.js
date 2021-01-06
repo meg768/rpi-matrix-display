@@ -30,6 +30,7 @@ module.exports = class extends MatrixCommand {
 		var os = require('os');
 		var mqtt = require('mqtt')
 		var client = mqtt.connect('mqtt://85.24.185.150');
+		var topicPrefix = `${os.hostname()}`;
 
 		var TextAnimation    = require('../src/text-animation.js');
 		var RainAnimation    = require('../src/rain-animation.js');
@@ -50,7 +51,7 @@ module.exports = class extends MatrixCommand {
 			var animations = ['rain','weather','gif','news','text'];
 
 			animations.forEach((animation) => {
-				var topic = `${os.hostname()}/${animation}`;
+				var topic = `${topicPrefix}/${animation}`;
 
 				this.debug(`Subscribing to ${topic}...`);
 
@@ -92,7 +93,7 @@ module.exports = class extends MatrixCommand {
 		this.runAnimation('text', {text:':smiley:', iterations:1});
 
         this.queue.on('idle', () => {
-			client.publish('idle', JSON.stringify({message:'Idle'}));
+			client.publish(`${topicPrefix}/message`, JSON.stringify({message:'Idle'}));
 			if (this.defaultAnimation) {
 				this.runAnimation(this.defaultAnimation.name, this.defaultAnimation.options);
 			}
