@@ -62,7 +62,7 @@ module.exports = class extends MatrixCommand {
 				this.runAnimation(topic, json);
 			}
 			catch(error) {
-				this.log(error.message);
+				console.error(error.message);
 			}
 		});
 
