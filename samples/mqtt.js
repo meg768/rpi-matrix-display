@@ -53,7 +53,7 @@ module.exports = class extends MatrixCommand {
 				var topic = `${os.hostname()}/${animation}`;
 
 				this.debug(`Subscribing to ${topic}...`);
-				
+
 				client.subscribe(topic,  (error) => {
 					if (error) {
 						console.error(`Could not subscribe to topic '${topic}'.`);
@@ -65,7 +65,7 @@ module.exports = class extends MatrixCommand {
 		
 		client.on('message', (topic, message) => {
 
-			topic = topic.toString().split()
+			topic = topic.toString();
 			message = message.toString();
 
 			this.debug(`Topic ${topic}`);
@@ -79,7 +79,7 @@ module.exports = class extends MatrixCommand {
 				this.runAnimation(animation, json);
 			}
 			catch(error) {
-				console.error(error.message);
+				console.error(error);
 			}
 		});
 
