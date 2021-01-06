@@ -30,7 +30,7 @@ module.exports = class extends MatrixCommand {
 		var os = require('os');
 		var mqtt = require('mqtt')
 		var client = mqtt.connect('mqtt://85.24.185.150');
-		var topicPrefix = `${os.hostname()}`;
+		var topicPrefix = `rpi/${os.hostname()}`;
 
 		var TextAnimation    = require('../src/text-animation.js');
 		var RainAnimation    = require('../src/rain-animation.js');
