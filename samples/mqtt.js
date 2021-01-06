@@ -27,6 +27,7 @@ module.exports = class extends MatrixCommand {
 
 
 	runAnimations() {
+		var os = require('os');
 		var mqtt = require('mqtt')
 		var client = mqtt.connect('mqtt://85.24.185.150');
 
@@ -45,21 +46,37 @@ module.exports = class extends MatrixCommand {
 
 		client.on('connect', () => {
 			this.debug('Connected to MQTT Broker.');
-			client.subscribe(['rain','weather','gif','news','text'],  (error) => {
-				if (error) {
-					this.log('Could not subscribe.')
-				}
+
+			var animations = ['rain','weather','gif','news','text'];
+
+			animations.forEach((animation) => {
+				var topic = `${os.hostname()}/${animation}`;
+
+				this.debug(`Subscribing to ${topic}...`);
+				
+				client.subscribe(topic,  (error) => {
+					if (error) {
+						console.error(`Could not subscribe to topic '${topic}'.`);
+					}
+				});
+	
 			});
 		})
 		
 		client.on('message', (topic, message) => {
 
-			topic = topic.toString();
+			topic = topic.toString().split()
 			message = message.toString();
 
+			this.debug(`Topic ${topic}`);
+			this.debug(`Message ${message}`);
+
 			try {
+				var paths = topic.split('/');
+				var animation = paths[paths.length - 1];
+
 				var json = message == '' ? {} : JSON.parse(message);
-				this.runAnimation(topic, json);
+				this.runAnimation(animation, json);
 			}
 			catch(error) {
 				console.error(error.message);

@@ -5,7 +5,13 @@ var client  = mqtt.connect('mqtt://85.24.185.150');
 
 
 client.on('connect',  () => {
-	client.publish('text', '{}');
+	var json = {
+		priority: '!',
+		iterations: 1,
+		fontSize: 0.5,
+		text: 'Hej Magnus',
+	};
+	client.publish('news', JSON.stringify(json));
 	client.end();
 })
 
