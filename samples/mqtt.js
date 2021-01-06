@@ -58,7 +58,7 @@ module.exports = class extends MatrixCommand {
 			message = message.toString();
 
 			try {
-				json = message == '' ? {} : JSON.parse(message);
+				var json = message == '' ? {} : JSON.parse(message);
 				this.runAnimation(topic, json);
 			}
 			catch(error) {
