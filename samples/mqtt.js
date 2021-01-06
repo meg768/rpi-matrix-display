@@ -5,6 +5,7 @@ module.exports = class extends MatrixCommand {
 
     constructor(options) {
 		super({command: 'mqtt [options]', description: 'Run matrix MQTT server', ...options}); 
+
 	}
 
     options(args) {
@@ -13,31 +14,6 @@ module.exports = class extends MatrixCommand {
         args.option('host', {describe:'Address of MQTT broker', default:''});
     }
 
-    setup() {
-		var mqtt = require('mqtt')
-		var client  = mqtt.connect('mqtt://85.24.185.150');
- 
-		client.on('connect',  () => {
-			this.debug('Connected!');
-			client.subscribe('test',  (err) => {
-				this.debug('Subscribed!');
-				if (!err) {
-					this.debug('Publishing!');
-					client.publish('test', 'Hello mqtt');
-				}
-			})
-		})
-		
-		client.on('message', (topic, message) => {
-			// message is Buffer
-			console.log('topic', topic)
-			console.log('message', message.toString());
-			client.end();
-		});
-		
-
-	}
-	
 	runAnimation(name, options) {
 		var Animation = this.animations[name];
 		
@@ -51,6 +27,9 @@ module.exports = class extends MatrixCommand {
 
 
 	runAnimations() {
+		var mqtt = require('mqtt')
+		var client = mqtt.connect('mqtt://85.24.185.150');
+
 		var TextAnimation    = require('../src/text-animation.js');
 		var RainAnimation    = require('../src/rain-animation.js');
 		var NewsAnimation    = require('../src/news-animation.js');
@@ -64,7 +43,28 @@ module.exports = class extends MatrixCommand {
 		this.animations['gif']     = GifAnimation;
 		this.animations['news']    = NewsAnimation;
 
+		client.on('connect', () => {
+			this.debug('Connected to MQTT Broker.');
+			client.subscribe(['rain','weather','gif','news','text'],  (error) => {
+				if (error) {
+					this.log('Could not subscribe.')
+				}
+			});
+		})
+		
+		client.on('message', (topic, payload) => {
 
+			topic = topic.toString();
+			message = message.toString();
+
+			try {
+				json = message == '' ? {} : JSON.parse(message);
+				this.runAnimation(topic, json);
+			}
+			catch(error) {
+				this.log(error.message);
+			}
+		});
 
 		this.defaultAnimation = {
 			name: 'rain',
@@ -72,10 +72,10 @@ module.exports = class extends MatrixCommand {
 			}
 		};
 
-        this.setup();
 		this.runAnimation('text', {text:':smiley:', iterations:1});
 
         this.queue.on('idle', () => {
+			client.publish('idle', JSON.stringify({message:'Idle'}));
 			if (this.defaultAnimation) {
 				this.runAnimation(this.defaultAnimation.name, this.defaultAnimation.options);
 			}
