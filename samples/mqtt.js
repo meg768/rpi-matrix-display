@@ -45,7 +45,7 @@ module.exports = class extends MatrixCommand {
 		this.animations['news']    = NewsAnimation;
 
 		this.debug(`Connecting to host '${this.argv.host}'...`);
-		var client = mqtt.connect(this.argv.host);
+		var client = mqtt.connect(this.argv.host, {user:process.env.MQTT_USER, password:process.env.MQTT_PASSWORD});
 
 
 		client.on('connect', () => {
