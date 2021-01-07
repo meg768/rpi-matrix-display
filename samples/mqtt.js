@@ -11,7 +11,7 @@ module.exports = class extends MatrixCommand {
     options(args) {
         super.options(args);
         args.option('port', {describe:'Port', default:1883});
-        args.option('host', {describe:'Address of MQTT broker', default:''});
+        args.option('host', {describe:'Address of MQTT broker', default:process.MQTT_HOST});
     }
 
 	runAnimation(name, options) {
@@ -29,7 +29,7 @@ module.exports = class extends MatrixCommand {
 	runAnimations() {
 		var os = require('os');
 		var mqtt = require('mqtt')
-		var client = mqtt.connect('mqtt://85.24.185.150');
+		var client = mqtt.connect(this.argv.host);
 		var topicPrefix = `rpi/${os.hostname()}`;
 
 		var TextAnimation    = require('../src/text-animation.js');
@@ -93,7 +93,7 @@ module.exports = class extends MatrixCommand {
 		this.runAnimation('text', {text:':smiley:', iterations:1});
 
         this.queue.on('idle', () => {
-			client.publish(`${topicPrefix}/message`, JSON.stringify({message:'Idle'}));
+			client.publish(`${topicPrefix}/status`, JSON.stringify({message:'Idle'}));
 			if (this.defaultAnimation) {
 				this.runAnimation(this.defaultAnimation.name, this.defaultAnimation.options);
 			}
