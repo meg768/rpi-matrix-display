@@ -29,7 +29,6 @@ module.exports = class extends MatrixCommand {
 	runAnimations() {
 		var os = require('os');
 		var mqtt = require('mqtt')
-		var client = mqtt.connect(this.argv.host);
 		var topicPrefix = `rpi/${os.hostname()}`;
 
 		var TextAnimation    = require('../src/text-animation.js');
@@ -44,6 +43,10 @@ module.exports = class extends MatrixCommand {
 		this.animations['weather'] = WeatherAnimation;
 		this.animations['gif']     = GifAnimation;
 		this.animations['news']    = NewsAnimation;
+
+		this.debug(`Connecting to host '${this.argv.host}...`);
+		var client = mqtt.connect(this.argv.host);
+
 
 		client.on('connect', () => {
 			this.debug('Connected to MQTT Broker.');
