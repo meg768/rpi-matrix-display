@@ -11,7 +11,7 @@ module.exports = class extends MatrixCommand {
     options(args) {
         super.options(args);
         args.option('port', {describe:'Port', default:1883});
-        args.option('host', {describe:'Address of MQTT broker', default:process.MQTT_HOST});
+        args.option('host', {describe:'Address of MQTT broker', default:process.env.MQTT_HOST});
     }
 
 	runAnimation(name, options) {
@@ -44,7 +44,7 @@ module.exports = class extends MatrixCommand {
 		this.animations['gif']     = GifAnimation;
 		this.animations['news']    = NewsAnimation;
 
-		this.debug(`Connecting to host '${this.argv.host}...`);
+		this.debug(`Connecting to host '${this.argv.host}'...`);
 		var client = mqtt.connect(this.argv.host);
 
 
