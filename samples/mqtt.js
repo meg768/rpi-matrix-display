@@ -50,11 +50,11 @@ module.exports = class extends MatrixCommand {
 
 		client.on('connect', () => {
 			this.debug('Connected to MQTT Broker.');
-			this.debug(`Subscribing to ${topic}...`);
+			this.debug(`Subscribing to ${animationTopic}...`);
 
 			client.subscribe(animationTopic,  (error) => {
 				if (error) {
-					console.error(`Could not subscribe to topic '${topic}'.`);
+					console.error(`Could not subscribe to topic '${animationTopic}'.`);
 				}
 			});
 		})
