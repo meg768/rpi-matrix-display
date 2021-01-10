@@ -1,34 +1,32 @@
 #!/usr/bin/env node
 
+require('dotenv').config();
+
 var mqtt = require('mqtt');
-var client  = mqtt.connect('mqtt://85.24.185.150');
+var client  = mqtt.connect(process.env.MQTT_HOST, {username:process.env.MQTT_USERNAME, password:process.env.MQTT_PASSWORD});
 
 
 client.on('connect',  () => {
-	var json = {
-		priority: '!',
-		iterations: 1,
-		fontSize: 0.5,
-		text: 'Hej Magnus',
-	};
-	client.publish('news', JSON.stringify(json));
-	client.end();
-})
 
-/*
-
-client.on('connect',  () => {
 	console.log('Connected!');
-	client.subscribe('test',  (err) => {
+
+	client.subscribe('homey/devices/utomhus/terassen/onoff',  (err) => {
 		console.log('Subscribed!');
 	})
+
+	client.on('message', (topic, message, packet) => {
+		console.log('topic', topic);
+		console.log('message', message.toString());
+		console.log('packet', packet);
+		console.log('value', eval(message.toString()));
+	});
+
+/*
+	client.publish('homey/devices/utomhus/terassen/onoff', 'true');
+	client.end();
+	*/
 })
 
-client.on('message', (topic, message) => {
-	// message is Buffer
-	console.log('topic', topic)
-	console.log('message', message.toString());
-});
-*/
+
 
 console.log('Done.');

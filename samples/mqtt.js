@@ -28,8 +28,8 @@ module.exports = class extends MatrixCommand {
 
 	runAnimations() {
 		var os = require('os');
-		var mqtt = require('mqtt')
-		var topicPrefix = `rpi/${os.hostname()}`;
+		var mqtt = require('mqtt');
+		var animationTopic = `rpi/${os.hostname()}/animations`;
 
 		var TextAnimation    = require('../src/text-animation.js');
 		var RainAnimation    = require('../src/rain-animation.js');
@@ -50,37 +50,35 @@ module.exports = class extends MatrixCommand {
 
 		client.on('connect', () => {
 			this.debug('Connected to MQTT Broker.');
+			this.debug(`Subscribing to ${topic}...`);
 
-			var animations = ['rain','weather','gif','news','text'];
-
-			animations.forEach((animation) => {
-				var topic = `${topicPrefix}/${animation}`;
-
-				this.debug(`Subscribing to ${topic}...`);
-
-				client.subscribe(topic,  (error) => {
-					if (error) {
-						console.error(`Could not subscribe to topic '${topic}'.`);
-					}
-				});
-	
+			client.subscribe(animationTopic,  (error) => {
+				if (error) {
+					console.error(`Could not subscribe to topic '${topic}'.`);
+				}
 			});
 		})
 		
 		client.on('message', (topic, message) => {
 
-			topic = topic.toString();
 			message = message.toString();
 
 			this.debug(`Topic ${topic}`);
 			this.debug(`Message ${message}`);
 
 			try {
-				var paths = topic.split('/');
-				var animation = paths[paths.length - 1];
+				message = JSON.parse(message);
+			}
+			catch(error) {
+				this.debug(`Could not parse JSON payload '${message}'.`)
+				console.error(error);
+				message = {};
+			}
 
-				var json = message == '' ? {} : JSON.parse(message);
-				this.runAnimation(animation, json);
+
+			try {
+				if (message.animation)
+					this.runAnimation(message.animation, message.options);
 			}
 			catch(error) {
 				console.error(error);
@@ -88,7 +86,7 @@ module.exports = class extends MatrixCommand {
 		});
 
 		this.defaultAnimation = {
-			name: 'rain',
+			animation: 'rain',
 			options: {
 			}
 		};
@@ -96,9 +94,8 @@ module.exports = class extends MatrixCommand {
 		this.runAnimation('text', {text:':smiley:', iterations:1});
 
         this.queue.on('idle', () => {
-			client.publish(`${topicPrefix}/status`, JSON.stringify({message:'Idle'}));
 			if (this.defaultAnimation) {
-				this.runAnimation(this.defaultAnimation.name, this.defaultAnimation.options);
+				this.runAnimation(this.defaultAnimation.animation, this.defaultAnimation.options);
 			}
         });
 
