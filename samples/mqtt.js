@@ -35,7 +35,7 @@ module.exports = class extends MatrixCommand {
 		
 		this.debug(`Displaying animation '${name}' with payload ${JSON.stringify(options)}...`);
 		this.queue.enqueue(new Animation(options));
-		this.mqtt.publish(`${this.mqttTopic}/current`, JSON.stringify({name:name, options: options}));
+		this.mqtt.publish(`${this.mqttTopic}`, JSON.stringify({name:name, options: options}));
 	}
 
 
