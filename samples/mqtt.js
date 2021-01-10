@@ -14,14 +14,26 @@ module.exports = class extends MatrixCommand {
         args.option('host', {describe:'Address of MQTT broker', default:process.env.MQTT_HOST});
     }
 
-	runAnimation(name, options) {
-		var Animation = this.animations[name];
-		
-		if (Animation == undefined)
+	getAnimation(name) {
+
+		var animations = {
+			text:    require('../src/text-animation.js'),
+			rain:    require('../src/rain-animation.js'),
+			weather: require('../src/weather-animation.js'),
+			gif:     require('../src/gif-animation.js'),
+			news:    require('../src/news-animation.js')
+		};
+
+		if (animations[name] == undefined)
 			throw new Error(`Animation '${name}' was not found.`);
 
-		this.debug(`Displaying animation '${name}' with payload ${JSON.stringify(options)}...`);
+		return animations[name];
+	}
 
+	runAnimation(name, options) {
+		var Animation = this.getAnimation(name);
+		
+		this.debug(`Displaying animation '${name}' with payload ${JSON.stringify(options)}...`);
 		this.queue.enqueue(new Animation(options));
 	}
 
@@ -31,22 +43,8 @@ module.exports = class extends MatrixCommand {
 		var mqtt = require('mqtt');
 		var animationTopic = `rpi/${os.hostname()}/animations`;
 
-		var TextAnimation    = require('../src/text-animation.js');
-		var RainAnimation    = require('../src/rain-animation.js');
-		var NewsAnimation    = require('../src/news-animation.js');
-		var WeatherAnimation = require('../src/weather-animation.js');
-		var GifAnimation     = require('../src/gif-animation.js');
-
-		this.animations = {};
-		this.animations['text']    = TextAnimation;
-		this.animations['rain']    = RainAnimation;
-		this.animations['weather'] = WeatherAnimation;
-		this.animations['gif']     = GifAnimation;
-		this.animations['news']    = NewsAnimation;
-
 		this.debug(`Connecting to host '${this.argv.host}'...`);
 		var client = mqtt.connect(this.argv.host, {username:process.env.MQTT_USERNAME, password:process.env.MQTT_PASSWORD});
-
 
 		client.on('connect', () => {
 			this.debug('Connected to MQTT Broker.');
@@ -68,17 +66,11 @@ module.exports = class extends MatrixCommand {
 
 			try {
 				message = JSON.parse(message);
-			}
-			catch(error) {
-				this.debug(`Could not parse JSON payload '${message}'.`)
-				console.error(error);
-				message = {};
-			}
 
+				if (!message.name)
+					throw new Error('Animation name not specified in MQTT payload.');
 
-			try {
-				if (message.animation)
-					this.runAnimation(message.animation, message.options);
+				this.runAnimation(message.name, message.options);
 			}
 			catch(error) {
 				console.error(error);
@@ -86,7 +78,7 @@ module.exports = class extends MatrixCommand {
 		});
 
 		this.defaultAnimation = {
-			animation: 'rain',
+			name: 'rain',
 			options: {
 			}
 		};
@@ -95,7 +87,7 @@ module.exports = class extends MatrixCommand {
 
         this.queue.on('idle', () => {
 			if (this.defaultAnimation) {
-				this.runAnimation(this.defaultAnimation.animation, this.defaultAnimation.options);
+				this.runAnimation(this.defaultAnimation.name, this.defaultAnimation.options);
 			}
         });
 
