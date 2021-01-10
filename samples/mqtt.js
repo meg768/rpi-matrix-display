@@ -35,6 +35,7 @@ module.exports = class extends MatrixCommand {
 		
 		this.debug(`Displaying animation '${name}' with payload ${JSON.stringify(options)}...`);
 		this.queue.enqueue(new Animation(options));
+		this.mqtt.publish(`${this.mqttTopic}/current`, {name:name, options: options});
 	}
 
 
@@ -45,6 +46,9 @@ module.exports = class extends MatrixCommand {
 
 		this.debug(`Connecting to host '${this.argv.host}'...`);
 		var client = mqtt.connect(this.argv.host, {username:process.env.MQTT_USERNAME, password:process.env.MQTT_PASSWORD});
+
+		this.mqtt = client;
+		this.mqttTopic = animationTopic;
 
 		client.on('connect', () => {
 			this.debug('Connected to MQTT Broker.');
