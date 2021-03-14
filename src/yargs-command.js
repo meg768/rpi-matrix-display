@@ -15,6 +15,8 @@ module.exports = class Command {
 
         this.handler = async (argv) => {
             try {
+				this.argv = argv;
+				
 				await this.start();
                 await this.run();
 				await this.stop();
