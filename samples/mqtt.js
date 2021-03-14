@@ -8,6 +8,9 @@ module.exports = class extends MatrixCommand {
     constructor(options) {
 		super({command: 'mqtt [options]', description: 'Run matrix MQTT server', ...options}); 
 
+		this.timer = new Timer();
+		this.texts = [];
+
 	}
 
     options(yargs) {
@@ -30,8 +33,15 @@ module.exports = class extends MatrixCommand {
 
     }
 
+	/*
+	enqueueTexts() {
+		this.texts.forEach((text) => {
+			this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:`${text}`}));
+		});
+	}
+	*/
+
 	async start() {
-		this.timer = new Timer();
 		await super.start();
 
 		this.debug(`Connecting to host '${this.argv.host}'...`);
@@ -45,12 +55,12 @@ module.exports = class extends MatrixCommand {
 
 		mqtt.on('RSS/:name/title', (topic, message, args) => {
 
-			this.debug(`Topic ${topic}`);
-			this.debug(`Message ${message}`);
-
 			try {
 				var json = JSON.parse(message);
-				this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:`${args.name} - ${json}`}));
+				var text = `${args.name} - ${json}`;
+
+				//this.texts.push(text);
+				this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:`${text}`}));
 			}
 			catch(error) {
 				this.log(error);
