@@ -4,17 +4,14 @@ var fs   = require('fs');
 var path = require('path');
 var args = require('yargs');
 
+require('dotenv').config();
+require('yow/preixConsole')();
+
 
 class App {
 
 	constructor() {
 		this.fileName = __filename;
-
-        // Load .env
-        require('dotenv').config({
-            path: path.join(__dirname, './.env')
-        });
-
 	}
 
 

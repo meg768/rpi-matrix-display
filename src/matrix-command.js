@@ -75,11 +75,10 @@ module.exports = class extends YargsCommand {
 
     }
     
-    run() {
+	async start() {
         Matrix.configure(this.argv);
-		this.debug(this.argv);
-        this.runAnimations();
-    }
+	}
+
 
 
 };

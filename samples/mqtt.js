@@ -1,4 +1,6 @@
+var MQTT = require('mqtt-ex');
 var MatrixCommand = require('../src/matrix-command.js');
+var TextAnimation = require('../src/text-animation.js');
 
 
 module.exports = class extends MatrixCommand {
@@ -8,27 +10,22 @@ module.exports = class extends MatrixCommand {
 
 	}
 
-    options(args) {
-        super.options(args);
-        args.option('port', {describe:'Port', default:1883});
-        args.option('host', {describe:'Address of MQTT broker', default:process.env.MQTT_HOST});
+    options(yargs) {
+        super.options(yargs);
+
+		yargs.option('host',     {describe:'Specifies MQTT host', default:process.env.MQTT_HOST});
+		yargs.option('password', {describe:'Password for MQTT broker', default:process.env.MQTT_PASSWORD});
+		yargs.option('username', {describe:'User name for MQTT broker', default:process.env.MQTT_USERNAME});
+		yargs.option('port',     {describe:'Port for MQTT', default:process.env.MQTT_PORT});
+
+        yargs.option('textColor',   {describe: 'Text color', default:'red'});
+        yargs.option('emojiSize',   {describe: 'Size of emojis relative to matrix height', default:0.75});
+        yargs.option('fontStyle',   {describe: 'Font style', default:'bold'});
+        yargs.option('fontName',    {describe: 'Font name', default:'Arial'});
+        yargs.option('scrollDelay', {describe: 'Scrolling speed', default:10});
+
+
     }
-
-	getAnimation(name) {
-
-		var animations = {
-			text:    require('../src/text-animation.js'),
-			rain:    require('../src/rain-animation.js'),
-			weather: require('../src/weather-animation.js'),
-			gif:     require('../src/gif-animation.js'),
-			news:    require('../src/news-animation.js')
-		};
-
-		if (animations[name] == undefined)
-			throw new Error(`Animation '${name}' was not found.`);
-
-		return animations[name];
-	}
 
 	runAnimation(name, options) {
 		var Animation = this.getAnimation(name);
@@ -39,61 +36,74 @@ module.exports = class extends MatrixCommand {
 	}
 
 
-	runAnimations() {
-		var os = require('os');
-		var mqtt = require('mqtt');
-		var animationTopic = `rpi/${os.hostname()}/animations`;
+    enqueueAnimations() {
+        this.queue.enqueue(new TextAnimation({...this.argv}));
+    }
 
-		this.debug(`Connecting to host '${this.argv.host}'...`);
-		var client = mqtt.connect(this.argv.host, {username:process.env.MQTT_USERNAME, password:process.env.MQTT_PASSWORD});
 
-		this.mqtt = client;
-		this.mqttTopic = animationTopic;
-
-		client.on('connect', () => {
-			this.debug('Connected to MQTT Broker.');
-			this.debug(`Subscribing to ${animationTopic}...`);
-
-			client.subscribe(animationTopic,  (error) => {
-				if (error) {
-					console.error(`Could not subscribe to topic '${animationTopic}'.`);
-				}
-			});
-		})
+	async start() {
+		await super.start();
 		
-		client.on('message', (topic, message) => {
+		this.debug(`Connecting to host '${this.argv.host}'...`);
+		var mqtt = MQTT.connect(this.argv.host, {username:process.env.MQTT_USERNAME, password:process.env.MQTT_PASSWORD, port:process.env.MQTT_PORT});
 
-			message = message.toString();
+		mqtt.on('connect', () => {
+			this.log(`Connected to MQTT Broker ${this.argv.host}:${this.argv.port}...`);
+		})
+
+		mqtt.subscribe('RSS/#');
+
+		mqtt.on('RSS/:name/title', (topic, message) => {
 
 			this.debug(`Topic ${topic}`);
 			this.debug(`Message ${message}`);
 
 			try {
-				message = JSON.parse(message);
-
-				if (!message.name)
-					throw new Error('Animation name not specified in MQTT payload.');
-
-				this.runAnimation(message.name, message.options);
+				var json = JSON.parse(message);
+				this.queue.enqueue(new TextAnimation({...this.argv, text:json}));
 			}
 			catch(error) {
-				console.error(error);
+				this.log(error);
 			}
 		});
 
-		this.defaultAnimation = {
-			name: 'rain',
-			options: {
-			}
-		};
 
-		this.runAnimation('text', {text:':smiley:', iterations:1});
+	}
+
+	runAnimations() {
+
+		this.debug(`Connecting to host '${this.argv.host}'...`);
+		var mqtt = MQTT.connect(this.argv.host, {username:process.env.MQTT_USERNAME, password:process.env.MQTT_PASSWORD, port:process.env.MQTT_PORT});
+
+		mqtt.on('connect', () => {
+			this.log(`Connected to MQTT Broker ${this.argv.host}:${this.argv.port}...`);
+		})
+
+		mqtt.subscribe('RSS/#');
+
+		mqtt.on('RSS/:name/title', (topic, message) => {
+
+			this.debug(`Topic ${topic}`);
+			this.debug(`Message ${message}`);
+
+			try {
+				var json = JSON.parse(message);
+				this.queue.enqueue(new TextAnimation({...this.argv, text:json}));
+			}
+			catch(error) {
+				this.log(error);
+			}
+		});
+
+		this.enqueueAnimations();
 
         this.queue.on('idle', () => {
-			if (this.defaultAnimation) {
-				this.runAnimation(this.defaultAnimation.name, this.defaultAnimation.options);
-			}
+            this.timer.setTimer(1 * 1000, () => {
+                this.enqueueAnimations();
+            })
         });
+
+
 
 	}
 

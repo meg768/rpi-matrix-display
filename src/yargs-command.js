@@ -6,21 +6,21 @@ module.exports = class Command {
 
         this.command = command;
         this.description = description;
+		this.log = console.log;
         this.debug = () => {};
 
         this.builder = (yargs) => {
             this.options(yargs);
         };
 
-        this.handler = (argv) => {
+        this.handler = async (argv) => {
             try {
-                this.argv = argv;
-                this.debug = typeof argv.debug === 'function' ? argv.debug : (argv.debug ? console.log : () => {});
-                
-                this.run();
+				await this.start();
+                await this.run();
+				await this.stop();
             }
             catch (error) {
-                console.error(error.stack);
+                this.log(error.stack);
                 process.exit(-1);
             }            
         };
@@ -29,11 +29,21 @@ module.exports = class Command {
 
     options(yargs) {
         yargs.usage(`Usage: $0 ${this.command} [options]`);
-        yargs.option('debug', {describe: 'Debug mode', type:'boolean'});
+        yargs.option('debug', {describe: 'Debug mode', type:'boolean', default:process.env.DEBUG == '1'});
     }
 
-    run() {
+	async start() {
+		this.argv = argv;
+		this.log = console.log;
+		this.debug = typeof argv.debug === 'function' ? argv.debug : (argv.debug ? this.log : () => {});
+		
+}
+
+    async run() {
     }
+
+	async stop() {
+	}
 
 };
 
