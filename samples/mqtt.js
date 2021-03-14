@@ -27,50 +27,8 @@ module.exports = class extends MatrixCommand {
 
     }
 
-	runAnimation(name, options) {
-		var Animation = this.getAnimation(name);
-		
-		this.debug(`Displaying animation '${name}' with payload ${JSON.stringify(options)}...`);
-		this.queue.enqueue(new Animation(options));
-		this.mqtt.publish(`${this.mqttTopic}/current`, JSON.stringify({name:name, options: options}));
-	}
-
-
-    enqueueAnimations() {
-        this.queue.enqueue(new TextAnimation({...this.argv}));
-    }
-
-
 	async start() {
 		await super.start();
-		
-		this.debug(`Connecting to host '${this.argv.host}'...`);
-		var mqtt = MQTT.connect(this.argv.host, {username:process.env.MQTT_USERNAME, password:process.env.MQTT_PASSWORD, port:process.env.MQTT_PORT});
-
-		mqtt.on('connect', () => {
-			this.log(`Connected to MQTT Broker ${this.argv.host}:${this.argv.port}...`);
-		})
-
-		mqtt.subscribe('RSS/#');
-
-		mqtt.on('RSS/:name/title', (topic, message) => {
-
-			this.debug(`Topic ${topic}`);
-			this.debug(`Message ${message}`);
-
-			try {
-				var json = JSON.parse(message);
-				this.queue.enqueue(new TextAnimation({...this.argv, text:json}));
-			}
-			catch(error) {
-				this.log(error);
-			}
-		});
-
-
-	}
-
-	runAnimations() {
 
 		this.debug(`Connecting to host '${this.argv.host}'...`);
 		var mqtt = MQTT.connect(this.argv.host, {username:process.env.MQTT_USERNAME, password:process.env.MQTT_PASSWORD, port:process.env.MQTT_PORT});
@@ -95,13 +53,14 @@ module.exports = class extends MatrixCommand {
 			}
 		});
 
-		this.enqueueAnimations();
 
         this.queue.on('idle', () => {
             this.timer.setTimer(1 * 1000, () => {
-                this.enqueueAnimations();
+                this.log(`Idle`);
             })
         });
+
+	}
 
 
 
