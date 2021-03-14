@@ -49,7 +49,7 @@ module.exports = class extends MatrixCommand {
 
 			try {
 				var json = JSON.parse(message);
-				this.queue.enqueue(new TextAnimation({...this.argv, text:json}));
+				this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:json}));
 			}
 			catch(error) {
 				this.log(error);
