@@ -1,7 +1,7 @@
 var MQTT = require('mqtt-ex');
 var MatrixCommand = require('../src/matrix-command.js');
 var TextAnimation = require('../src/text-animation.js');
-
+var Timer = require('yow/timer');
 
 module.exports = class extends MatrixCommand {
 
@@ -31,6 +31,7 @@ module.exports = class extends MatrixCommand {
     }
 
 	async start() {
+		this.timer = new Timer();
 		await super.start();
 
 		this.debug(`Connecting to host '${this.argv.host}'...`);
@@ -40,16 +41,16 @@ module.exports = class extends MatrixCommand {
 			this.log(`Connected to MQTT Broker ${this.argv.host}:${this.argv.port}...`);
 		})
 
-		mqtt.subscribe('RSS/#');
+		mqtt.subscribe('RSS/+/+');
 
-		mqtt.on('RSS/:name/title', (topic, message) => {
+		mqtt.on('RSS/:name/title', (topic, message, args) => {
 
 			this.debug(`Topic ${topic}`);
 			this.debug(`Message ${message}`);
 
 			try {
 				var json = JSON.parse(message);
-				this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:json}));
+				this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:`${args.name} - ${json}`}));
 			}
 			catch(error) {
 				this.log(error);
