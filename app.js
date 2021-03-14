@@ -5,7 +5,7 @@ var path = require('path');
 var args = require('yargs');
 
 require('dotenv').config();
-require('yow/preixConsole')();
+require('yow/prefixConsole')();
 
 
 class App {
