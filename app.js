@@ -7,6 +7,8 @@ var args = require('yargs');
 require('dotenv').config();
 require('yow/prefixConsole')();
 
+console.log(process.env.MQTT_HOST);
+
 
 class App {
 
