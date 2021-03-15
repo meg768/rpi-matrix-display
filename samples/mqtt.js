@@ -57,7 +57,7 @@ module.exports = class extends MatrixCommand {
 		mqtt.on('foo/text', (topic, message, args) => {
 
 			try {
-				this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:`${message}`}));
+				this.queue.enqueue(new TextAnimation({...this.argv, priority:'!', iterations:1, text:`${message}`}));
 			}
 			catch(error) {
 				this.log(error);
