@@ -65,7 +65,7 @@ module.exports = class extends MatrixCommand {
 		});
 
 
-		mqtt.on('RSS/:name/title', (topic, message, args) => {
+		mqtt.on('XRSS/:name/title', (topic, message, args) => {
 
 			try {
 				var json = JSON.parse(message);
