@@ -25,6 +25,7 @@ var loadEmojis = once((folder) => {
 
 				images[name] = fileName;
 				images[code] = fileName;
+				images['0'+ code] = fileName;
 
 				console.log(`${name}=${fileName}`)
 				console.log(`${code}=${fileName}`)
