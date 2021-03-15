@@ -70,6 +70,21 @@ module.exports = class TextAnimation extends Animation  {
 
     }
 
+	translateEmojiText(text) {
+		var chars = text.match(/./ug);
+		var result = [];
+		
+		chars.forEach((char) => {
+			if (char.length == 2 ) {
+				result.push(`:${char.codePointAt(0).toString(16).toUpperCase()}:`);
+			}
+			else
+				result.push(char);
+			
+		});
+	
+		return result.join('');
+	}
 
     parse(text) {
 
@@ -80,16 +95,9 @@ module.exports = class TextAnimation extends Animation  {
             var emojiRegExp = new RegExp(/(\:[\w\-\+]+\:)/g);
             var colorRegExp = new RegExp(/(\{[\w\-\+]+\})/g);
 
-			var replacements = [
-				{emoji:'🙂', text:':grin:'},
-				{emoji:'node', text:':crazy:'}
-			];
-	
-			replacements.forEach((item) => {
-				text = text.replace(item.emoji, item.text);
-			});
+			text = this.translateEmojiText(text);
 
-            var images = [];
+			var images = [];
 
             var generateTextImage = (text) => {
                 var myctx = this.matrix.canvas.getContext('2d');
