@@ -21,7 +21,7 @@ var loadEmojis = once((folder) => {
 
 			if (parts.length == 2) {
 				var name = parts[0].toLowerCase();
-				var code = sprintf('%04X', parseInt(parts[1], 16));
+				var code = sprintf('%05X', parseInt(parts[1], 16));
 
 				images[name] = fileName;
 				images[code] = fileName;
