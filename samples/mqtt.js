@@ -51,7 +51,7 @@ module.exports = class extends MatrixCommand {
 			this.log(`Connected to MQTT Broker ${this.argv.host}:${this.argv.port}...`);
 		})
 
-		mqtt.subscribe('RSS/#');
+		//mqtt.subscribe('RSS/#');
 		mqtt.subscribe('foo/text');
 
 		mqtt.on('foo/text', (topic, message, args) => {
@@ -65,7 +65,7 @@ module.exports = class extends MatrixCommand {
 		});
 
 
-		mqtt.on('XRSS/:name/title', (topic, message, args) => {
+		mqtt.on('RSS/:name/title', (topic, message, args) => {
 
 			try {
 				var json = JSON.parse(message);
