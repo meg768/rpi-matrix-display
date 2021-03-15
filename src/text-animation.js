@@ -61,10 +61,21 @@ module.exports = class TextAnimation extends Animation  {
 
     parse(text) {
 
+
+
         return new Promise((resolve, reject) => {
             var regexp = new RegExp(/(\:[\w\-\+]+\:|\{[\w\-\+]+\})/g);
             var emojiRegExp = new RegExp(/(\:[\w\-\+]+\:)/g);
             var colorRegExp = new RegExp(/(\{[\w\-\+]+\})/g);
+
+			var replacements = [
+				{emoji:'🙂', text:':grin:'},
+				{emoji:'🤪', text:':crazy:'}
+			];
+	
+			replacements.forEach((item) => {
+				text = text.replace(item.emoji, item.text);
+			});
 
             var images = [];
 

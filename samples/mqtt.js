@@ -52,6 +52,18 @@ module.exports = class extends MatrixCommand {
 		})
 
 		mqtt.subscribe('RSS/#');
+		mqtt.subscribe('foo/text');
+
+		mqtt.on('foo/text', (topic, message, args) => {
+
+			try {
+				this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:`${message}`}));
+			}
+			catch(error) {
+				this.log(error);
+			}
+		});
+
 
 		mqtt.on('RSS/:name/title', (topic, message, args) => {
 
@@ -59,7 +71,6 @@ module.exports = class extends MatrixCommand {
 				var json = JSON.parse(message);
 				var text = `${args.name} - ${json}`;
 
-				//this.texts.push(text);
 				this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:`${text}`}));
 			}
 			catch(error) {
