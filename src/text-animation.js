@@ -79,7 +79,7 @@ module.exports = class TextAnimation extends Animation  {
 		var result = [];
 		
 		chars.forEach((char) => {
-			if (char.length == 2 ) {
+			if (char.codePointAt(0) > 1000) {
 				result.push(`:${char.codePointAt(0).toString(16).toUpperCase()}:`);
 			}
 			else
