@@ -91,9 +91,6 @@ module.exports = class TextAnimation extends Animation  {
 	}
 
     parse(text) {
-
-
-
         return new Promise((resolve, reject) => {
             var regexp = new RegExp(/(\:[\w\-\+]+\:|\{[\w\-\+]+\})/g);
             var emojiRegExp = new RegExp(/(\:[\w\-\+]+\:)/g);
