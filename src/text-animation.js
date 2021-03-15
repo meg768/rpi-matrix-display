@@ -17,7 +17,19 @@ var loadEmojis = once((folder) => {
         var components = path.parse(fileName);
 
         if (components.ext == '.png') {
-            images[components.name] = fileName;
+			var parts = components.name.split('_');
+
+			if (parts.length == 2) {
+				var name = parts[0].toLowerCase();
+				var code = parts[1].toUpperCase();
+
+				images[name] = fileName;
+				images[code] = fileName;
+
+			}
+			else {
+				images[components.name] = fileName;
+			}
         }
 
     })
@@ -70,7 +82,7 @@ module.exports = class TextAnimation extends Animation  {
 
 			var replacements = [
 				{emoji:'🙂', text:':grin:'},
-				{emoji:'🤪', text:':crazy:'}
+				{emoji:'node', text:':crazy:'}
 			];
 	
 			replacements.forEach((item) => {

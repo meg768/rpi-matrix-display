@@ -1,32 +1,22 @@
 #!/usr/bin/env node
 
-require('dotenv').config();
-
-var mqtt = require('mqtt');
-var client  = mqtt.connect(process.env.MQTT_HOST, {username:process.env.MQTT_USERNAME, password:process.env.MQTT_PASSWORD});
-
-
-client.on('connect',  () => {
-
-	console.log('Connected!');
-
-	client.subscribe('homey/devices/utomhus/terassen/onoff',  (err) => {
-		console.log('Subscribed!');
-	})
-
-	client.on('message', (topic, message, packet) => {
-		console.log('topic', topic);
-		console.log('message', message.toString());
-		console.log('packet', packet);
-		console.log('value', eval(message.toString()));
+function translateEmojiText(text) {
+	var chars = text.match(/./ug);
+	var result = [];
+	
+	chars.forEach((char) => {
+		if (char.length == 2 ) {
+			result.push(`:${char.codePointAt(0).toString(16).toUpperCase()}:`);
+		}
+		else
+			result.push(char);
+		
 	});
 
-/*
-	client.publish('homey/devices/utomhus/terassen/onoff', 'true');
-	client.end();
-	*/
-})
+	return result.join('');
+}
 
+var text = "Grinning Face 😀 Winking Face 😉 Smirking Face 😏";
 
-
-console.log('Done.');
+console.log(`Text: ${text}`);
+console.log(`Translated text: ${translateEmojiText(text)}`);
