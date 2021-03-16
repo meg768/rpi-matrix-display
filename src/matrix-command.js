@@ -46,7 +46,6 @@ module.exports = class extends YargsCommand {
 		config['led-pwm-dither-bits'] = getValue(process.env.LED_PWM_DITHER_BITS, 0);
 		config['led-no-hardware-pulse'] = getValue(process.env.LED_NO_HARDWARE_PULSE, false);
 		config['led-slowdown-gpio'] = getValue(process.env.LED_SLOWDOWN_GPIO, 1);
-		config['led-pwm-dither-bits'] = getValue(process.env.LED_PWM_DITHER_BITS, 0);
 
 		return config;
     }

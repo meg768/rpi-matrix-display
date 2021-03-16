@@ -2,12 +2,14 @@ var MQTT = require('mqtt-ex');
 var MatrixCommand = require('../src/matrix-command.js');
 var TextAnimation = require('../src/text-animation.js');
 var Timer = require('yow/timer');
+var OS = require("os");
 
 module.exports = class extends MatrixCommand {
 
     constructor(options) {
 		super({command: 'mqtt [options]', description: 'Run matrix MQTT server', ...options}); 
 
+		this.hostname = OS.hostname();
 		this.timer = new Timer();
 		this.texts = [];
 
@@ -29,8 +31,6 @@ module.exports = class extends MatrixCommand {
         yargs.option('fontStyle',   {describe: 'Font style', default:'bold'});
         yargs.option('fontName',    {describe: 'Font name', default:'Arial'});
         yargs.option('scrollDelay', {describe: 'Scrolling speed', default:10});
-
-
     }
 
 	
@@ -45,13 +45,13 @@ module.exports = class extends MatrixCommand {
 		var mqtt = MQTT.connect(this.argv.host, {username:process.env.MQTT_USERNAME, password:process.env.MQTT_PASSWORD, port:process.env.MQTT_PORT});
 
 		mqtt.on('connect', () => {
-			this.displayText(`Connected to MQTT Broker ${this.argv.host}:${this.argv.port}... 🙂`);
+			this.displayText(`Connected to ${this.argv.host}:${this.argv.port}... 🙂`);
 		})
 
 		//mqtt.subscribe('RSS/#');
-		mqtt.subscribe('foo/text');
+		mqtt.subscribe(`Raspberry/${this.hostname}/text`);
 
-		mqtt.on('foo/text', (topic, message, args) => {
+		mqtt.on(`Raspberry/${this.hostname}/text`, (topic, message, args) => {
 
 			try {
 				this.queue.enqueue(new TextAnimation({...this.argv, priority:'!', iterations:1, text:`${message}`}));
