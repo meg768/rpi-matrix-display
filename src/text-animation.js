@@ -46,7 +46,7 @@ var loadEmojis = once((folder) => {
 module.exports = class TextAnimation extends Animation  {
 
     constructor(options) {
-        var {text = 'ABC 123', fontSize = 0.65, fontStyle = 'bold', fontName = 'Arial', textColor = 'auto', scrollDelay = 10, ...options} = options;
+        var {text = 'ABC 123', fontSize = 0.65, iterations = 1, fontStyle = 'bold', fontName = 'Arial', textColor = 'auto', scrollDelay = 10, ...options} = options;
 
         super({...options, name:'TextAnimation'});
 
@@ -59,6 +59,7 @@ module.exports = class TextAnimation extends Animation  {
 
         this.matrix       = new Matrix({mode: 'canvas'});
         this.text         = text;
+        this.iterations   = iterations;
         this.fontSize     = fontSize;
         this.emojiSize    = fontSize * 1.2;
         this.fontStyle    = fontStyle;
