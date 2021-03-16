@@ -84,9 +84,11 @@ module.exports = class extends MatrixCommand {
 		mqtt.on(`Raspberry/${this.hostname}/:animation`, (topic, message, args) => {
 
 			try {
-				var payload = JSON.parse(message);
-				this.debug(`Config ${args.animation}:${JSON.stringify(payload)}`);
-				this.config[args.animation] = JSON.parse(message);
+				if (message != '') {
+					var payload = JSON.parse(message);
+					this.debug(`Config ${args.animation}:${JSON.stringify(payload)}`);
+					this.config[args.animation] = JSON.parse(message);	
+				}
 			}
 			catch(error) {
 				this.log(error);
@@ -96,8 +98,10 @@ module.exports = class extends MatrixCommand {
 		mqtt.on(`Raspberry/${this.hostname}/:animation/animate`, (topic, message, args) => {
 
 			try {
-				var payload = JSON.parse(message);
-				this.runAnimation(args.animation, payload);
+				if (message != '') {
+					var payload = JSON.parse(message);
+					this.runAnimation(args.animation, payload);	
+				}
 			}
 			catch(error) {
 				this.log(error);
