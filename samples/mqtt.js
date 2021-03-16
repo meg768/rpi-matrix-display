@@ -90,7 +90,7 @@ module.exports = class extends MatrixCommand {
 			try {
 				if (message != '') {
 					var payload = JSON.parse(message);
-					this.debug(`Config ${args.animation}:${JSON.stringify(payload)}`);
+					this.log(`Config ${args.animation}:${JSON.stringify(payload)}`);
 					this.config[args.animation] = payload;
 				}
 			}
