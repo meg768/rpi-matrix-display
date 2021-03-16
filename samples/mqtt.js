@@ -10,6 +10,7 @@ module.exports = class extends MatrixCommand {
 		super({command: 'mqtt [options]', description: 'Run matrix MQTT server', ...options}); 
 
 		this.hostname = OS.hostname();
+
 		this.timer = new Timer();
 		this.texts = [];
 		this.config = {};
@@ -78,6 +79,8 @@ module.exports = class extends MatrixCommand {
 			this.log(`Connected to ${this.argv.host}:${this.argv.port}...`);
 		})
 
+		this.debug(`Raspberry/${this.hostname}/:animation`);
+		
 		//mqtt.subscribe('RSS/#');
 		mqtt.subscribe(`Raspberry/${this.hostname}/#`);
 
@@ -87,7 +90,7 @@ module.exports = class extends MatrixCommand {
 				if (message != '') {
 					var payload = JSON.parse(message);
 					this.debug(`Config ${args.animation}:${JSON.stringify(payload)}`);
-					this.config[args.animation] = JSON.parse(message);	
+					this.config[args.animation] = payload;
 				}
 			}
 			catch(error) {
