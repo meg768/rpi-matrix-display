@@ -33,13 +33,10 @@ module.exports = class extends MatrixCommand {
 
     }
 
-	/*
-	enqueueTexts() {
-		this.texts.forEach((text) => {
-			this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:`${text}`}));
-		});
+	
+	displayText(text) {
+		this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:`${text}`}));
 	}
-	*/
 
 	async start() {
 		await super.start();
@@ -48,7 +45,7 @@ module.exports = class extends MatrixCommand {
 		var mqtt = MQTT.connect(this.argv.host, {username:process.env.MQTT_USERNAME, password:process.env.MQTT_PASSWORD, port:process.env.MQTT_PORT});
 
 		mqtt.on('connect', () => {
-			this.log(`Connected to MQTT Broker ${this.argv.host}:${this.argv.port}...`);
+			this.displayText(`Connected to MQTT Broker ${this.argv.host}:${this.argv.port}... 🙂`);
 		})
 
 		//mqtt.subscribe('RSS/#');
