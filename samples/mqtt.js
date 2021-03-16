@@ -55,7 +55,7 @@ module.exports = class extends MatrixCommand {
 		animations['gif']     = GifAnimation;
 		animations['news']    = NewsAnimation;		
 		
-		var Animation = this.animations[name];
+		var Animation = animations[name];
 		var config = this.config[name] || {};
 
 		options = {...config, ...options};
@@ -77,10 +77,11 @@ module.exports = class extends MatrixCommand {
 
 		mqtt.on('connect', () => {
 			this.log(`Connected to ${this.argv.host}:${this.argv.port}...`);
+			this.runAnimation('text', {text:'Foo'});
 		})
 
-		this.debug(`Raspberry/${this.hostname}/:animation`);
-		
+		this.debug(`*************Raspberry/${this.hostname}/:animation`);
+
 		//mqtt.subscribe('RSS/#');
 		mqtt.subscribe(`Raspberry/${this.hostname}/#`);
 
