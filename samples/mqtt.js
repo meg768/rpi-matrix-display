@@ -80,7 +80,7 @@ module.exports = class extends MatrixCommand {
 			this.runAnimation('text', {text:'Foo'});
 		})
 
-		this.debug(`*************Raspberry/${this.hostname}/:animation`);
+		this.log(`*************Raspberry/${this.hostname}/:animation`);
 
 		//mqtt.subscribe('RSS/#');
 		mqtt.subscribe(`Raspberry/${this.hostname}/#`);
