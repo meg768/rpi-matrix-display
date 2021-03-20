@@ -82,7 +82,9 @@ module.exports = class extends MatrixCommand {
 
 		this.log(`*************Raspberry/${this.hostname}/:animation`);
 
-		//mqtt.subscribe('RSS/#');
+		mqtt.subscribe('RSS/#');
+		
+		/*
 		mqtt.subscribe(`Raspberry/${this.hostname}/#`);
 
 		mqtt.on(`Raspberry/${this.hostname}/:animation`, (topic, message, args) => {
@@ -111,6 +113,8 @@ module.exports = class extends MatrixCommand {
 				this.log(error);
 			}
 		});
+
+		*/
 
 
 
