@@ -140,7 +140,7 @@ module.exports = class extends MatrixCommand {
 					if (quote.price != undefined && quote.change != undefined) {
 
 						//let text = sprintf('%s - %.02f (%.01f%%)', args.name, quote.price, quote.change);
-						let text = sprintf('%s - %.01f%%', args.name, quote.price, quote.change);
+						let text = sprintf('%s - %.01f%%', args.name, quote.change);
 						let textColor = quote.change < 0 ? 'red' : 'blue';
 
 						this.runAnimation('text', {...this.argv, iterations:1, text:text, textColor:textColor});
