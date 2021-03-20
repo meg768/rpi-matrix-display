@@ -38,7 +38,7 @@ module.exports = class Command {
 				value = JSON.parse(value);
 	
 			if (typeof defaultValue == 'boolean')
-				value = JSON.parse(value);
+				value = parseInt(value) != 0;			
 	
 			return value != undefined ? value : defaultValue; 
 	
