@@ -12,9 +12,29 @@ module.exports = class extends MatrixCommand {
 		this.hostname = OS.hostname();
 
 		this.timer = new Timer();
+		this.timers = {};
+		this.cache = {};
 		this.texts = [];
 		this.config = {};
 
+	}
+
+	getCache(name) {
+		let cache = this.cache[name];
+
+		if (cache != undefined)
+			return cache;
+
+		return this.cache[name] = {};
+	}
+
+	getTimer(name) {
+		let timer = this.timers[name];
+
+		if (timer != undefined)
+			return timer;
+
+		return this.timers[name] = new Timer();
 	}
 
     options(yargs) {
@@ -36,8 +56,8 @@ module.exports = class extends MatrixCommand {
     }
 
 	
-	displayText(text) {
-		this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:`${text}`}));
+	displayText(text, options = {}) {
+		this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, ...options, text:`${text}`}));
 	}
 
 	runAnimation(name, options) {
@@ -80,9 +100,8 @@ module.exports = class extends MatrixCommand {
 			this.runAnimation('text', {text:'Foo'});
 		})
 
-		this.log(`*************Raspberry/${this.hostname}/:animation`);
-
-		mqtt.subscribe('RSS/#');
+		//mqtt.subscribe('RSS/#');
+		mqtt.subscribe('Yahoo Quotes/#');
 		
 		/*
 		mqtt.subscribe(`Raspberry/${this.hostname}/#`);
@@ -125,6 +144,37 @@ module.exports = class extends MatrixCommand {
 				var text = `${args.name} - ${json}`;
 
 				this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:`${text}`}));
+			}
+			catch(error) {
+				this.log(error);
+			}
+		});
+
+		mqtt.on('Yahoo Quotes/:name/:prop', (topic, message, args) => {
+
+				
+			try {
+
+				if (message == '')
+					return;
+
+				this.debug(`${topic}:${message}`);
+				
+				let json  = JSON.parse(message);
+				let id    = `Yahoo Quotes/${args.name}`; 
+				let quote = this.getCache(id);
+				let timer = this.getTimer(id);
+
+				quote[args.prop] = json;
+
+				timer.setTimer(2000, () => {
+					if (quote.price != undefined && quote.change != undefined) {
+						let text = `${args.name} - ${quote.price} (${quote.change}%)`;
+						this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:`${text}`}));
+	
+					} 
+	
+				});
 			}
 			catch(error) {
 				this.log(error);
