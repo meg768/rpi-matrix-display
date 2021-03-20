@@ -75,6 +75,7 @@ module.exports = class extends YargsCommand {
     }
     
 	async start() {
+		await super.start();
         Matrix.configure(this.argv);
 	}
 
