@@ -88,6 +88,7 @@ module.exports = class extends MatrixCommand {
 	}
 	
 	async start() {
+		console.log(this.argv);
 		await super.start();
 
 		this.config = {};
