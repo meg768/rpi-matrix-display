@@ -39,33 +39,15 @@ module.exports = class extends MatrixCommand {
 	}
 
     options(yargs) {
-/*
-		function getDefaultValue(parameter, defaultValue) {
-
-			let name = parameter.split(/(?=[A-Z])/).join('_').toUpperCase();
-			let value = process.env[name];
-
-			if (typeof defaultValue == 'number')
-				value = parseInt(value);
-
-			if (typeof defaultValue == 'boolean')
-				value = parseInt(value) != 0;			
-
-			return value != undefined ? value : defaultValue; 
-		}
-*/
         super.options(yargs);
 
-		if (process.env.MQTT_PORT == undefined)
-			process.env.MQTT_PORT = 1883;
-
-		yargs.option('host',     {describe:'Specifies MQTT host', default:process.env.MQTT_HOST});
-		yargs.option('password', {describe:'Password for MQTT broker', default:process.env.MQTT_PASSWORD});
-		yargs.option('username', {describe:'User name for MQTT broker', default:process.env.MQTT_USERNAME});
-		yargs.option('port',     {describe:'Port for MQTT', default:process.env.MQTT_PORT });
+		yargs.option('host',     {describe:'Specifies MQTT host', default:this.getDefaultValue('mqttHost')});
+		yargs.option('password', {describe:'Password for MQTT broker', default:this.getDefaultValue('mqttPassword')});
+		yargs.option('username', {describe:'User name for MQTT broker', default:this.getDefaultValue('mqttUsername')});
+		yargs.option('port',     {describe:'Port for MQTT', default:this.getDefaultValue('mqttPort', 1883)});
 
         yargs.option('textColor',   {describe: 'Text color', default:this.getDefaultValue('textColor', 'red')});
-        yargs.option('emojiSize',   {describe: 'Size of emojis relative to matrix height', default:0.75});
+        yargs.option('emojiSize',   {describe: 'Size of emojis relative to matrix height', default:this.getDefaultValue('emojiSize', 0.75)});
         yargs.option('fontStyle',   {describe: 'Font style', default:'bold'});
         yargs.option('fontName',    {describe: 'Font name', default:'Arial'});
         yargs.option('scrollDelay', {describe: 'Scrolling speed', type:'number', default:this.getDefaultValue('scrollDelay', 10)});
