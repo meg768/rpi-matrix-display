@@ -61,45 +61,16 @@ module.exports = class extends MatrixCommand {
 		this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, ...options, text:`${text}`}));
 	}
 
-	runAnimation(name, options) {
-
-		var TextAnimation    = require('../src/text-animation.js');
-		var RainAnimation    = require('../src/rain-animation.js');
-		var NewsAnimation    = require('../src/news-animation.js');
-		var WeatherAnimation = require('../src/weather-animation.js');
-		var GifAnimation     = require('../src/gif-animation.js');
-
-		var animations = {};
-		animations['text']    = TextAnimation;
-		animations['rain']    = RainAnimation;
-		animations['weather'] = WeatherAnimation;
-		animations['gif']     = GifAnimation;
-		animations['news']    = NewsAnimation;		
-		
-		var Animation = animations[name];
-		var config = this.config[name] || {};
-
-		options = {...config, ...options};
-		
-		if (Animation == undefined)
-			throw new Error(`Animation '${name}' was not found.`);
-
-		this.debug(`Displaying animation '${name}' with payload ${JSON.stringify(options)}...`);
-		this.queue.enqueue(new Animation(options));
-	}
-	
 	async start() {
 		console.log(this.argv);
 		await super.start();
-
-		this.config = {};
 
 		this.debug(`Connecting to host '${this.argv.host}'...`);
 		var mqtt = MQTT.connect(this.argv.host, {username:process.env.MQTT_USERNAME, password:process.env.MQTT_PASSWORD, port:process.env.MQTT_PORT});
 
 		mqtt.on('connect', () => {
 			this.log(`Connected to ${this.argv.host}:${this.argv.port}...`);
-			this.runAnimation('text', {text:'Foo'});
+			this.runAnimation('text', {text:'🤪'});
 		})
 
 		//mqtt.subscribe('RSS/#');
@@ -140,7 +111,6 @@ module.exports = class extends MatrixCommand {
 
 
 		mqtt.on('RSS/:name/title', (topic, message, args) => {
-
 			try {
 				var json = JSON.parse(message);
 				var text = `${args.name} - ${json}`;
@@ -153,10 +123,7 @@ module.exports = class extends MatrixCommand {
 		});
 
 		mqtt.on('Yahoo Quotes/:name/:prop', (topic, message, args) => {
-
-				
 			try {
-
 				if (message == '')
 					return;
 
@@ -172,8 +139,10 @@ module.exports = class extends MatrixCommand {
 				timer.setTimer(2000, () => {
 					if (quote.price != undefined && quote.change != undefined) {
 
-						let text = `${args.name} - ${sprintf('%.02f', quote.price)} (${sprintf('%.01f', quote.change)}%)`;
-						this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:`${text}`}));
+						let text = sprintf('%s - %.02f (%.01f%%)', args.name, quote.price, quote.change);
+						let textColor = quote.change < 0 ? 'red' : 'blue';
+
+						this.runAnimation('text', {...this.argv, iterations:1, text:text, textColor:textColor});
 	
 					} 
 	

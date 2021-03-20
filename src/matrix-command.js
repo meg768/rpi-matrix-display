@@ -1,7 +1,12 @@
 
-var Matrix = require('rpi-matrix');
-var AnimationQueue = require('./animation-queue.js');
-var YargsCommand = require('./yargs-command.js');
+var Matrix           = require('rpi-matrix');
+var AnimationQueue   = require('./animation-queue.js');
+var YargsCommand     = require('./yargs-command.js');
+var TextAnimation    = require('../src/text-animation.js');
+var RainAnimation    = require('../src/rain-animation.js');
+var NewsAnimation    = require('../src/news-animation.js');
+var WeatherAnimation = require('../src/weather-animation.js');
+var GifAnimation     = require('../src/gif-animation.js');
 
 
 module.exports = class extends YargsCommand {
@@ -73,6 +78,25 @@ module.exports = class extends YargsCommand {
         args.option('led-slowdown-gpio',       {describe:'Slowdown GPIO. Needed for faster Pis/slower panels', default:defaultConfig['led-slowdown-gpio']});
 
     }
+
+	runAnimation(name, options) {
+
+
+		var animations = {};
+		animations['text']    = TextAnimation;
+		animations['rain']    = RainAnimation;
+		animations['weather'] = WeatherAnimation;
+		animations['gif']     = GifAnimation;
+		animations['news']    = NewsAnimation;		
+		
+		var Animation = animations[name];
+		
+		if (Animation == undefined)
+			throw new Error(`Animation '${name}' was not found.`);
+
+		this.debug(`Displaying animation '${name}' with payload ${JSON.stringify(options)}...`);
+		this.queue.enqueue(new Animation(options));
+	}	
     
 	async start() {
 		await super.start();
