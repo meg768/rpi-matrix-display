@@ -2,6 +2,7 @@ var MQTT = require('mqtt-ex');
 var MatrixCommand = require('../src/matrix-command.js');
 var TextAnimation = require('../src/text-animation.js');
 var Timer = require('yow/timer');
+var sprintf = require('yow/sprintf');
 var OS = require("os");
 
 module.exports = class extends MatrixCommand {
@@ -170,7 +171,8 @@ module.exports = class extends MatrixCommand {
 
 				timer.setTimer(2000, () => {
 					if (quote.price != undefined && quote.change != undefined) {
-						let text = `${args.name} - ${quote.price} (${quote.change}%)`;
+
+						let text = `${args.name} - ${sprintf('%.02f', quote.price)} (${sprintf('%.01f', quote.change)}%)`;
 						this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:`${text}`}));
 	
 					} 
