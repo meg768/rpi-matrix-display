@@ -73,8 +73,8 @@ module.exports = class extends MatrixCommand {
 			this.runAnimation('text', {text:'🤪'});
 		})
 
-		//mqtt.subscribe('RSS/#');
-		mqtt.subscribe('Yahoo Quotes/#');
+		mqtt.subscribe('RSS/+/+');
+		mqtt.subscribe('Yahoo Quotes/+/+');
 		
 		/*
 		mqtt.subscribe(`Raspberry/${this.hostname}/#`);
@@ -115,7 +115,7 @@ module.exports = class extends MatrixCommand {
 				var json = JSON.parse(message);
 				var text = `${args.name} - ${json}`;
 
-				this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, text:`${text}`}));
+				this.runAnimation('text', {...this.argv, iterations:1, text:text});
 			}
 			catch(error) {
 				this.log(error);
