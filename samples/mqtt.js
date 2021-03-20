@@ -70,7 +70,7 @@ module.exports = class extends MatrixCommand {
 			this.runAnimation('text', {text:'🤪'});
 		})
 
-		//mqtt.subscribe('RSS/+/+');
+		mqtt.subscribe('RSS/+/+');
 		mqtt.subscribe('Yahoo Quotes/+/+');
 		
 		/*
