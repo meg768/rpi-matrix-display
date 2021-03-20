@@ -30,16 +30,22 @@ module.exports = class Command {
 
 	getDefaultValue(parameter, defaultValue) {
 
-		let name = parameter.split(/(?=[A-Z])/).join('_').toUpperCase();
-		let value = process.env[name];
-
-		if (typeof defaultValue == 'number')
-			value = parseInt(value);
-
-		if (typeof defaultValue == 'boolean')
-			value = parseInt(value) != 0;			
-
-		return value != undefined ? value : defaultValue; 
+		try {
+			let name = parameter.split(/(?=[A-Z])/).join('_').toUpperCase();
+			let value = process.env[name];
+	
+			if (typeof defaultValue == 'number')
+				value = JSON.parse(value);
+	
+			if (typeof defaultValue == 'boolean')
+				value = JSON.parse(value);
+	
+			return value != undefined ? value : defaultValue; 
+	
+		}
+		catch (error) {
+			return undefined;
+		}
 	}
 
 
