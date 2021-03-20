@@ -39,7 +39,7 @@ module.exports = class extends MatrixCommand {
 	}
 
     options(yargs) {
-
+/*
 		function getDefaultValue(parameter, defaultValue) {
 
 			let name = parameter.split(/(?=[A-Z])/).join('_').toUpperCase();
@@ -53,7 +53,7 @@ module.exports = class extends MatrixCommand {
 
 			return value != undefined ? value : defaultValue; 
 		}
-
+*/
         super.options(yargs);
 
 		if (process.env.MQTT_PORT == undefined)
@@ -64,11 +64,11 @@ module.exports = class extends MatrixCommand {
 		yargs.option('username', {describe:'User name for MQTT broker', default:process.env.MQTT_USERNAME});
 		yargs.option('port',     {describe:'Port for MQTT', default:process.env.MQTT_PORT });
 
-        yargs.option('textColor',   {describe: 'Text color', default:getDefaultValue('textColor', 'red')});
+        yargs.option('textColor',   {describe: 'Text color', default:this.getDefaultValue('textColor', 'red')});
         yargs.option('emojiSize',   {describe: 'Size of emojis relative to matrix height', default:0.75});
         yargs.option('fontStyle',   {describe: 'Font style', default:'bold'});
         yargs.option('fontName',    {describe: 'Font name', default:'Arial'});
-        yargs.option('scrollDelay', {describe: 'Scrolling speed', type:'number', default:getDefaultValue('scrollDelay', 10)});
+        yargs.option('scrollDelay', {describe: 'Scrolling speed', type:'number', default:this.getDefaultValue('scrollDelay', 10)});
     }
 
 	

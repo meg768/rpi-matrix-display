@@ -28,10 +28,24 @@ module.exports = class Command {
         };
     }
 
+	getDefaultValue(parameter, defaultValue) {
+
+		let name = parameter.split(/(?=[A-Z])/).join('_').toUpperCase();
+		let value = process.env[name];
+
+		if (typeof defaultValue == 'number')
+			value = parseInt(value);
+
+		if (typeof defaultValue == 'boolean')
+			value = parseInt(value) != 0;			
+
+		return value != undefined ? value : defaultValue; 
+	}
+
 
     options(yargs) {
         yargs.usage(`Usage: $0 ${this.command} [options]`);
-        yargs.option('debug', {describe: 'Debug mode', type:'boolean', default:process.env.DEBUG == '1'});
+        yargs.option('debug', {describe: 'Debug mode', type:'boolean', default:this.getDefaultValue('debug', false)});
     }
 
 	async start() {
