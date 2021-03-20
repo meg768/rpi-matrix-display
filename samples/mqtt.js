@@ -41,8 +41,16 @@ module.exports = class extends MatrixCommand {
     options(yargs) {
 
 		function getDefaultValue(parameter, defaultValue) {
+
 			let name = parameter.split(/(?=[A-Z])/).join('_').toUpperCase();
 			let value = process.env[name];
+
+			if (typeof defaultValue == 'number')
+				value = parseInt(value);
+
+			if (typeof defaultValue == 'boolean')
+				value = parseInt(value) != 0;			
+
 			return value != undefined ? value : defaultValue; 
 		}
 
