@@ -70,7 +70,7 @@ module.exports = class extends MatrixCommand {
 			this.runAnimation('text', {text:'🤪'});
 		})
 
-		mqtt.subscribe('RSS/+/+');
+		//mqtt.subscribe('RSS/+/+');
 		mqtt.subscribe('Yahoo Quotes/+/+');
 		
 		/*
@@ -153,7 +153,7 @@ module.exports = class extends MatrixCommand {
         this.queue.on('idle', () => {
             this.timer.setTimer(1 * 1000, () => {
                 this.log(`Idle`);
-				this.runAnimation('rain', {});
+				//this.runAnimation('rain', {});
             })
         });
 
