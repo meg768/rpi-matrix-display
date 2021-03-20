@@ -60,7 +60,7 @@ module.exports = class extends MatrixCommand {
         yargs.option('emojiSize',   {describe: 'Size of emojis relative to matrix height', default:0.75});
         yargs.option('fontStyle',   {describe: 'Font style', default:'bold'});
         yargs.option('fontName',    {describe: 'Font name', default:'Arial'});
-        yargs.option('scrollDelay', {describe: 'Scrolling speed', default:getDefaultValue('scrollDelay', 10)});
+        yargs.option('scrollDelay', {describe: 'Scrolling speed', type:'number', default:getDefaultValue('scrollDelay', 10)});
     }
 
 	
