@@ -103,7 +103,7 @@ module.exports = class extends MatrixCommand {
 			}
 		});
 
-		*/
+		
 
 
 
