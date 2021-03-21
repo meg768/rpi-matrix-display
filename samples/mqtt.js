@@ -70,10 +70,8 @@ module.exports = class extends MatrixCommand {
 			this.runAnimation('text', {text:'🤪'});
 		})
 
-		//mqtt.subscribe('RSS/+/+');
-		//mqtt.subscribe('Yahoo Quotes/+/+');
-		
-		
+		mqtt.subscribe('RSS/+/+');
+		mqtt.subscribe('Yahoo Quotes/+/+');		
 		mqtt.subscribe(`Raspberry/${this.hostname}/#`);
 
 		mqtt.on(`Raspberry/${this.hostname}/:animation`, (topic, message, args) => {
@@ -103,9 +101,6 @@ module.exports = class extends MatrixCommand {
 			}
 		});
 
-		
-
-		"Turkisk attack i Syrien – första på 17 månader"
 
 		mqtt.on('RSS/:name/title', (topic, message, args) => {
 			try {
