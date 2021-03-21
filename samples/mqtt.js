@@ -95,7 +95,7 @@ module.exports = class extends MatrixCommand {
 			try {
 				if (message != '') {
 					var payload = JSON.parse(message);
-					this.runAnimation(args.animation, payload);	
+					this.runAnimation(args.animation, {...this.config[args.animation], ...payload});	
 				}
 			}
 			catch(error) {
@@ -105,7 +105,7 @@ module.exports = class extends MatrixCommand {
 
 		
 
-
+		"Turkisk attack i Syrien – första på 17 månader"
 
 		mqtt.on('RSS/:name/title', (topic, message, args) => {
 			try {
