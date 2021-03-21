@@ -104,10 +104,13 @@ module.exports = class extends MatrixCommand {
 
 		mqtt.on('RSS/:name/title', (topic, message, args) => {
 			try {
+				if (message == '')
+					return;
+
 				var json = JSON.parse(message);
 				var text = `${args.name} - ${json}`;
 
-				this.runAnimation('text', {...this.argv, iterations:1, text:text});
+				this.runAnimation('text', {...this.argv, iterations:1, text:text});	
 			}
 			catch(error) {
 				this.log(error);
