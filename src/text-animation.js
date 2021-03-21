@@ -70,21 +70,6 @@ module.exports = class TextAnimation extends Animation  {
 
     }
 
-	translateEmojiText(text) {
-		var chars = text.match(/./ug);
-		var result = [];
-		
-		chars.forEach((char) => {
-			if (char.codePointAt(0) > 1000) {
-				result.push(`:${char.codePointAt(0).toString(16).toUpperCase()}:`);
-			}
-			else
-				result.push(char);
-			
-		});
-	
-		return result.join('');
-	}
 
     parse(text) {
         return new Promise((resolve, reject) => {
@@ -92,10 +77,25 @@ module.exports = class TextAnimation extends Animation  {
             var emojiRegExp = new RegExp(/(\:[\w\-\+]+\:)/g);
             var colorRegExp = new RegExp(/(\{[\w\-\+]+\})/g);
 
-			text = this.translateEmojiText(text);
-
 			var images = [];
 
+			var translateEmojiCodes = (text) => {
+				var chars = text.match(/./ug);
+				var result = [];
+				
+				chars.forEach((char) => {
+					var code = char.codePointAt(0).toString(16).toUpperCase();
+			
+					if (this.emojis[code] != undefined)
+						result.push(`:${code}:`);
+					else
+						result.push(char);
+					
+				});
+			
+				return result.join('');
+			}
+		
             var generateTextImage = (text) => {
                 var myctx = this.matrix.canvas.getContext('2d');
                 var textSize = myctx.measureText(text); 
@@ -194,7 +194,7 @@ module.exports = class TextAnimation extends Animation  {
 
             var promise = Promise.resolve();
 
-            text.split(regexp).forEach((text) => {
+            translateEmojiCodes(text).split(regexp).forEach((text) => {
     
                 promise = promise.then(() => {
                     if (text.match(emojiRegExp)) {
