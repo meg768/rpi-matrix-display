@@ -119,8 +119,8 @@ module.exports = class extends MatrixCommand {
 
 		mqtt.on('Yahoo Quotes/:name/:prop', (topic, message, args) => {
 			try {
-				// Ignore deletions and time changes
-				if (message == '' || args.prop == 'time')
+				// Ignore deletions 
+				if (message == '')
 					return;
 
 				this.debug(`${topic}:${message}`);
@@ -132,26 +132,29 @@ module.exports = class extends MatrixCommand {
 
 				quote[args.prop] = json;
 
-				timer.setTimer(2000, () => {
-					let {price, change, market, type} = quote;
-
-					if (price != undefined && change != undefined && market != undefined && type != undefined) {
-
-						let text = '';
-
-						change = sprintf('%s%.01f%%', change < 0 ? '' : '+', change);
-						price  = sprintf('%.02f', price);
-
-						if (type == 'INDEX')
-							text = sprintf('%s %s%%', args.name, change);
-						else 
-							text = sprintf('%s %s (%s%%)', args.name, price, change);
-
-						this.runAnimation('text', {...this.argv, iterations:1, text:text, textColor:quote.change < 0 ? 'red' : 'blue'});
+				if (args.prop == 'change') {
+					timer.setTimer(2000, () => {
+						let {price, change, market, type} = quote;
 	
-					} 
+						if (price != undefined && change != undefined && market != undefined && type != undefined) {
 	
-				});
+							let text = '';
+	
+							change = sprintf('%s%.01f%%', change < 0 ? '' : '+', change);
+							price  = sprintf('%.02f', price);
+	
+							if (type == 'INDEX')
+								text = sprintf('%s %s', args.name, change);
+							else 
+								text = sprintf('%s %s (%s)', args.name, price, change);
+	
+							this.runAnimation('text', {...this.argv, iterations:1, text:text, textColor:quote.change < 0 ? 'red' : 'blue'});
+		
+						} 
+		
+					});
+	
+				}
 			}
 			catch(error) {
 				this.log(error);
