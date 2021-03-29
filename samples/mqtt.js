@@ -132,7 +132,7 @@ module.exports = class extends MatrixCommand {
 
 				quote[args.prop] = json;
 
-				if (args.prop == 'change') {
+				if (args.prop == 'change' || args.prop == 'market') {
 					timer.setTimer(2000, () => {
 						let {price, change, market, type} = quote;
 	
