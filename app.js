@@ -13,8 +13,6 @@ class App {
 	constructor() {
 		this.fileName = __filename;
 	}
-
-
 	
 	loadSamples() {
 		var folder = path.join(__dirname, './samples');
