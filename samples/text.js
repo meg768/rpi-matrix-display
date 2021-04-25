@@ -30,7 +30,16 @@ module.exports = class extends MatrixCommand {
     }
 
 
+	async run() {
+        this.enqueueAnimations();
 
+        this.queue.on('idle', () => {
+            this.timer.setTimer(1 * 1000, () => {
+                this.enqueueAnimations();
+            })
+        });
+    }
+	/*
 	runAnimations() {
         this.enqueueAnimations();
 
@@ -41,6 +50,7 @@ module.exports = class extends MatrixCommand {
         });
 
 	}
+	*/
 
 
 
