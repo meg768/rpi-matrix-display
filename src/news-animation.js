@@ -30,6 +30,8 @@ module.exports = class extends TextAnimation {
 
         return new Promise((resolve, reject) => {
 
+			this.debug(`Fetching ${feed.url}...`);
+			
             this.parser.parseURL(feed.url).then((result) => {
 
                 result.items.forEach((item) => {
