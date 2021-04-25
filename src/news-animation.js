@@ -75,7 +75,12 @@ module.exports = class extends TextAnimation {
 
 	async getText() {
 		Promise.all(this.feeds.map(async (feed) => {
-			await this.fetch(feed);
+			try {
+				await this.fetch(feed);
+			}
+			catch(error) {
+				this.debug(`Failed to fetch from feed ${feed.url}`);
+			}
 		})); 
 
 		var now = new Date();
