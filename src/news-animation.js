@@ -18,7 +18,7 @@ module.exports = class extends TextAnimation {
             {url:'http://www.svd.se/?service=rss',                                   name: 'SvD',            description:'Svenska Dagbladet'},
             {url:'https://feeds.expressen.se/nyheter',                               name: 'Expressen',      description:'Expressen'},
             //{url:'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',           name: 'New York Times', description:'New York Times'},
-            {url:'https://rss.aftonbladet.se/rss2/small/pages/sections/senastenyttx', name: 'Aftonbladet',    description:'Aftonbladet'}
+            {url:'https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt', name: 'Aftonbladet',    description:'Aftonbladet'}
         ];
 
 		
