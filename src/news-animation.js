@@ -54,7 +54,7 @@ module.exports = class extends TextAnimation {
 				await this.fetch(feed);
 			}
 			catch(error) {
-				this.log(`Failed to fetch from feed ${feed.url}`);
+				this.debug(`Failed to fetch from feed ${feed.url}`);
 			}
 		})); 
 
