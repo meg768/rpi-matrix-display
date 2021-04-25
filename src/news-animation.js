@@ -117,6 +117,7 @@ module.exports = class extends TextAnimation {
 			text.push(`${item.description} - ${item.title}`);
 		});
 
+		this.debug(text);
 		return text;
 	}
 
