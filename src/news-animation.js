@@ -45,7 +45,7 @@ module.exports = class extends TextAnimation {
 			this.cache[key]  = news;
 		});
 
-		this.debug(thgis.cache);
+		this.debug(this.cache);
 
 
 /*
