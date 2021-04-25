@@ -46,32 +46,6 @@ module.exports = class extends TextAnimation {
 		});
 
 
-
-/*
-        return new Promise((resolve, reject) => {
-
-
-            this.parser.parseURL(feed.url).then((result) => {
-
-                result.items.forEach((item) => {
-                    var key = sprintf('%s:%s', item.isoDate, item.title);
-                    var news = {};
-                    news.timestamp   = new Date(item.isoDate);
-                    news.name        = feed.name;
-                    news.description = feed.description;
-                    news.title       = item.title;
-
-                    this.cache[key]  = news;
-                });
- 
-                resolve();
-            })
-            .catch((error) => {
-                reject(error);
-
-            })
-        });
-		*/
     }
 
 	async getText() {
@@ -80,7 +54,7 @@ module.exports = class extends TextAnimation {
 				await this.fetch(feed);
 			}
 			catch(error) {
-				this.debug(`Failed to fetch from feed ${feed.url}`);
+				this.log(`Failed to fetch from feed ${feed.url}`);
 			}
 		})); 
 
@@ -122,69 +96,6 @@ module.exports = class extends TextAnimation {
 		return text;
 	}
 
-
-    getTextOld() {
-
-        return new Promise((resolve, reject) => {
-
-            var promises = [];
-            
-            this.feeds.forEach((feed) => {
-
-				
-				try {
-					var promise = this.fetch(feed);
-
-				}
-				catch(error) {
-
-				}
-                promises.push(this.fetch(feed));
-            });
-
-            Promise.all(promises).then(() => {
-
-                var now = new Date();
-                var someTimeAgo = new Date(now.getTime() -  1 * 24 * 60 * 60 * 1000);
-                var news = [];        
-                var cache = {};
-        
-                // Remove old entries
-                for (var key in this.cache) {
-                    var item = this.cache[key];
-        
-                    if (item.timestamp.getTime() >= someTimeAgo.getTime())
-                        cache[key] = item;
-                }
-
-                for (var key in cache) {
-                    news.push(cache[key]);
-                }
-
-                // Sort by date DESC
-                news.sort((a, b) => {
-                    return b.timestamp.getTime() - a.timestamp.getTime();
-                });
-
-                // Select top 5
-                news = news.slice(0, 5);
-
-                // Save cache for later
-                this.cache = cache;
-
-                var text = [];
-
-                news.forEach((item) => {
-                    text.push(`${item.description} - ${item.title}`);
-                });
-
-                resolve(text);
-            })
-            .catch((error) => {
-                reject(error);
-            })
-        });
-    }
 
 
     
