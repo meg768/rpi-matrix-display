@@ -45,7 +45,6 @@ module.exports = class extends TextAnimation {
 			this.cache[key]  = news;
 		});
 
-		this.debug(this.cache);
 
 
 /*
@@ -76,7 +75,7 @@ module.exports = class extends TextAnimation {
     }
 
 	async getText() {
-		Promise.all(this.feeds.map(async (feed) => {
+		await Promise.all(this.feeds.map(async (feed) => {
 			try {
 				await this.fetch(feed);
 			}
