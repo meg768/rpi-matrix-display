@@ -26,7 +26,7 @@ module.exports = class extends MatrixCommand {
 
 
 
-	runAnimations() {
+	async run() {
         this.enqueueAnimations();
 
         this.queue.on('idle', () => {

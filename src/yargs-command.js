@@ -55,9 +55,8 @@ module.exports = class Command {
     }
 
 	async start() {
-		this.debug = typeof this.argv.debug === 'function' ? this.argv.debug : (this.argv.debug ? this.log : () => {});
-		
-}
+		this.debug = typeof this.argv.debug === 'function' ? this.argv.debug : (this.argv.debug ? this.log : () => {});	
+	}
 
     async run() {
     }
