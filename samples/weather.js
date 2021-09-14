@@ -21,7 +21,7 @@ module.exports = class WeatherCommand extends MatrixCommand {
         this.queue.enqueue(new WeatherAnimation({...this.argv}));
     }
 
-	runAnimations() {
+	async run() {
         this.enqueueAnimations();
 
         this.queue.on('idle', () => {
