@@ -42,7 +42,7 @@ module.exports = class extends MatrixCommand {
         if (this.argv.rain) {
             this.animations.push(() => {
                 var Animation = require('../src/rain-animation.js');
-                return new Animation({...this.argv, duration:30000});                
+                return new Animation({...this.argv, duration:5 * 60 * 1000});                
             });
         }
 
