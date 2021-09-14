@@ -15,10 +15,10 @@ module.exports = class extends MatrixCommand {
 
     options(args) {
         super.options(args);
-		args.option('news', {describe:'Display RSS news feeds', type: 'boolean', default:true});
-		args.option('gif', {describe:'Display random gif animations', type: 'boolean', default:true});
-		args.option('weather', {describe:'Display weather information', type: 'boolean', default:true});
-        args.option('rain', {describe:'Display matrix rain', type: 'boolean', default:true});
+		args.option('news', {describe:'Display RSS news feeds', type: 'boolean', default:false});
+		args.option('gif', {describe:'Display random gif animations', type: 'boolean', default:false});
+		args.option('weather', {describe:'Display weather information', type: 'boolean', default:false});
+        args.option('rain', {describe:'Display matrix rain', type: 'boolean', default:false});
         
         args.option('scrollDelay', {describe:'Text scroll delay in ms', type: 'number', default:10});
         args.option('textColor', {describe:'Text color', default:'red'});
