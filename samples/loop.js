@@ -62,7 +62,7 @@ module.exports = class extends MatrixCommand {
 
     }
     
-	runAnimations() {
+	async run() {
         this.setupAnimations();
         this.runNextAnimation();
 
