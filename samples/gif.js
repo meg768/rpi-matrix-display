@@ -16,7 +16,7 @@ module.exports = class GifCommand extends MatrixCommand {
 		args.option('iterations', { describe: 'Number of iterations to animate'});
 	}
 
-	runAnimations() {
+	async run() {
 
 		var argv = {...this.argv, debug:this.debug};
 

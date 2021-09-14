@@ -39,18 +39,6 @@ module.exports = class extends MatrixCommand {
             })
         });
     }
-	/*
-	runAnimations() {
-        this.enqueueAnimations();
-
-        this.queue.on('idle', () => {
-            this.timer.setTimer(1 * 1000, () => {
-                this.enqueueAnimations();
-            })
-        });
-
-	}
-	*/
 
 
 
