@@ -56,7 +56,7 @@ module.exports = class extends MatrixCommand {
         if (this.argv.gif) {
             this.animations.push(() => {
                 var Animation = require('../src/gif-animation.js');
-                return new Animation({...this.argv, duration:30000});                
+                return new Animation({...this.argv, duration:5 * 60 * 1000});                
             });
         }
 
