@@ -48,6 +48,7 @@ module.exports = class extends TextAnimation {
 
 
 	async getText() {
+        console.log('GET TEXT', this.text);
         return this.text;
 
 	}
