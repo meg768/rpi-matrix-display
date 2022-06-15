@@ -28,13 +28,8 @@ module.exports = class extends TextAnimation {
             rss = new RSS(feeds, options);
 
             rss.on('rss', (name, rss) => {
-                console.log(rss);
-                this.text.unshift(`${name} - ${rss.title}`);
+                this.text.push(`${name} - ${rss.title}`);
 
-                // Select top 5
-                this.text = this.text.slice(0, 5);
-
-                console.log(this.text);
 
             });
 
