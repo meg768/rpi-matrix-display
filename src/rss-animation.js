@@ -25,6 +25,14 @@ module.exports = class extends TextAnimation {
 
     }
 
+    async start() {
+        await super.start();
+
+    }
+
+    async stop() {
+        await super.stop()
+    }
 
     async fetch(feed) {
         var sprintf = require('yow/sprintf');
