@@ -1,5 +1,6 @@
 var TextAnimation = require('./text-animation.js');
-let RSS = null;
+let RSS = require('./rss-parser-events');
+let rss = null;
 
 module.exports = class extends TextAnimation {
 
@@ -12,18 +13,22 @@ module.exports = class extends TextAnimation {
 
     async start() {
 
-        if (RSS == null) {
+        if (rss == null) {
 
             let feeds = {
                 "BBC": "http://feeds.bbci.co.uk/news/uk/rss.xml#",
                 "CNN": "http://rss.cnn.com/rss/edition.rss",
                 "Google": "https://news.google.com/rss?gl=US&ceid=US:en&hl=en-US"
-            };            
+            };
 
-            let RssParserEvents = require('./rss-parser-events');
-            RSS = new RssParserEvents(feeds);
+            let options = {
+                interval:1
+            }
 
-            RSS.on('rss', (name, rss) => {
+            rss = new RSS(feeds, options);
+
+            rss.on('rss', (name, rss) => {
+                console.log(rss);
                 this.text.unshift(`${name} - ${rss.title}`);
 
                 // Select top 5
