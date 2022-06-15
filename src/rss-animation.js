@@ -29,8 +29,8 @@ module.exports = class extends TextAnimation {
 
             rss.on('rss', (name, rss) => {
                 let text = `${name} - ${rss.title}`;
-                this.text.push(text);
-                console.log(this.text);
+                console.log(text);
+                this.text = ['AB', 'CD'];
 
 
             });
@@ -50,7 +50,7 @@ module.exports = class extends TextAnimation {
 
 
 	async getText() {
-        return (['A', 'B']);
+//        return (['A', 'B']);
         console.log('GET TEXT', this.text);
         return this.text;
 
