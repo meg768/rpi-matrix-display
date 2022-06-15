@@ -57,7 +57,7 @@ module.exports = class extends TextAnimation {
     }
 
 	async getText() {
-        return "HEllo";
+        return ["HEllo", 'goo'];
 		await Promise.all(this.feeds.map(async (feed) => {
 			try {
 				await this.fetch(feed);
