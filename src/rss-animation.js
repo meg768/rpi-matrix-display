@@ -28,6 +28,7 @@ module.exports = class extends TextAnimation {
             rss = new RSS(feeds, options);
 
             rss.on('rss', (name, rss) => {
+                console.log('GOT RSS', rss);
                 this.text.push(`${name} - ${rss.title}`);
 
 
