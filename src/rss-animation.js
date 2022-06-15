@@ -13,11 +13,12 @@ module.exports = class extends TextAnimation {
     async start() {
 
         if (RSS == null) {
-            let feeds = [
-                {'SDS':'https://www.sydsvenskan.se/rss.xml?latest'},
-                {'DI':'https://digital.di.se/rss'},
-                {'SvD':'http://www.svd.se/?service=rss'},
-            ];
+
+            let feeds = {
+                "BBC": "http://feeds.bbci.co.uk/news/uk/rss.xml#",
+                "CNN": "http://rss.cnn.com/rss/edition.rss",
+                "Google": "https://news.google.com/rss?gl=US&ceid=US:en&hl=en-US"
+            };            
 
             let RssParserEvents = require('./rss-parser-events');
             RSS = new RssParserEvents(feeds);
