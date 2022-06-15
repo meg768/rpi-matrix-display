@@ -1,5 +1,4 @@
 
-var NewsAnimation = require('../src/rss-animation.js');
 var MatrixCommand = require('../src/matrix-command.js');
 
 module.exports = class extends MatrixCommand {
@@ -21,7 +20,8 @@ module.exports = class extends MatrixCommand {
     }
 
     enqueueAnimations() {
-        this.queue.enqueue(new NewsAnimation({...this.argv}));
+        var Animation = require('../src/rss-animation.js');
+        this.queue.enqueue(new Animation({...this.argv}));
     }
 
 
