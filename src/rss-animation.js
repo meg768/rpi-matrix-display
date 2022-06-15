@@ -6,10 +6,12 @@ module.exports = class extends TextAnimation {
     constructor(options = {}) {
         super(options);
 
+        this.text = [];
+
     }
 
     async start() {
-/*
+
         if (RSS == null) {
             let feeds = [
                 {'SDS':'https://www.sydsvenskan.se/rss.xml?latest'},
@@ -21,12 +23,16 @@ module.exports = class extends TextAnimation {
             RSS = new RssParserEvents(feeds);
 
             RSS.on('rss', (name, rss) => {
+                this.text.unshift(`${name} - ${rss.title}`);
+
+                // Select top 5
+                this.text = this.text.slice(0, 5);
 
             });
 
     
         }
-*/
+
 
         await super.start();
 
@@ -39,7 +45,7 @@ module.exports = class extends TextAnimation {
 
 
 	async getText() {
-        return ["HEllo", 'goo'];
+        return this.text;
 
 	}
 
