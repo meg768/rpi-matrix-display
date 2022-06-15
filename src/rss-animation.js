@@ -34,7 +34,7 @@ module.exports = class extends TextAnimation {
                 // Select top 5
                 this.text = this.text.slice(0, 5);
 
-                console.log(text);
+                console.log(this.text);
 
             });
 
