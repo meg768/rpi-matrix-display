@@ -44,7 +44,7 @@ module.exports = class extends MatrixCommand {
 
         this.rss.on('rss', (name, rss) => {
             let text = `${name} - ${rss.title}`;
-            this.debug(`${rss.isoDate}:${text}`);
+            this.debug(`${rss.isoDate.toLocaleString()}:${text}`);
 
             this.queue.enqueue(new TextAnimation({...this.argv, text:text, debug:false}));            
         });
