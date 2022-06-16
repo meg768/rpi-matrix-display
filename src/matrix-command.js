@@ -2,12 +2,14 @@
 var Matrix           = require('rpi-matrix');
 var AnimationQueue   = require('./animation-queue.js');
 var YargsCommand     = require('./yargs-command.js');
+/*
+
 var TextAnimation    = require('../src/text-animation.js');
 var RainAnimation    = require('../src/rain-animation.js');
 var NewsAnimation    = require('../src/news-animation.js');
 var WeatherAnimation = require('../src/weather-animation.js');
 var GifAnimation     = require('../src/gif-animation.js');
-
+*/
 
 module.exports = class extends YargsCommand {
 

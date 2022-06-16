@@ -4,11 +4,8 @@ var MatrixCommand = require('../src/matrix-command.js');
 module.exports = class extends MatrixCommand {
 
     constructor(options) {
-        var Timer = require('yow/timer');
-
         super({...options, command:'rss [options]', description:'Display RSS'});
 
-        this.timer = new Timer();
     }
 
  
@@ -19,21 +16,33 @@ module.exports = class extends MatrixCommand {
         args.option('fontSize', {describe:'Size of font relative to height of matrix', default:0.65});
     }
 
-    enqueueAnimations() {
-        var Animation = require('../src/rss-animation.js');
-        this.queue.enqueue(new Animation({...this.argv}));
+
+    async start() {
+        let RSS = require('../src/rss-parser-events');
+        let TextAnimation = require('../src/text-animation');
+
+        let feeds = {
+            "BBC": "http://feeds.bbci.co.uk/news/uk/rss.xml#",
+            "CNN": "http://rss.cnn.com/rss/edition.rss",
+            "Google": "https://news.google.com/rss?gl=US&ceid=US:en&hl=en-US"
+        };
+    
+        let options = {
+            interval:1
+        };
+
+        this.rss = new RSS(feeds, options);
+
+        rss.on('rss', (name, rss) => {
+            let text = `${name} - ${rss.title}`;
+            console.log(text);
+
+            this.queue.enqueue(new TextAnimation({...this.argv, text:text}));            
+        });
+
     }
 
-
-
 	async run() {
-        this.enqueueAnimations();
-
-        this.queue.on('idle', () => {
-            this.timer.setTimer(5  * 1000, () => {
-                this.enqueueAnimations();
-            })
-        });
 
 	}
 
