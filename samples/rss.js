@@ -18,6 +18,9 @@ module.exports = class extends MatrixCommand {
 
 
     async start() {
+
+        await super.start();
+
         let RSS = require('../src/rss-parser-events');
         let TextAnimation = require('../src/text-animation');
 
