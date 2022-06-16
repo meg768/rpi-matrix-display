@@ -33,7 +33,7 @@ module.exports = class extends MatrixCommand {
 
         this.rss = new RSS(feeds, options);
 
-        rss.on('rss', (name, rss) => {
+        this.rss.on('rss', (name, rss) => {
             let text = `${name} - ${rss.title}`;
             console.log(text);
 
