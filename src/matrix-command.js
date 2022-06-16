@@ -78,7 +78,7 @@ module.exports = class extends YargsCommand {
         args.option('led-slowdown-gpio',       {describe:'Slowdown GPIO. Needed for faster Pis/slower panels', default:defaultConfig['led-slowdown-gpio']});
 
     }
-
+/*
 	runAnimation(name, options) {
 
 
@@ -97,7 +97,7 @@ module.exports = class extends YargsCommand {
 		this.debug(`Displaying animation '${name}' with payload ${JSON.stringify(options)}...`);
 		this.queue.enqueue(new Animation(options));
 	}	
-    
+  */  
 	async start() {
 		await super.start();
         Matrix.configure({...this.argv, debug:0});
