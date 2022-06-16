@@ -27,7 +27,13 @@ module.exports = class extends MatrixCommand {
         let feeds = {
             "BBC": "http://feeds.bbci.co.uk/news/uk/rss.xml#",
             "CNN": "http://rss.cnn.com/rss/edition.rss",
-            "Google": "https://news.google.com/rss?gl=US&ceid=US:en&hl=en-US"
+            "Google": "https://news.google.com/rss?gl=US&ceid=US:en&hl=en-US",
+            "SDS" :'https://www.sydsvenskan.se/rss.xml?latest',
+            "Di": 'https://digital.di.se/rss',
+            "SvD": 'http://www.svd.se/?service=rss',
+            "Experssen":'https://feeds.expressen.se/nyheter',
+            "Aftonbladet": 'https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt'
+
         };
     
         let options = {
