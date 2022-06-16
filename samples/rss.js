@@ -13,7 +13,7 @@ module.exports = class extends MatrixCommand {
         super.options(args);
         args.option('textColor', {describe:'Text color', default:'red'});
         args.option('scrollDelay', {describe:'Scrolling speed', default:10});
-        args.option('fontSize', {describe:'Size of font relative to height of matrix', default:0.5});
+        args.option('fontSize', {describe:'Size of font relative to height of matrix', default:0.55});
     }
 
 
