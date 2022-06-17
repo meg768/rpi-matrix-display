@@ -1,0 +1,21 @@
+{
+    "matrix": {
+        "led-gpio-mapping":"regular",
+        "led-rows": 32,
+        "led-cols": 32,
+        "led-chain": 1,
+        "led-parallel":1,
+        "led-multiplexing":0,
+        "led-pwm-bits":11,
+        "led-brightness":100,
+        "led-scan-mode":0,
+        "led-row-addr-type":0, 
+        "led-show-refresh":false,
+        "led-inverse":false,
+        "led-rgb-sequence":"RGB",
+        "led-pwm-lsb-nanoseconds": 130,
+        "led-pwm-dither-bits": 0,
+        "led-no-hardware-pulse":false,
+        "led-slowdown-gpio":1
+    }
+}

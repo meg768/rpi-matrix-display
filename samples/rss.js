@@ -21,7 +21,7 @@ module.exports = class extends MatrixCommand {
 
         await super.start();
 
-        let RSS = require('../src/rss-parser-events');
+        let RSS = require('../src/rss-events');
         let TextAnimation = require('../src/text-animation');
 
         let feeds = {

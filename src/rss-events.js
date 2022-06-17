@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
-var Parser = require('rss-parser');
 var Events = require('events');
 
-module.exports = class RssParserEvents extends Events {
+module.exports = class RssEvents extends Events {
 
 	constructor() {
 
@@ -55,6 +54,7 @@ module.exports = class RssParserEvents extends Events {
 
 		this.debug(`Fetching ${url}...`);
 
+        let Parser = require('rss-parser');
 		let parser = new Parser();
 		let result = await parser.parseURL(url);
 
