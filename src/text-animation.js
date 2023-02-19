@@ -84,7 +84,7 @@ module.exports = class TextAnimation extends Animation  {
 
 			var translateEmojiCodes = (text) => {
 
-                console.log(`Translating emolig `);
+                console.log(`Translating translateEmojiCodes `);
 
                 var chars = text.match(/./ug);
 				var result = [];
@@ -207,6 +207,7 @@ module.exports = class TextAnimation extends Animation  {
 
             translateEmojiCodes(text).split(regexp).forEach((text) => {
     
+                console.log(`xxxxxx ${text}`);
                 promise = promise.then(() => {
                     if (text.match(emojiRegExp)) {
                         return parseEmoji(text);
