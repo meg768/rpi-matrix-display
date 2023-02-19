@@ -15,11 +15,6 @@ module.exports = class extends MatrixCommand {
         args.option('port', {describe:'Port', default:4000});
     }
 
-    async start() {
-		await super.start();
-
-        this.setupServer();
-    }
 
     setupServer() {
         var bodyParser = require('body-parser');
@@ -118,9 +113,10 @@ module.exports = class extends MatrixCommand {
 		this.queue.enqueue(new Animation(options));
 	}
 
+    
+	async run() {
 
-	runAnimations() {
-		var TextAnimation    = require('../src/text-animation.js');
+        var TextAnimation    = require('../src/text-animation.js');
 		var RainAnimation    = require('../src/rain-animation.js');
 		var NewsAnimation    = require('../src/news-animation.js');
 		var WeatherAnimation = require('../src/weather-animation.js');
