@@ -162,6 +162,8 @@ module.exports = class TextAnimation extends Animation  {
                 var name  = text.replace(/:/g, '');
                 var emoji = this.emojis[name];
 
+                this.debug(`ksajdfklajsdf ${text}  ${emoji}`);
+
                 if (emoji == undefined)
                     return parseText(text);
 

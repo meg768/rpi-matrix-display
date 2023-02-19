@@ -25,39 +25,6 @@ module.exports = class extends MatrixCommand {
         app.use(bodyParser.urlencoded({ limit: '50mb', extended: false}));
         app.use(bodyParser.json({limit: '50mb'}));
 
-/*
-		app.post(`/animate/:animation`, (request, response) => {
-			try {
-				this.runAnimation(request.params.animation, {...request.query, ...request.body});
-				response.status(200).json({status:'OK'});    
-			}
-			catch(error) {
-				response.status(401).json({error:error.message});    
-			}
-		});           
-
-		app.get(`/animate/:animation`, (request, response) => {
-			try {
-				this.runAnimation(request.params.animation, {...request.query, ...request.body});
-				response.status(200).json({status:'OK'});    
-			}
-			catch(error) {
-				response.status(401).json({error:error.message});    
-			}
-		});           
-*/
-        /*
-        app.post(`/text`, (request, response) => {
-			try {
-                this.debug({...request.query, ...request.body});
-				this.runAnimation('text', {...request.query, ...request.body});
-				response.status(200).json({status:'OK'});    
-			}
-			catch(error) {
-				response.status(401).json({error:error.message});    
-			}
-		});           
-*/
         app.post(`/:animation`, (request, response) => {
 			try {
                 this.debug({...request.query, ...request.body});
