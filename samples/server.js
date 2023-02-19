@@ -53,6 +53,7 @@ module.exports = class extends MatrixCommand {
 
         app.post(`/text`, (request, response) => {
 			try {
+                this.debug({...request.query, ...request.body});
 				this.runAnimation('text', {...request.query, ...request.body});
 				response.status(200).json({status:'OK'});    
 			}
