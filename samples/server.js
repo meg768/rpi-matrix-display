@@ -12,7 +12,7 @@ module.exports = class extends MatrixCommand {
 
     options(args) {
         super.options(args);
-        args.option('port', {describe:'Port', default:4000});
+        args.option('port', {describe:'Port', default:80});
     }
 
 
@@ -50,6 +50,17 @@ module.exports = class extends MatrixCommand {
 			try {
                 this.debug({...request.query, ...request.body});
 				this.runAnimation('text', {...request.query, ...request.body});
+				response.status(200).json({status:'OK'});    
+			}
+			catch(error) {
+				response.status(401).json({error:error.message});    
+			}
+		});           
+
+        app.post(`/:animation`, (request, response) => {
+			try {
+                this.debug({...request.query, ...request.body});
+				this.runAnimation(request.params.animation, {...request.query, ...request.body});
 				response.status(200).json({status:'OK'});    
 			}
 			catch(error) {
@@ -138,7 +149,7 @@ module.exports = class extends MatrixCommand {
 		};
 
         this.setupServer();
-		this.runAnimation('text', {text:':smiley:', iterations:1});
+		this.runAnimation('text', {text:'A :smiley: ', iterations:1});
 
         this.queue.on('idle', () => {
 			if (this.defaultAnimation) {
