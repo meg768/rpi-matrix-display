@@ -24,6 +24,7 @@ module.exports = class extends MatrixCommand {
         app.use(bodyParser.urlencoded({ limit: '50mb', extended: false}));
         app.use(bodyParser.json({limit: '50mb'}));
 
+
 		app.post(`/animate/:animation`, (request, response) => {
 			try {
 				this.runAnimation(request.params.animation, {...request.query, ...request.body});
@@ -43,6 +44,17 @@ module.exports = class extends MatrixCommand {
 				response.status(401).json({error:error.message});    
 			}
 		});           
+
+        app.post(`/text`, (request, response) => {
+			try {
+				this.runAnimation('text', {...request.query, ...request.body});
+				response.status(200).json({status:'OK'});    
+			}
+			catch(error) {
+				response.status(401).json({error:error.message});    
+			}
+		});           
+
 
 		io.on('connection', (socket) => {
 			this.debug('A socket connected.');
@@ -65,8 +77,24 @@ module.exports = class extends MatrixCommand {
 
 			});
 
+			socket.on('text', (payload, callback) => {
+
+				callback = typeof callback == "function" ? callback : () => {};
+
+				try {
+					this.runAnimation('text', payload);
+					callback({status:'OK'});
+				}
+				catch(error) {
+					callback({error:error.message});
+				}
+
+			});
+
+
 		});
 
+        this.debug(`Setting up server on port ${this.argv.port}.`);
 
         server.listen(this.argv.port);
 
