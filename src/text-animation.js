@@ -23,8 +23,8 @@ var loadEmojis = once((folder) => {
 				var name = parts[0].toLowerCase();
 				var code = parts[1].toUpperCase();
 
-				images[name] = fileName;
-				images[code] = fileName;
+				images[name] = name;
+				images[code] = code;
 			}
 			else {
 				images[components.name] = fileName;
@@ -78,6 +78,8 @@ module.exports = class TextAnimation extends Animation  {
             var colorRegExp = new RegExp(/(\{[\w\-\+]+\})/g);
 
 			var images = [];
+
+            this.debug(`Parsing text ${text}`);
 
 			var translateEmojiCodes = (text) => {
 				var chars = text.match(/./ug);
