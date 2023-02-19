@@ -27,7 +27,6 @@ module.exports = class extends MatrixCommand {
 
         app.post(`/:animation`, (request, response) => {
 			try {
-                this.debug({...request.query, ...request.body});
 				this.runAnimation(request.params.animation, {...request.query, ...request.body});
 				response.status(200).json({status:'OK'});    
 			}
@@ -118,7 +117,7 @@ module.exports = class extends MatrixCommand {
 
         this.setupServer();
 		this.runAnimation('text', {text:'Server started 🤪...', iterations:1});
-
+return;
         this.queue.on('idle', () => {
 			if (this.defaultAnimation) {
 				this.runAnimation(this.defaultAnimation.name, this.defaultAnimation.options);
