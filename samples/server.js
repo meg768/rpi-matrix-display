@@ -15,6 +15,12 @@ module.exports = class extends MatrixCommand {
         args.option('port', {describe:'Port', default:4000});
     }
 
+    async start() {
+		await super.start();
+
+        this.setupServer();
+    }
+
     setupServer() {
         var bodyParser = require('body-parser');
 		var app = require('express')();
