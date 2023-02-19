@@ -45,7 +45,7 @@ module.exports = class extends MatrixCommand {
 				response.status(401).json({error:error.message});    
 			}
 		});           
-
+/*
         app.post(`/text`, (request, response) => {
 			try {
                 this.debug({...request.query, ...request.body});
@@ -56,7 +56,7 @@ module.exports = class extends MatrixCommand {
 				response.status(401).json({error:error.message});    
 			}
 		});           
-
+*/
         app.post(`/:animation`, (request, response) => {
 			try {
                 this.debug({...request.query, ...request.body});
