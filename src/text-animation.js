@@ -98,6 +98,7 @@ module.exports = class TextAnimation extends Animation  {
 						result.push(char);
 					
 				});
+                console.log(`Translating emolig ${result.join('')}`);
 			
 				return result.join('');
 			}
