@@ -119,12 +119,13 @@ module.exports = class extends MatrixCommand {
         this.setupServer();
 		this.runAnimation('text', {text:'Server started 🤪...', iterations:1});
 
-        
+        /*
         this.queue.on('idle', () => {
 			if (this.defaultAnimation) {
 				this.runAnimation(this.defaultAnimation.name, this.defaultAnimation.options);
 			}
         });
+        */
 
 	}
 
