@@ -91,7 +91,9 @@ module.exports = class TextAnimation extends Animation  {
 				
 				chars.forEach((char) => {
 					var code = char.codePointAt(0).toString(16).toUpperCase();
-			
+
+                    console.log(`CODE ${code}`);
+
 					if (this.emojis[code] != undefined)
 						result.push(`:${code}:`);
 					else
