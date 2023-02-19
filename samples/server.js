@@ -111,6 +111,7 @@ module.exports = class extends MatrixCommand {
 
 		this.defaultAnimation = {
 			name: 'rain',
+            priority: 'low',
 			options: {
 			}
 		};
