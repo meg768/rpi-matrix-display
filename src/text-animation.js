@@ -80,10 +80,13 @@ module.exports = class TextAnimation extends Animation  {
 
 			var images = [];
 
-            this.debug(`Parsing text ${text}`);
+            console.log(`Parsing text ${text}`);
 
 			var translateEmojiCodes = (text) => {
-				var chars = text.match(/./ug);
+
+                console.log(`Translating emolig `);
+
+                var chars = text.match(/./ug);
 				var result = [];
 				
 				chars.forEach((char) => {
