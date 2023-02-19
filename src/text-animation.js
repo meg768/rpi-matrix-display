@@ -23,8 +23,8 @@ var loadEmojis = once((folder) => {
 				var name = parts[0].toLowerCase();
 				var code = parts[1].toUpperCase();
 
-				images[name] = name;
-				images[code] = code;
+				images[name] = fileName;
+				images[code] = fileName;
 			}
 			else {
 				images[components.name] = fileName;
