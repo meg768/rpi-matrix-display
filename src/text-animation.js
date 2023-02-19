@@ -33,6 +33,7 @@ var loadEmojis = once((folder) => {
 
     })
 
+    console.log(images);
     return images;
 
 });
