@@ -33,7 +33,6 @@ var loadEmojis = once((folder) => {
 
     })
 
-    console.log(images);
     return images;
 
 });
@@ -80,11 +79,8 @@ module.exports = class TextAnimation extends Animation  {
 
 			var images = [];
 
-            console.log(`Parsing text ${text}`);
-
 			var translateEmojiCodes = (text) => {
 
-                console.log(`Translating translateEmojiCodes `);
 
                 var chars = text.match(/./ug);
 				var result = [];
@@ -92,7 +88,6 @@ module.exports = class TextAnimation extends Animation  {
 				chars.forEach((char) => {
 					var code = char.codePointAt(0).toString(16).toUpperCase();
 
-                    console.log(`CODE ${code}`);
 
 					if (this.emojis[code] != undefined)
 						result.push(`:${code}:`);
@@ -100,8 +95,8 @@ module.exports = class TextAnimation extends Animation  {
 						result.push(char);
 					
 				});
-                console.log(`Translating emolig ${result.join('')}`);
-			
+
+                
 				return result.join('');
 			}
 		
@@ -207,7 +202,6 @@ module.exports = class TextAnimation extends Animation  {
 
             translateEmojiCodes(text).split(regexp).forEach((text) => {
     
-                console.log(`xxxxxx ${text}`);
                 promise = promise.then(() => {
                     if (text.match(emojiRegExp)) {
                         return parseEmoji(text);
