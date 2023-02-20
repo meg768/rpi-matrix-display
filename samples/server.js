@@ -36,26 +36,23 @@ module.exports = class extends MatrixCommand {
 		});           
 
 
+        app.get(`/:animation`, (request, response) => {
+			try {
+				this.runAnimation(request.params.animation, {...request.query, ...request.body});
+				response.status(200).json({status:'OK'});    
+			}
+			catch(error) {
+				response.status(401).json({error:error.message});    
+			}
+		});  
+
+
 		io.on('connection', (socket) => {
 			this.debug('A socket connected.');
 
 			socket.on('disconnect', () => {
 				this.debug('A socket disconnected.');
 			});	
-
-			socket.on('animate', (animation, payload, callback) => {
-
-				callback = typeof callback == "function" ? callback : () => {};
-
-				try {
-					this.runAnimation(animation, payload);
-					callback({status:'OK'});
-				}
-				catch(error) {
-					callback({error:error.message});
-				}
-
-			});
 
 			socket.on('text', (payload, callback) => {
 
