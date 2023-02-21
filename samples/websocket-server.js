@@ -28,8 +28,21 @@ module.exports = class extends MatrixCommand {
             ws.on('error', console.error);
           
             ws.on('message', (data) => {
+                var json = undefined;
                 var text = data.toString();
-                this.debug(text);
+
+                try {
+                    json = JSON.parse(text);
+                }
+                catch {                    
+                }
+
+                if (json != undefined) {
+                    this.debug(JSON.stringify(json, null, 4));
+                }
+                else {
+                    this.debug(text);
+                }
 
             });
 
