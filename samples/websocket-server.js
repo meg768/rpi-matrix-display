@@ -22,7 +22,9 @@ module.exports = class extends MatrixCommand {
 
         this.debug(`Setting up WebSocket server on port ${this.argv.port}.`);
 
-        wss.on('connection', function connection(ws) {
+        wss.on('connection', (ws) => {
+            this.debug(`Client connected`);
+
             ws.on('error', console.error);
           
             ws.on('message', (data) => {
@@ -30,9 +32,8 @@ module.exports = class extends MatrixCommand {
                 this.debug(text);
 
             });
-        }
-//            ws.send('something');
 
+        });
         
 	}
 	
