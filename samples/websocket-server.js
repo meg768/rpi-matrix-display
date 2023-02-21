@@ -25,12 +25,14 @@ module.exports = class extends MatrixCommand {
         wss.on('connection', function connection(ws) {
             ws.on('error', console.error);
           
-            ws.on('message', function message(data) {
-              console.log('received: %s', data);
+            ws.on('message', (data) => {
+                var text = data.toString();
+                this.debug(text);
+
             });
-          
+        }
 //            ws.send('something');
-          });
+
         
 	}
 	
