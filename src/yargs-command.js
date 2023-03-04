@@ -27,7 +27,7 @@ module.exports = class Command {
             }            
         };
     }
-
+/*
 	getDefaultValue(parameter, defaultValue) {
 
 		try {
@@ -49,7 +49,7 @@ module.exports = class Command {
 			return undefined;
 		}
 	}
-
+*/
 
     options(yargs) {
         yargs.usage(`Usage: $0 ${this.command} [options]`);
