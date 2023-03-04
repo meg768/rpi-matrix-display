@@ -35,7 +35,7 @@ module.exports = class Command {
 			let value = process.env[name];
 	
             console.log(name, value);
-            
+
 			if (typeof defaultValue == 'number')
 				value = JSON.parse(value);
 	
@@ -53,7 +53,8 @@ module.exports = class Command {
 
     options(yargs) {
         yargs.usage(`Usage: $0 ${this.command} [options]`);
-        yargs.option('debug', {describe: 'Debug mode', type:'boolean', default:this.getDefaultValue('debug', false)});
+//        yargs.option('debug', {describe: 'Debug mode', type:'boolean', default:this.getDefaultValue('debug', false)});
+        yargs.option('debug', {describe: 'Debug mode', type:'boolean', default:false});
     }
 
 	async start() {
