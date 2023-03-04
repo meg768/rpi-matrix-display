@@ -1,32 +1,19 @@
-
 var RainAnimation = require('../src/rain-animation.js');
 var MatrixCommand = require('../src/matrix-command.js');
 
 module.exports = class RainCommand extends MatrixCommand {
+	constructor(options) {
+		super({ command: 'rain [options]', description: 'Fill matrix with rain', ...options });
+	}
 
-    constructor(options) {
-		super({command: 'rain [options]', description:'Fill matrix with rain', ...options});
-    }
-
-    options(args) {
+	options(args) {
 		super.options(args);
-		args.option('duration',   {describe: 'Animate for a specified time (ms)', default:30000});
-		args.option('iterations', {describe: 'Number of iterations to animate'});
-
+		args.option('duration', { describe: 'Animate for a specified time (ms)', default: 30000 });
+		args.option('iterations', { describe: 'Number of iterations to animate' });
 	}
 
 	async run() {
-
-//        console.log(this.argv);
-
-		var animation = new RainAnimation({...this.argv});		
+		var animation = new RainAnimation({ ...this.argv });
 		return animation.run();
 	}
-
-
 };
-
-
-
-
-
