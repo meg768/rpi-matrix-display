@@ -33,6 +33,13 @@ module.exports = class extends MatrixCommand {
     }
 
     setupAnimations() {
+        if (!this.argv.news && !this.argv.rain && !this.argv.weather && !this.argv.gif) {
+            this.argv.news = true;
+            this.argv.weather = true;
+            this.argv.gif = true;
+            this.argv.rain = true;
+        }
+
         if (this.argv.news) {
             this.animations.push(() => {
                 var Animation = require('../src/news-animation.js');
