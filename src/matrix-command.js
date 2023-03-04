@@ -38,7 +38,7 @@ module.exports = class extends YargsCommand {
 
 		config['led-gpio-mapping'] = getValue(process.env.LED_GPIO_MAPPING, 'regular');
 		config['led-rows'] = getValue(process.env.LED_ROWS, 32);
-		config['led-cols'] = getValue(process.env.LED_COLS, 32);
+		config['led-cols'] = getValue(process.env.LED_COLS, 64);
 		config['led-chain'] = getValue(process.env.LED_CHAIN, 1);
 		config['led-parallel'] = getValue(process.env.LED_PARALLEL, 1);
 		config['led-multiplexing'] = getValue(process.env.LED_MULTIPLEXING, 0);
