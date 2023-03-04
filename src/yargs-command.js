@@ -34,6 +34,8 @@ module.exports = class Command {
 			let name = parameter.split(/(?=[A-Z])/).join('_').toUpperCase();
 			let value = process.env[name];
 	
+            console.log(name, value);
+            
 			if (typeof defaultValue == 'number')
 				value = JSON.parse(value);
 	
