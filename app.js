@@ -36,7 +36,7 @@ class App {
 		})
 
 	}
-
+/*
 	getDefaultConfig() {
 		var config = {};
 
@@ -74,7 +74,7 @@ class App {
 
 		return config;
 	}
-
+*/
 	run() {
 
 		try {
