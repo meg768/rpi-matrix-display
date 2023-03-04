@@ -28,7 +28,6 @@ module.exports = class extends MatrixCommand {
     runNextAnimation() {
         var animation = this.animations[this.animationIndex];
         this.animationIndex = (this.animationIndex + 1) % this.animations.length; 
-        console.log(animation);
         return this.queue.enqueue(animation());
     }
 
