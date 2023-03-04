@@ -51,7 +51,7 @@ module.exports = class Command {
 
     options(yargs) {
         yargs.usage(`Usage: $0 ${this.command} [options]`);
-//        yargs.option('debug', {describe: 'Debug mode', type:'boolean', default:this.getDefaultValue('debug', false)});
+        yargs.option('debug', {describe: 'Debug mode', type:'boolean', default:this.getDefaultValue('debug', false)});
     }
 
 	async start() {
