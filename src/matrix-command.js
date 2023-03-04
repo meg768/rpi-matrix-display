@@ -62,9 +62,6 @@ module.exports = class extends YargsCommand {
 
         var defaultConfig = this.getDefaultConfig();
 
-        console.log(process.env);
-        console.log(defaultConfig);
-
         args.option('led-cols',                {describe:'Number of columns for display', default:defaultConfig['led-cols']});
         args.option('led-rows',                {describe:'Number of rows for display', default:defaultConfig['led-rows']});
         args.option('led-chain',               {describe:'Number of daisy-chained panels', default:defaultConfig['led-chain']});
