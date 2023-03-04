@@ -27,7 +27,14 @@ module.exports = class extends Events {
 		this.iterations      = toValidNumber(iterations);
 		this.renderFrequency = toValidNumber(renderFrequency);
 		this.renderTime      = undefined;
-		this.debug           = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
+        this.debug           = () => {};
+
+        if (typeof debug == 'function')
+            this.debug = debug;
+        else if (debug != undefined && debug)
+            debug = console.log;
+
+		//this.debug           = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
 	}
 
     render() {
