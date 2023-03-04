@@ -27,33 +27,10 @@ module.exports = class Command {
             }            
         };
     }
-/*
-	getDefaultValue(parameter, defaultValue) {
 
-		try {
-			let name = parameter.split(/(?=[A-Z])/).join('_').toUpperCase();
-			let value = process.env[name];
-	
-            console.log(name, value);
-
-			if (typeof defaultValue == 'number')
-				value = JSON.parse(value);
-	
-			if (typeof defaultValue == 'boolean')
-				value = parseInt(value) != 0;			
-	
-			return value != undefined ? value : defaultValue; 
-	
-		}
-		catch (error) {
-			return undefined;
-		}
-	}
-*/
 
     options(yargs) {
         yargs.usage(`Usage: $0 ${this.command} [options]`);
-//        yargs.option('debug', {describe: 'Debug mode', type:'boolean', default:this.getDefaultValue('debug', false)});
         yargs.option('debug', {describe: 'Debug mode', type:'boolean', default:false});
     }
 
