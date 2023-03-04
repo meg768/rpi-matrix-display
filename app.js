@@ -7,7 +7,7 @@ var args = require('yargs');
 require('dotenv').config();
 require('yow/prefixConsole')();
 
-
+console.log(process.env);
 class App {
 
 	constructor() {
