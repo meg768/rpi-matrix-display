@@ -18,7 +18,7 @@ module.exports = class extends Events {
 
 		super();
 	
-		var {debug, renderFrequency = undefined, name = 'Noname', priority = 'normal', iterations = undefined, duration = undefined} = options;
+		var {debug = false, renderFrequency = undefined, name = 'Noname', priority = 'normal', iterations = undefined, duration = undefined} = options;
 	
 		this.name            = name;
 		this.priority        = priority;
