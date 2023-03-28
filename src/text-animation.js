@@ -5,7 +5,7 @@ var sprintf = require('yow/sprintf');
 var Matrix = require('rpi-matrix');
 var Animation = require('./animation.js');
 
-var loadEmojis = once((folder) => {
+var loadEmojis = once((folder) => { 
 
     // https://emojipedia.org/apple/
 
