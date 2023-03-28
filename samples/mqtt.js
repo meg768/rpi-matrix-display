@@ -63,7 +63,7 @@ module.exports = class extends MatrixCommand {
 		await super.start();
 
 		this.debug(`Connecting to host '${this.argv.host}'...`);
-		var mqtt = MQTT.connect(this.argv.host, {username:process.env.MQTT_USERNAME, password:process.env.MQTT_PASSWORD, port:process.env.MQTT_PORT});
+		var mqtt = MQTT.connect(this.argv.host, {username:this.argv.username, password:this.argv.password, port:this.argv.port});
 
 		mqtt.on('connect', () => {
 			this.log(`Connected to ${this.argv.host}:${this.argv.port}...`);
