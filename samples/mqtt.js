@@ -42,7 +42,7 @@ module.exports = class extends MatrixCommand {
         super.options(yargs);
 
 		yargs.option('host',     {describe:'Specifies MQTT host', default:process.env.MQTT_HOST});
-		yargs.option('password', {describe:'Password for MQTT broker', default:tprocess.env.MQTT_PASSWORD});
+		yargs.option('password', {describe:'Password for MQTT broker', default:process.env.MQTT_PASSWORD});
 		yargs.option('username', {describe:'User name for MQTT broker', default:process.env.MQTT_USERNAME});
 		yargs.option('port',     {describe:'Port for MQTT', default:this.process.env.MQTT_PORT});
 		yargs.option('topic',    {describe:'Topic for MQTT', default:this.process.env.MQTT_TOPIC});
