@@ -82,7 +82,14 @@ module.exports = class extends MatrixCommand {
                 if (message == '')
                     return
 
-                payload = JSON.parse(message)
+                payload = {text:message}
+
+                try {
+                    payload = JSON.parse(message)
+                }
+                catch(error) {
+                    
+                }
 
                 this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, ...payload}));
 
