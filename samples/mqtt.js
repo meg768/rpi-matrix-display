@@ -77,12 +77,14 @@ module.exports = class extends MatrixCommand {
 
 		mqtt.on('message', (topic, message) => {
 			try {
-                message = message.toString()
+                message = message.toString();
 
-				if (message == '')
-					return;
+                if (message == '')
+                    return
 
-                    this.displayText(message);
+                payload = JSON.parse(message)
+
+                this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, ...payload}));
 
             }
 			catch(error) {
