@@ -44,8 +44,8 @@ module.exports = class extends MatrixCommand {
 		yargs.option('host',     {describe:'Specifies MQTT host', default:process.env.MQTT_HOST});
 		yargs.option('password', {describe:'Password for MQTT broker', default:process.env.MQTT_PASSWORD});
 		yargs.option('username', {describe:'User name for MQTT broker', default:process.env.MQTT_USERNAME});
-		yargs.option('port',     {describe:'Port for MQTT', default:this.process.env.MQTT_PORT});
-		yargs.option('topic',    {describe:'Topic for MQTT', default:this.process.env.MQTT_TOPIC});
+		yargs.option('port',     {describe:'Port for MQTT', default:process.env.MQTT_PORT});
+		yargs.option('topic',    {describe:'Topic for MQTT', default:process.env.MQTT_TOPIC});
 
         yargs.option('textColor',   {describe: 'Text color', default:this.getDefaultValue('textColor', 'red')});
         yargs.option('emojiSize',   {describe: 'Size of emojis relative to matrix height', default:this.getDefaultValue('emojiSize', 0.75)});
