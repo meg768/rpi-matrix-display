@@ -79,6 +79,8 @@ module.exports = class extends MatrixCommand {
 			try {
                 message = message.toString();
 
+                this.log(`MQTT message: '${message}'`);
+                
                 if (message == '')
                     return
 
