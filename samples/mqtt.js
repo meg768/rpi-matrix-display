@@ -80,7 +80,7 @@ module.exports = class extends MatrixCommand {
                 message = message.toString();
 
                 this.log(`MQTT message: '${message}'`);
-                
+
                 if (message == '')
                     return
 
@@ -88,6 +88,11 @@ module.exports = class extends MatrixCommand {
 
                 try {
                     payload = JSON.parse(message)
+
+                    let {font, color} = payload;
+
+                    // Make some translations
+                    payload.textColor = color == undefined ? payload.textColor : color;
                 }
                 catch(error) {
 
