@@ -6,6 +6,9 @@ var Matrix = require('rpi-matrix');
 var Animation = require('./animation.js');
 
 var loadEmojis = once((folder) => {
+
+    // https://emojipedia.org/apple/
+
     var fs = require('fs');
     var path = require('path');
 
