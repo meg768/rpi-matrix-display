@@ -1,4 +1,4 @@
-var MQTT = require('mqtt-ex');
+var MQTT = require('mqtt');
 var MatrixCommand = require('../src/matrix-command.js');
 var TextAnimation = require('../src/text-animation.js');
 var Timer = require('yow/timer');
@@ -41,10 +41,11 @@ module.exports = class extends MatrixCommand {
     options(yargs) {
         super.options(yargs);
 
-		yargs.option('host',     {describe:'Specifies MQTT host', default:this.getDefaultValue('mqttHost')});
-		yargs.option('password', {describe:'Password for MQTT broker', default:this.getDefaultValue('mqttPassword')});
-		yargs.option('username', {describe:'User name for MQTT broker', default:this.getDefaultValue('mqttUsername')});
-		yargs.option('port',     {describe:'Port for MQTT', default:this.getDefaultValue('mqttPort', 1883)});
+		yargs.option('host',     {describe:'Specifies MQTT host', default:process.env.MQTT_HOST});
+		yargs.option('password', {describe:'Password for MQTT broker', default:tprocess.env.MQTT_PASSWORD});
+		yargs.option('username', {describe:'User name for MQTT broker', default:process.env.MQTT_USERNAME});
+		yargs.option('port',     {describe:'Port for MQTT', default:this.process.env.MQTT_PORT});
+		yargs.option('topic',    {describe:'Topic for MQTT', default:this.process.env.MQTT_TOPIC});
 
         yargs.option('textColor',   {describe: 'Text color', default:this.getDefaultValue('textColor', 'red')});
         yargs.option('emojiSize',   {describe: 'Size of emojis relative to matrix height', default:this.getDefaultValue('emojiSize', 0.75)});
@@ -69,96 +70,25 @@ module.exports = class extends MatrixCommand {
 			this.runAnimation('text', {text:'🤪'});
 		})
 
-		mqtt.subscribe('RSS/+/+');
-		mqtt.subscribe('Yahoo Quotes/+/+');		
-		mqtt.subscribe(`Raspberry/${this.hostname}/#`);
+		mqtt.subscribe(this.argv.topic, (error) => {
 
-		mqtt.on(`Raspberry/${this.hostname}/:animation`, (topic, message, args) => {
+        });
 
+
+		mqtt.on('message', (topic, message) => {
 			try {
-				if (message != '') {
-					var payload = JSON.parse(message);
-					this.log(`Config ${args.animation}:${JSON.stringify(payload)}`);
-					this.config[args.animation] = payload;
-				}
-			}
-			catch(error) {
-				this.log(error);
-			}
-		});
+                message = message.toString()
 
-		mqtt.on(`Raspberry/${this.hostname}/:animation/animate`, (topic, message, args) => {
-
-			try {
-				if (message != '') {
-					var payload = JSON.parse(message);
-					this.runAnimation(args.animation, {...this.config[args.animation], ...payload});	
-				}
-			}
-			catch(error) {
-				this.log(error);
-			}
-		});
-
-
-		mqtt.on('RSS/:name/title', (topic, message, args) => {
-			try {
 				if (message == '')
 					return;
 
-				var json = JSON.parse(message);
-				var text = `${args.name} - ${json}`;
-
-				this.runAnimation('text', {...this.argv, iterations:1, text:text});	
+				this.runAnimation('text', {...this.argv, iterations:1, text:message});	
 			}
 			catch(error) {
 				this.log(error);
 			}
 		});
 
-		mqtt.on('Yahoo Quotes/:name/:prop', (topic, message, args) => {
-			try {
-				// Ignore deletions 
-				if (message == '')
-					return;
-
-				this.debug(`${topic}:${message}`);
-				
-				let json  = JSON.parse(message);
-				let id    = `Yahoo Quotes/${args.name}`; 
-				let quote = this.getCache(id);
-				let timer = this.getTimer(id);
-
-				quote[args.prop] = json;
-
-				if (args.prop == 'change' || args.prop == 'market') {
-					timer.setTimer(2000, () => {
-						let {price, change, market, type} = quote;
-	
-						if (price != undefined && change != undefined && market != undefined && type != undefined) {
-	
-							let text = '';
-	
-							change = sprintf('%s%.01f%%', change < 0 ? '' : '+', change);
-							price  = sprintf('%.02f', price);
-	
-							if (type == 'INDEX')
-								text = sprintf('%s %s', args.name, change);
-							else 
-								text = sprintf('%s %s (%s)', args.name, price, change);
-	
-							this.runAnimation('text', {...this.argv, iterations:1, text:text, textColor:quote.change < 0 ? 'red' : 'blue'});
-		
-						} 
-		
-					});
-	
-				}
-			}
-			catch(error) {
-				this.log(error);
-			}
-		});
 
 
         this.queue.on('idle', () => {
