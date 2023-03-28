@@ -47,11 +47,11 @@ module.exports = class extends MatrixCommand {
 		yargs.option('port',     {describe:'Port for MQTT', default:process.env.MQTT_PORT});
 		yargs.option('topic',    {describe:'Topic for MQTT', default:process.env.MQTT_TOPIC});
 
-        yargs.option('textColor',   {describe: 'Text color', default:this.getDefaultValue('textColor', 'red')});
-        yargs.option('emojiSize',   {describe: 'Size of emojis relative to matrix height', default:this.getDefaultValue('emojiSize', 0.75)});
+        yargs.option('textColor',   {describe: 'Text color', default:'red'});
+        yargs.option('emojiSize',   {describe: 'Size of emojis relative to matrix height', default:0.75});
         yargs.option('fontStyle',   {describe: 'Font style', default:'bold'});
         yargs.option('fontName',    {describe: 'Font name', default:'Arial'});
-        yargs.option('scrollDelay', {describe: 'Scrolling speed', type:'number', default:this.getDefaultValue('scrollDelay', 10)});
+        yargs.option('scrollDelay', {describe: 'Scrolling speed', type:'number', default:10});
     }
 
 	
