@@ -46,7 +46,7 @@ function translateEmojiText(text) {
 	var result = [];
 	
 	chars.forEach((char) => {
-		var code = char.codePointAt(0).toString(16).toUpperCase();
+		var code = char.codePointAt(1).toString(16).toUpperCase();
 
 		if (emojis[code] != undefined)
 			result.push(`:${code}:`);
