@@ -75,4 +75,4 @@ const codePoints = Array.from(facepalm)
   .map((hex) => "\\u{" + hex + "}");
 console.log(codePoints);
 
-["\u{1f926}", "\u{1f3fc}", "\u{200d}", "\u{2642}", "\u{fe0f}"]
+//["\u{1f926}", "\u{1f3fc}", "\u{200d}", "\u{2642}", "\u{fe0f}"]
