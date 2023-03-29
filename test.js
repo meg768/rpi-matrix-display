@@ -61,5 +61,7 @@ function translateEmojiText(text) {
 var text = "Grinning Face 😀 Winking Face 😉 Smirking Face 😏";
 var text = "A 😀 B 😉 C 😏 :grinning-face-with-smiling-eyes:";
 var text = "A – B :grinning-face-with-smiling-eyes:";
+var text = "A ☁️ B";
+
 console.log(`Text: ${text}`);
 console.log(`Translated text: ${translateEmojiText(text)}`);
