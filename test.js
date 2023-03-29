@@ -69,7 +69,7 @@ console.log(`Translated text: ${translateEmojiText(text)}`);
 
 
 
-const facepalm = "😊"; //"🤦🏼‍♂️";
+let facepalm = "😊"; //"🤦🏼‍♂️";
 facepalm = "🌧"
 
 const codePoints = Array.from(facepalm)
