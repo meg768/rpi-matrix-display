@@ -70,6 +70,8 @@ console.log(`Translated text: ${translateEmojiText(text)}`);
 
 
 const facepalm = "😊"; //"🤦🏼‍♂️";
+facepalm = "🌧"
+
 const codePoints = Array.from(facepalm)
   .map((v) => v.codePointAt(0).toString(16))
   .map((hex) => "\\u{" + hex + "}");
