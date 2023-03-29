@@ -66,3 +66,13 @@ var text = "A ☁️ B";
 
 console.log(`Text: ${text}`);
 console.log(`Translated text: ${translateEmojiText(text)}`);
+
+
+
+const facepalm = "🤦🏼‍♂️";
+const codePoints = Array.from(facepalm)
+  .map((v) => v.codePointAt(0).toString(16))
+  .map((hex) => "\\u{" + hex + "}");
+console.log(codePoints);
+
+["\u{1f926}", "\u{1f3fc}", "\u{200d}", "\u{2642}", "\u{fe0f}"]
