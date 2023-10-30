@@ -1,41 +1,28 @@
 var MQTT = require('mqtt');
 var MatrixCommand = require('../src/matrix-command.js');
-var TextAnimation = require('../src/text-animation.js');
 var Timer = require('yow/timer');
-var sprintf = require('yow/sprintf');
 var OS = require("os");
+
+var TextAnimation    = require('../src/text-animation.js');
+var RainAnimation    = require('../src/rain-animation.js');
+var NewsAnimation    = require('../src/news-animation.js');
+var WeatherAnimation = require('../src/weather-animation.js');
+var GifAnimation     = require('../src/gif-animation.js');
 
 module.exports = class extends MatrixCommand {
 
     constructor(options) {
 		super({command: 'mqtt [options]', description: 'Run matrix MQTT server', ...options}); 
 
-		this.hostname = OS.hostname();
+        this.animations = {};
+		this.animations['text']    = TextAnimation;
+		this.animations['rain']    = RainAnimation;
+		this.animations['weather'] = WeatherAnimation;
+		this.animations['gif']     = GifAnimation;
+		this.animations['news']    = NewsAnimation;
 
-		this.timer = new Timer();
-		this.timers = {};
-		this.cache = {};
-		this.texts = [];
-		this.config = {};
+        
 
-	}
-
-	getCache(name) {
-		let cache = this.cache[name];
-
-		if (cache != undefined)
-			return cache;
-
-		return this.cache[name] = {};
-	}
-
-	getTimer(name) {
-		let timer = this.timers[name];
-
-		if (timer != undefined)
-			return timer;
-
-		return this.timers[name] = new Timer();
 	}
 
     options(yargs) {
@@ -58,6 +45,17 @@ module.exports = class extends MatrixCommand {
 	displayText(text, options = {}) {
 		this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, ...options, text:`${text}`}));
 	}
+
+	runAnimation(name, options) {
+		var Animation = this.animations[name];
+		
+		if (Animation == undefined)
+			throw new Error(`Animation '${name}' was not found.`);
+
+		this.debug(`Displaying animation '${name}' with payload ${JSON.stringify(options)}...`);
+
+		this.queue.enqueue(new Animation(options));
+	}    
 
 	async start() {
 		await super.start();
@@ -84,17 +82,14 @@ module.exports = class extends MatrixCommand {
                 if (message == '')
                     return
 
-                let payload = {text:message}
-
                 try {
-                    payload = JSON.parse(message)
+                    let payload = JSON.parse(message)
+                    let {animation, ...options} = payload;
 
-                    let {font, color} = payload;
-
-                    // Make some translations
-                    payload.textColor = color == undefined ? payload.textColor : color;
+                    this.runAnimation(animation, options);
                 }
                 catch(error) {
+                    this.displayText(error);
 
                 }
 
@@ -107,13 +102,13 @@ module.exports = class extends MatrixCommand {
 		});
 
 
-
+/*
         this.queue.on('idle', () => {
             this.timer.setTimer(1 * 1000, () => {
                 this.debug(`Idle`);
             })
         });
-
+*/
 	}
 
 
