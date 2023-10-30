@@ -93,7 +93,6 @@ module.exports = class extends MatrixCommand {
 
                 }
 
-                this.queue.enqueue(new TextAnimation({...this.argv, iterations:1, ...payload}));
 
             }
 			catch(error) {
