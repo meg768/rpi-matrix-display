@@ -81,7 +81,7 @@ module.exports = class RainAnimation extends Animation {
         return new Promise((resolve, reject) => {
 
             super.stop().then(() => {
-                this.matrix.clear();
+                this.matrix.fill('white');
                 this.matrix.render({blend:50});
             })
             .then(() => {
