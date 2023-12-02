@@ -79,14 +79,11 @@ module.exports = class GifAnimation extends Animation {
     }
 
     stop() {
-        console.log(`STOPPINGH`);
         return new Promise((resolve, reject) => {
 
-            super.stop().then(() => {				
-                console.log(`CLEANING UP`);
-                this.gif.matrix.clear();
-                this.gif.matrix.render(); //{blend:50});
-                this.gif = null;
+            super.stop().then(() => {
+                this.matrix.clear();
+                this.matrix.render({blend:50});
             })
             .then(() => {
                 resolve();
@@ -96,8 +93,8 @@ module.exports = class GifAnimation extends Animation {
             })
 
         });
-    }    
-
+    }   
+    
     start() {
         return new Promise((resolve, reject) => {
 
