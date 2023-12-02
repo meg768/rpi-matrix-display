@@ -85,6 +85,7 @@ module.exports = class GifAnimation extends Animation {
                 console.log(`STOPPOING ANIMATIONS ANS CLANING UP`);
                 this.matrix.clear();
                 this.matrix.render({blend:50});
+                console.log(`FINISHED`);
             })
             .then(() => {
                 resolve();
