@@ -65,7 +65,7 @@ module.exports = class extends MatrixCommand {
 
 		mqtt.on('connect', () => {
 			this.log(`Connected to ${this.argv.host}:${this.argv.port}...`);
-			this.displayText(`Listening to MQTT topic ${this.argv.topic}... 🤪`);
+//			this.displayText(`Listening to MQTT topic ${this.argv.topic}... 🤪`);
 		})
 
 		mqtt.subscribe(this.argv.topic, (error) => {

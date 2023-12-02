@@ -144,6 +144,10 @@ module.exports = class GifAnimation extends Animation {
 
     render() {
 
+        if (!this.gif) {
+            return;
+        }
+
         if (this.gif.currentFrame < this.gif.frameCount) {
             console.log(`Drawing frame ${this.gif.currentFrame}`);
             
