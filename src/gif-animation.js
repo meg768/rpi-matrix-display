@@ -62,16 +62,16 @@ module.exports = class GifAnimation extends Animation {
 
     constructor(options) {
 
-        var {name = undefined, iterations = undefined, ...other} = options;
+        var {name = undefined, ...other} = options;
 
         super(other);
 
         this.matrix     = new Matrix({mode:'canvas'});
         this.name       = name;
-        this.iterations = iterations;
+        this.loops      = this.iterations;
         this.gifFiles   = loadGifFiles(this.matrix.width, this.matrix.height);
 
-        console.log(`mmmmasdlsdkfj ${this.iterations}`)
+        console.log(`mmmmasdlsdkfj ${this.loops}`)
         if (this.gifFiles.length == 0) {
             throw new Error('No GIFs available for this size of matrix.');
         }
@@ -161,11 +161,11 @@ module.exports = class GifAnimation extends Animation {
 
         }
         else {
-            console.log(`${this.iterations} ------------------------`);
-            if (this.iterations != undefined) {
-                this.iterations--;
+            console.log(`${this.loops} ------------------------`);
+            if (this.loops != undefined) {
+                this.loops--;
 
-                if (this.iterations <= 0) {
+                if (this.loops <= 0) {
                     this.cancel();            
                 }
                 else {
