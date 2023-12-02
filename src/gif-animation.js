@@ -159,6 +159,7 @@ module.exports = class GifAnimation extends Animation {
             this.matrix.sleep(this.gif.getCurrentFrameDelay() * 10);
     
             this.gif.nextFrame();
+            console.log(`CURRENT FRAME IS ${this.gif.currentFrame}`);
     
             if (this.gif.currentFrame == 0) {
                 console.log(`CURRENT FRAME IS 0`);
