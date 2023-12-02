@@ -161,6 +161,7 @@ module.exports = class GifAnimation extends Animation {
             this.gif.nextFrame();
     
             if (this.gif.currentFrame == 0) {
+                console.log(`CURRENT FRAME IS 0`);
                 if (this.iterations != undefined && this.iterations > 0) 
                     this.iterations--;
             }    
