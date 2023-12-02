@@ -157,6 +157,7 @@ module.exports = class GifAnimation extends Animation {
 
         }
         else {
+            console.log(`${this.iterations}`);
             if (this.iterations != undefined) {
                 this.iterations--;
 
