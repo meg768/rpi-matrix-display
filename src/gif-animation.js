@@ -71,7 +71,6 @@ module.exports = class GifAnimation extends Animation {
         this.iterations = iterations;
         this.gifFiles   = loadGifFiles(this.matrix.width, this.matrix.height);
 
-        console.log(`ITERATIONS ${iterations}`);
         if (this.gifFiles.length == 0) {
             throw new Error('No GIFs available for this size of matrix.');
         }
@@ -161,7 +160,7 @@ module.exports = class GifAnimation extends Animation {
 
         }
         else {
-            console.log(`${this.iterations}`);
+            console.log(`${this.iterations} ------------------------`);
             if (this.iterations != undefined) {
                 this.iterations--;
 
