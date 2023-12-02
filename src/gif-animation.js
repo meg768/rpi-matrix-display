@@ -139,6 +139,8 @@ module.exports = class GifAnimation extends Animation {
     render() {
 
         if (this.gif.currentFrame < this.gif.frameCount) {
+            console.log(`Drawing frame ${this.gif.currentFrame}`);
+            
             this.gif.drawFrame(this.gif.currentFrame);
             this.matrix.canvas.getContext("2d").drawImage(this.gif.canvas, 0, 0);
     
