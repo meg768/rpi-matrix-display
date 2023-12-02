@@ -80,10 +80,6 @@ module.exports = class AnimationQueue extends Events {
 			else {
                 // Remove blocking animations
                 if (this.currentAnimation != undefined) {
-
-                    let {name, duration, priority} = this.currentAnimation;
-
-                    this.debug(`${name} ${priority} ${duration}`);
                     if (this.currentAnimation.duration < 0)
                         this.currentAnimation.cancel();
 				}

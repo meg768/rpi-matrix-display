@@ -1,8 +1,5 @@
 //module.exports = require('rpi-animations').Animation;
 
-
-
-
 var Sleep = require('sleep');
 var Events = require('events');
 
@@ -13,17 +10,16 @@ module.exports = class extends Events {
 
 		super();
 	
-		var {debug = false, renderFrequency = undefined, name = 'Noname', priority = 'normal', iterations = undefined, duration = undefined} = options;
+		var {debug, renderFrequency = undefined, name = 'Noname', priority = 'normal', iterations = undefined, duration = undefined} = options;
 	
 		this.name            = name;
 		this.priority        = priority;
 		this.cancelled       = false;
-		this.duration        = duration
+		this.duration        = duration;
 		this.iterations      = iterations;
 		this.renderFrequency = renderFrequency;
 		this.renderTime      = undefined;
-        this.debug           = (typeof debug == 'function') ? debug : (debug ? console.log : () => {});
-
+		this.debug           = typeof debug === 'function' ? debug : (debug ? console.log : () => {});
 	}
 
     render() {
@@ -92,7 +88,7 @@ module.exports = class extends Events {
             
                     resolve();
                 }
-                else if (this.duration != undefined && now - start > this.duration) {
+                else if (this.duration != undefined && this.duration > 0 && now - start > this.duration) {
                     resolve();
                 }
                 else if (this.iterations != undefined && this.iteration >= this.iterations) {
@@ -148,4 +144,3 @@ module.exports = class extends Events {
 
     }
 }
-
