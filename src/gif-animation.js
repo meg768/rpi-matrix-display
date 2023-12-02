@@ -148,6 +148,8 @@ module.exports = class GifAnimation extends Animation {
 
     render() {
 
+        console.log(`CURRENT FRAME IS ${this.gif.currentFrame} ITERATIONS ${this.iterations}`);
+
         if (this.iterations != undefined && this.iterations <= 0) {
             this.cancel();            
         }
@@ -163,6 +165,7 @@ module.exports = class GifAnimation extends Animation {
     
             if (this.gif.currentFrame == 0) {
                 console.log(`CURRENT FRAME IS 0`);
+                console.log(`ITERATIONS ${this.gif.currentFrame}`);
                 if (this.iterations != undefined && this.iterations > 0) 
                     this.iterations--;
             }    
