@@ -78,7 +78,7 @@ module.exports = class AnimationQueue extends Events {
 				this.animationQueue.unshift(animation);
 			}
 			else {
-                this.debug(`${this.currentAnimation}`);
+                this.debug(`${JSON.stringify(this.currentAnimation)}`);
                 // Remove blocking animations
                 if (this.currentAnimation != undefined) {
                     if (this.currentAnimation.duration < 0)
