@@ -79,6 +79,7 @@ module.exports = class GifAnimation extends Animation {
     }
 
     stop() {
+        console.log(`STOPPINGH`)
         return new Promise((resolve, reject) => {
 
             super.stop().then(() => {				
