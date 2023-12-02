@@ -1,7 +1,7 @@
 var Matrix    = require('../../../matrix.js');
-var Animation = require('rpi-animations').Animation;
-var AnimationQueue = require('rpi-animations').Queue;
 var Color = Matrix.Color;
+var Animation = require('./animation.js');
+var AnimationQueue = require('./animation-queue.js').Queue;
 
 var fs = require('fs');
 
