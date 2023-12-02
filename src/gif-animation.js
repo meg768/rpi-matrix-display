@@ -44,25 +44,14 @@ class GifFrames {
     }
 
 
-    nextFrame() {
-        this.currentFrame++;
 
-        if (this.currentFrame >= this.frameCount)
-            this.currentFrame = 0;
+    getFrameDelay(frame) {
+        return this.gif.frameInfo(frame).delay;
     }
 
-    isLastFrame() {
-        this.currentFrame == this.frameCount - 1
-    }
-
-    getCurrentFrameDelay() {
-        var frame = this.gif.frameInfo(this.currentFrame);
-        return frame.delay;
-    }
-
-    drawCurrentFrame() {
+    drawFrame(frame) {
         var image = this.canvas.getContext('2d').createImageData(this.gif.width, this.gif.height);
-        this.gif.decodeAndBlitFrameRGBA(this.currentFrame, image.data);
+        this.gif.decodeAndBlitFrameRGBA(frame, image.data);
 
         this.canvas.getContext("2d").putImageData(image, 0, 0);    
     }
@@ -146,7 +135,40 @@ module.exports = class GifAnimation extends Animation {
         });
     }  
 
+
     render() {
+
+        if (this.gif.currentFrame < this.gif.frameCount) {
+            this.gif.drawFrame(this.gif.currentFrame);
+            this.matrix.canvas.getContext("2d").drawImage(this.gif.canvas, 0, 0);
+    
+            this.matrix.render();
+            this.matrix.sleep(this.gif.getFrameDelay(this.gif.currentFrame) * 10);
+
+            this.gif.currentFrame++;
+
+        }
+        else {
+            if (this.iterations != undefined) {
+                this.iterations--;
+
+                if (this.iterations <= 0) {
+                    this.cancel();            
+                }
+                else {
+                    this.gif.currentFrame = 0;
+                }
+            } 
+            else {
+                this.cancel();
+            }
+    
+        }
+        
+    }    
+
+
+    renderX() {
 
         console.log(`CURRENT FRAME IS ${this.gif.currentFrame} ITERATIONS ${this.iterations}`);
 
