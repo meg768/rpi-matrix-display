@@ -85,7 +85,7 @@ module.exports = class GifAnimation extends Animation {
             super.stop().then(() => {				
                 console.log(`CLEANING UP`);
                 this.matrix.clear();
-                this.matrix.render({blend:50});
+                this.matrix.render(); //{blend:50});
                 this.gif = null;
             })
             .then(() => {
