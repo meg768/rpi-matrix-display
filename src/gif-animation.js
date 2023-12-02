@@ -82,6 +82,7 @@ module.exports = class GifAnimation extends Animation {
         return new Promise((resolve, reject) => {
 
             super.stop().then(() => {
+                console.log(`STOPPOING ANIMATIONS ANS CLANING UP`);
                 this.matrix.clear();
                 this.matrix.render({blend:50});
             })
@@ -94,7 +95,7 @@ module.exports = class GifAnimation extends Animation {
 
         });
     }   
-    
+
     start() {
         return new Promise((resolve, reject) => {
 
