@@ -79,10 +79,11 @@ module.exports = class GifAnimation extends Animation {
     }
 
     stop() {
-        console.log(`STOPPINGH`)
+        console.log(`STOPPINGH`);
         return new Promise((resolve, reject) => {
 
             super.stop().then(() => {				
+                console.log(`CLEANING UP`);
                 this.matrix.clear();
                 this.matrix.render({blend:50});
                 this.gif = null;
