@@ -68,77 +68,52 @@ module.exports = class GifAnimation extends Animation {
 
         this.matrix     = new Matrix({mode:'canvas'});
         this.name       = name;
-        this.loops      = this.iterations;
         this.gifFiles   = loadGifFiles(this.matrix.width, this.matrix.height);
 
-        console.log(`mmmmasdlsdkfj ${this.loops}`)
         if (this.gifFiles.length == 0) {
             throw new Error('No GIFs available for this size of matrix.');
         }
 
     }
 
-    stop() {
-        return new Promise((resolve, reject) => {
+    async stop() {
 
-            super.stop().then(() => {
-                console.log(`STOPPOING ANIMATIONS ANS CLANING UP`);
+        await super.stop();
 
-                let ctx = this.matrix.canvas.getContext("2d");
-                ctx.fillStyle = "black";
-                ctx.fillRect(0, 0, this.gif.width, this.gif.height);
+        let ctx = this.matrix.canvas.getContext("2d");
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, this.gif.width, this.gif.height);
 
-                this.matrix.render({blend:50});
-                console.log(`FINISHED`);
-            })
-            .then(() => {
-                resolve();
-            })
-            .catch(error => {
-                reject(error);
-            })
-
-        });
+        this.matrix.render({blend:50});
     }   
 
-    start() {
-        return new Promise((resolve, reject) => {
+    async start() {
+        await super.start();
 
-            super.start().then(() => {
-                var entry = this.gifFiles.find((item) => {
-                    return item.name == this.name; 
-                });
-
-                if (entry == undefined) {
-                    entry = random(this.gifFiles);
-                }
-
-                if (entry == undefined) {
-                    throw new Error('GIF not found.')
-                }
-
-                var gif = new GifFrames(entry.fileName);
-
-                var ctx    = this.matrix.canvas.getContext('2d');
-                var scaleX = this.matrix.width  / gif.width;
-                var scaleY = this.matrix.height / gif.height;
-        
-                ctx.scale(scaleX, scaleY);
-        
-                if (scaleX > 1 || scaleY > 1)
-                    ctx.imageSmoothingEnabled = false;
-        
-                this.gif = gif;
-
-            })
-            .then(() => {
-                resolve();
-            })
-            .catch(error => {
-                reject(error);
-            })
-
+        var entry = this.gifFiles.find((item) => {
+            return item.name == this.name; 
         });
+
+        if (entry == undefined) {
+            entry = random(this.gifFiles);
+        }
+
+        if (entry == undefined) {
+            throw new Error('GIF not found.')
+        }
+
+        var gif = new GifFrames(entry.fileName);
+
+        var ctx    = this.matrix.canvas.getContext('2d');
+        var scaleX = this.matrix.width  / gif.width;
+        var scaleY = this.matrix.height / gif.height;
+
+        ctx.scale(scaleX, scaleY);
+
+        if (scaleX > 1 || scaleY > 1)
+            ctx.imageSmoothingEnabled = false;
+
+        this.gif = gif;
     }  
 
 
@@ -159,23 +134,6 @@ module.exports = class GifAnimation extends Animation {
 
             this.gif.currentFrame++;
 
-        }
-        else {
-            console.log(`${this.loops} ------------------------`);
-            if (this.loops != undefined) {
-                this.loops--;
-
-                if (this.loops <= 0) {
-                    this.cancel();            
-                }
-                else {
-                    this.gif.currentFrame = 0;
-                }
-            } 
-            else {
-                this.cancel();
-            }
-    
         }
         
     }    
