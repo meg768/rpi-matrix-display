@@ -47,7 +47,7 @@ class GifFrames {
 
     getFrameDelay(frame) {
         return this.gif.frameInfo(frame).delay;
-    }
+    }   
 
     drawFrame(frame) {
         var image = this.canvas.getContext('2d').createImageData(this.gif.width, this.gif.height);
@@ -117,7 +117,6 @@ module.exports = class GifAnimation extends Animation {
 
         if (this.iterations != undefined) {
             this.iterations = this.iterations * this.gif.frameCount;
-            console.log(`Iterations: ${this.iterations}`);
         }
 
 
@@ -126,7 +125,6 @@ module.exports = class GifAnimation extends Animation {
 
     render() {
 
-
         this.gif.drawFrame(this.gif.currentFrame);
         this.matrix.canvas.getContext("2d").drawImage(this.gif.canvas, 0, 0);
 
@@ -134,62 +132,7 @@ module.exports = class GifAnimation extends Animation {
         this.matrix.sleep(this.gif.getFrameDelay(this.gif.currentFrame) * 10);
 
         this.gif.currentFrame = (this.gif.currentFrame + 1) % this.gif.frameCount;
-
-        
     }    
-
-
-    renderXXX() {
-
-
-        if (this.gif.currentFrame < this.gif.frameCount) {
-            
-            this.gif.drawFrame(this.gif.currentFrame);
-            this.matrix.canvas.getContext("2d").drawImage(this.gif.canvas, 0, 0);
-    
-            this.matrix.render();
-            this.matrix.sleep(this.gif.getFrameDelay(this.gif.currentFrame) * 10);
-
-            this.gif.currentFrame++;
-
-        }
-        else {
-            if (this.duration < 0) {
-                this.gif.currentFrame = 0;
-            }
-            else {
-                this.cancel();
-            }
-        }
-        
-    }    
-
-
-    renderX() {
-
-        console.log(`CURRENT FRAME IS ${this.gif.currentFrame} ITERATIONS ${this.iterations}`);
-
-        if (this.iterations != undefined && this.iterations <= 0) {
-            this.cancel();            
-        }
-        else {
-            this.gif.drawCurrentFrame();
-            this.matrix.canvas.getContext("2d").drawImage(this.gif.canvas, 0, 0);
-    
-            this.matrix.render();
-            this.matrix.sleep(this.gif.getCurrentFrameDelay() * 10);
-    
-            this.gif.nextFrame();
-            console.log(`CURRENT FRAME IS ${this.gif.currentFrame}`);
-    
-            if (this.gif.currentFrame == 0) {
-                console.log(`CURRENT FRAME IS 0`);
-                console.log(`ITERATIONS ${this.gif.currentFrame}`);
-                if (this.iterations != undefined && this.iterations > 0) 
-                    this.iterations--;
-            }    
-        }
-    }
 
 }
 
