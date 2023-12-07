@@ -124,7 +124,6 @@ module.exports = class GifAnimation extends Animation {
         }
 
         if (this.gif.currentFrame < this.gif.frameCount) {
-            console.log(`Drawing frame ${this.gif.currentFrame}`);
             
             this.gif.drawFrame(this.gif.currentFrame);
             this.matrix.canvas.getContext("2d").drawImage(this.gif.canvas, 0, 0);
@@ -136,7 +135,12 @@ module.exports = class GifAnimation extends Animation {
 
         }
         else {
-            this.cancel();
+            if (this.duration < 0) {
+                this.gif.currentFrame = 0;
+            }
+            else {
+                this.cancel();
+            }
         }
         
     }    
