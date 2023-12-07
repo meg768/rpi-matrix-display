@@ -114,7 +114,7 @@ module.exports = class GifAnimation extends Animation {
             ctx.imageSmoothingEnabled = false;
 
         if (this.iterations != undefined) {
-            this.iterations = this.iterations * this.gif.frameCount;
+            this.iterations = this.iterations * gif.frameCount;
             console.log(`Iterations: ${this.iterations}`);
         }
 
