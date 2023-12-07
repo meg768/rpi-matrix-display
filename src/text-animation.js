@@ -56,7 +56,7 @@ module.exports = class TextAnimation extends Animation  {
         }
 
         if (process.env.FONT_SIZE != undefined) {
-            fontSize = Number(this.process.env.FONT_SIZE);
+            fontSize = Number(process.env.FONT_SIZE);
         }
 
         this.matrix       = new Matrix({mode: 'canvas'});
