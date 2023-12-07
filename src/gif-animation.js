@@ -116,12 +116,27 @@ module.exports = class GifAnimation extends Animation {
         if (this.iterations != undefined) {
             this.iterations = this.iterations * this.gif.frameCount;
         }
-        
+
         this.gif = gif;
     }  
 
 
     render() {
+
+
+        this.gif.drawFrame(this.gif.currentFrame);
+        this.matrix.canvas.getContext("2d").drawImage(this.gif.canvas, 0, 0);
+
+        this.matrix.render();
+        this.matrix.sleep(this.gif.getFrameDelay(this.gif.currentFrame) * 10);
+
+        this.gif.currentFrame = (this.gif.currentFrame + 1) % this.gif.frameCount;
+
+        
+    }    
+
+
+    renderXXX() {
 
 
         if (this.gif.currentFrame < this.gif.frameCount) {
