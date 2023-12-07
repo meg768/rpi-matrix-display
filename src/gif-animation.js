@@ -136,7 +136,7 @@ module.exports = class GifAnimation extends Animation {
     
         }
         else {
-            if (this.iterations == undefined) {
+            if (this.iterations == undefined && this.duration >= 0) {
                 this.cancel();
             }
             else {
