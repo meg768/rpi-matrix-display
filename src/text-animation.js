@@ -55,6 +55,10 @@ module.exports = class TextAnimation extends Animation  {
             textColor = sprintf('hsl(%d,100%%,50%%)', hue);    
         }
 
+        if (this.process.env.FONT_SIZE != undefined) {
+            fontSize = Number(this.process.env.FONT_SIZE);
+        }
+
         this.matrix       = new Matrix({mode: 'canvas'});
         this.text         = text;
         this.iterations   = iterations;
