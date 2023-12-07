@@ -135,6 +135,9 @@ module.exports = class GifAnimation extends Animation {
             this.gif.currentFrame++;
 
         }
+        else {
+            this.cancel();
+        }
         
     }    
 
