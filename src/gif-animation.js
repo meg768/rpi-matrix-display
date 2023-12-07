@@ -113,15 +113,16 @@ module.exports = class GifAnimation extends Animation {
         if (scaleX > 1 || scaleY > 1)
             ctx.imageSmoothingEnabled = false;
 
+        if (this.iterations != undefined) {
+            this.iterations = this.iterations * this.gif.frameCount;
+        }
+        
         this.gif = gif;
     }  
 
 
     render() {
 
-        if (!this.gif) {
-            return;
-        }
 
         if (this.gif.currentFrame < this.gif.frameCount) {
             
