@@ -55,7 +55,7 @@ module.exports = class TextAnimation extends Animation  {
             textColor = sprintf('hsl(%d,100%%,50%%)', hue);    
         }
 
-        if (this.process.env.FONT_SIZE != undefined) {
+        if (process.env.FONT_SIZE != undefined) {
             fontSize = Number(this.process.env.FONT_SIZE);
         }
 
