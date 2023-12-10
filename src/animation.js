@@ -3,6 +3,10 @@
 var Sleep = require('sleep');
 var Events = require('events');
 
+function isNumber(value) {
+    return typeof value == 'number';
+} 
+
 module.exports = class extends Events {
 
 
@@ -37,7 +41,7 @@ module.exports = class extends Events {
 
             this.cancelled  = false;
             this.renderTime = undefined;
-            this.iteration  = 0;
+            this.iteration  = typeof this.iterations == 'number' ? 0 : undefined;
 
             this.debug('Animation', this.name, 'started.');
             resolve();
@@ -84,20 +88,18 @@ module.exports = class extends Events {
 
                 if (this.cancelled) {
                     this.emit('cancelled');
-                    this.emit('canceled');
-            
                     resolve();
                 }
-                else if (this.duration != undefined && this.duration > 0 && now - start > this.duration) {
+                else if (isNumber(this.duration) && this.duration > 0 && now - start > this.duration) {
                     resolve();
                 }
-                else if (this.iterations != undefined && this.iterations > 0 && this.iteration >= this.iterations) {
+                else if (isNumber(this.iterations) && isNumber(this.iteration) && this.iteration >= this.iterations) {
                     resolve();
                 }
                 else {
                     render();
 
-                    if (this.iterations != undefined && this.iterations > 0)
+                    if (isNumber(this.iteration))
                         this.iteration++;
 
                     this.next(loop);
@@ -112,7 +114,6 @@ module.exports = class extends Events {
         this.debug('Cancelling animation', this.name);
         this.cancelled = true;
         this.emit('cancelling');
-        this.emit('canceling');
     }
 
     run(options) {
@@ -124,6 +125,7 @@ module.exports = class extends Events {
             this.duration  = duration;
     
         }
+
 
         return new Promise((resolve, reject) => {
 
