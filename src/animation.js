@@ -93,7 +93,7 @@ module.exports = class extends Events {
                 else if (isNumber(this.duration) && this.duration > 0 && now - start > this.duration) {
                     resolve();
                 }
-                else if (isNumber(this.iterations) && isNumber(this.iteration) && this.iteration >= this.iterations) {
+                else if (isNumber(this.iterations) && isNumber(this.iteration) && this.iterations > 0 && this.iteration >= this.iterations) {
                     resolve();
                 }
                 else {
