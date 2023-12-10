@@ -60,15 +60,15 @@ class GifFrames {
 
 module.exports = class GifAnimation extends Animation {
 
-    constructor(options) {
+    constructor(args) {
 
-        let {name, duration, iterations} = options;
+        var {duration, iterations, ...args} = args;
 
         if (typeof duration == 'number') {
             iterations = -1;
         }
 
-        super(other);
+        super({...args, duration:duration, iterations:iterations});
 
         this.matrix     = new Matrix({mode:'canvas'});
         this.gifFiles   = loadGifFiles(this.matrix.width, this.matrix.height);
