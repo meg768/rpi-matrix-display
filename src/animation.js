@@ -91,13 +91,13 @@ module.exports = class extends Events {
                 else if (this.duration != undefined && this.duration > 0 && now - start > this.duration) {
                     resolve();
                 }
-                else if (this.iterations != undefined && this.iteration >= this.iterations) {
+                else if (this.iterations != undefined && this.iterations > 0 && this.iteration >= this.iterations) {
                     resolve();
                 }
                 else {
                     render();
 
-                    if (this.iterations != undefined)
+                    if (this.iterations != undefined && this.iterations > 0)
                         this.iteration++;
 
                     this.next(loop);
