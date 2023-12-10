@@ -68,6 +68,10 @@ module.exports = class GifAnimation extends Animation {
             iterations = -1;
         }
 
+        if (typeof iterations != 'number') {
+            iterations = 1;
+        }
+
         super({...args, duration:duration, iterations:iterations});
 
         this.matrix     = new Matrix({mode:'canvas'});
