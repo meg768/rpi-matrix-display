@@ -76,6 +76,7 @@ module.exports = class GifAnimation extends Animation {
 
         this.matrix     = new Matrix({mode:'canvas'});
         this.gifFiles   = loadGifFiles(this.matrix.width, this.matrix.height);
+        this.frameDelayFactor = process.env.GIF_FRAME_DELAY_FACTOR == undefined ? 1 : parseFloat(GIF_FRAME_DELAY_FACTOR);
 
         if (this.gifFiles.length == 0) {
             throw new Error('No GIFs available for this size of matrix.');
@@ -137,7 +138,7 @@ module.exports = class GifAnimation extends Animation {
             this.matrix.canvas.getContext("2d").drawImage(this.gif.canvas, 0, 0);
     
             this.matrix.render();
-            this.matrix.sleep(this.gif.getFrameDelay(this.gif.currentFrame) * 10);
+            this.matrix.sleep(this.gif.getFrameDelay(this.gif.currentFrame) * 10 * this.frameDelayFactor);
     
             this.gif.currentFrame++;
     
