@@ -28,17 +28,18 @@ module.exports = class extends MatrixCommand {
     options(yargs) {
         super.options(yargs);
 
-		yargs.option('host',     {describe:'Specifies MQTT host', default:process.env.MQTT_HOST});
-		yargs.option('password', {describe:'Password for MQTT broker', default:process.env.MQTT_PASSWORD});
-		yargs.option('username', {describe:'User name for MQTT broker', default:process.env.MQTT_USERNAME});
-		yargs.option('port',     {describe:'Port for MQTT', default:process.env.MQTT_PORT});
-		yargs.option('topic',    {describe:'Topic for MQTT', default:process.env.MQTT_TOPIC});
+		yargs.option('host',        {describe:'Specifies MQTT host', default:process.env.MQTT_HOST});
+		yargs.option('password',    {describe:'Password for MQTT broker', default:process.env.MQTT_PASSWORD});
+		yargs.option('username',    {describe:'User name for MQTT broker', default:process.env.MQTT_USERNAME});
+		yargs.option('port',        {describe:'Port for MQTT', default:process.env.MQTT_PORT});
+		yargs.option('topic',       {describe:'Topic for MQTT', default:process.env.MQTT_TOPIC});
+		yargs.option('extraTopics', {describe:'Extra MQTT topics (comma separated)', default:process.env.MQTT_EXTRA_TOPICS});
 
         yargs.option('textColor',   {describe: 'Text color', default:'red'});
         yargs.option('emojiSize',   {describe: 'Size of emojis relative to matrix height', default:0.75});
-        yargs.option('fontStyle',   {describe: 'Font style', default:'bold'});
-        yargs.option('fontName',    {describe: 'Font name', default:'Arial'});
-        yargs.option('scrollDelay', {describe: 'Scrolling speed', type:'number', default:10});
+        yargs.option('fontStyle',   {describe: 'Font style', default:(process.env.FONT_STYLE || 'bold')});
+        yargs.option('fontName',    {describe: 'Font name', default:(process.env.FONT_NAME || 'Arial')});
+        yargs.option('scrollDelay', {describe: 'Scrolling speed', type:'number', default:Number(process.env.SCROLL_DELAY || 10)});
     }
 
 	
@@ -68,7 +69,13 @@ module.exports = class extends MatrixCommand {
 //			this.displayText(`Listening to MQTT topic ${this.argv.topic}... 🤪`);
 		})
 
-		mqtt.subscribe(this.argv.topic, (error) => {
+		let topics = [this.argv.topic];
+
+		if (this.argv.extraTopics) {
+			topics.push(...this.argv.extraTopics.split(',').map((topic) => topic.trim()).filter(Boolean));
+		}
+
+		mqtt.subscribe(topics, (error) => {
 
         });
 
@@ -77,20 +84,22 @@ module.exports = class extends MatrixCommand {
 			try {
                 message = message.toString();
 
-                this.log(`MQTT message: '${message}'`);
+                this.log(`MQTT message on '${topic}': '${message}'`);
 
                 if (message == '')
-                    return
+                    return;
 
                 try {
-                    let payload = JSON.parse(message)
+                    let payload = JSON.parse(message);
                     let {animation, ...options} = payload;
 
-                    this.runAnimation(animation, options);
+                    if (animation == undefined)
+                        this.displayText(message);
+                    else
+                        this.runAnimation(animation, options);
                 }
                 catch(error) {
-                    this.displayText(error);
-
+                    this.displayText(message);
                 }
 
 
@@ -113,6 +122,5 @@ module.exports = class extends MatrixCommand {
 
 
 };
-
 
 
