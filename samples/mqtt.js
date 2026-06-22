@@ -54,7 +54,7 @@ module.exports = class extends MatrixCommand {
 
 		this.debug(`Displaying animation '${name}' with payload ${JSON.stringify(options)}...`);
 
-		this.queue.enqueue(new Animation({...options, ...this.argv}));
+		this.queue.enqueue(new Animation({...this.argv, ...options}));
 	}    
 
 	async start() {
